@@ -8,6 +8,7 @@ Application::Application()
 	textures = new ModuleTextures(this);
 	input = new ModuleInput(this);
 	audio = new ModuleAudio(this);
+	//scene = new ModuleScene(this, false);
 	//TODO:
 	//Init the modules/scenes here:
 	//yourscene = new ModuleYourScene(this, false);  -->Set to true the first scene.
@@ -27,7 +28,7 @@ Application::Application()
 	AddModule(audio);
 
 	// Scenes
-
+	//AddModule(scene);
 	
 	// Characters
 	AddModule(player);
