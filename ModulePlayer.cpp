@@ -55,7 +55,7 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 
-	graphics = App->textures->Load("SuperBomberman/GameAssets.png");
+	graphics = App->textures->Load("Game/GameAssets.png");
 
 	return true;
 }

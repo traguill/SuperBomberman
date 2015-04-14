@@ -1,4 +1,5 @@
-/*#pragma once
+#pragma once
+
 #include "Module.h"
 #include "Animation.h"
 #include "Globals.h"
@@ -16,5 +17,7 @@ public:
 public:
 
 	SDL_Texture* status;
+	SDL_Rect* bar;
+	SDL_Rect a;
 	
 };

@@ -1,4 +1,4 @@
-/* 
+
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleScene.h"
@@ -6,6 +6,9 @@
 ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	status = NULL;
+	
+	a = {409, 75, 258, 34 };
+	bar = &a;
 	
 }
 
@@ -17,7 +20,7 @@ bool ModuleScene::Start()
 {
 	LOG("Loading scene");
 
-	status = App->textures->Load("GameAssets.png");
+	status = App->textures->Load("Game/GameAssets.png");
 	App->player->Enable();
 
 	return true;
@@ -38,8 +41,7 @@ bool ModuleScene::CleanUp()
 update_status ModuleScene::Update()
 {
 	// Draw everything --------------------------------------
-	App->renderer->Blit(status, 0, 0, NULL);
+	App->renderer->Blit(status, 0, 0, bar);
 
 	return UPDATE_CONTINUE;
 }
-*/
