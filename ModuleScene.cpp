@@ -37,7 +37,7 @@ ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, sta
 
 ModuleScene::~ModuleScene()
 {}
-//TODO: modificar perque va moooolt lent
+
 void ModuleScene::PaintLevel()
 {
 	for (int i = 0; i < 12; i++)
@@ -45,7 +45,6 @@ void ModuleScene::PaintLevel()
 		for (int j = 0; j < 16; j++)
 		{
 			int a = 0;
-			LOG("value of the tile is: %d /n", a);
 			App->renderer->Blit(graphics, position.x + j*TILE, position.y + i*TILE, &(tiles[a]));
 		}
 	}
@@ -75,8 +74,10 @@ bool ModuleScene::CleanUp()
 }
 
 // Update: draw background
+//nota mental: nunca poner un log dentro del update, se sobrecarag todo
 update_status ModuleScene::Update()
 {
+
 	// Draw everything --------------------------------------
 	PaintLevel();
 
