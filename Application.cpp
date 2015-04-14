@@ -8,12 +8,12 @@ Application::Application()
 	textures = new ModuleTextures(this);
 	input = new ModuleInput(this);
 	audio = new ModuleAudio(this);
-	scene = new ModuleScene(this, true);
+	timer = new ModuleTimer(this, true);
 	//TODO:
 	//Init the modules/scenes here:
 	//yourscene = new ModuleYourScene(this, false);  -->Set to true the first scene.
 	player = new ModulePlayer(this, false);
-	
+	scene = new ModuleScene(this, false);
 	fade = new ModuleFadeToBlack(this);
 
 	// The order of calls is very important!
@@ -29,6 +29,9 @@ Application::Application()
 
 	// Scenes
 	AddModule(scene);
+
+	// Timer and status
+	AddModule(timer);
 	
 	// Characters
 	AddModule(player);
@@ -46,7 +49,7 @@ Application::~Application()
 	delete audio;
 	//TODO:
 	//Delete the modules here, IN THE SAME ORDER!
-	delete scene;
+	delete timer;
 	delete player;
 	delete fade;
 	

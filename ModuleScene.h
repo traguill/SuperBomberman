@@ -14,10 +14,16 @@ public:
 	update_status Update();
 	bool CleanUp();
 
+	//other methods
+
+	void PaintLevel();
+
 public:
 
-	SDL_Texture* status;
-	SDL_Rect* bar;
-	SDL_Rect a;
-	
+	SDL_Texture* graphics;
+	p2DynArray<SDL_Rect> tiles;
+	p2Point<int> position;
+	//int level[12][16];
+
+
 };

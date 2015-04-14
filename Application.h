@@ -11,6 +11,7 @@
 #include "ModuleAudio.h"
 #include "ModulePlayer.h"
 #include "ModuleFadeToBlack.h"
+#include "ModuleTimer.h"
 #include "ModuleScene.h"
 //Add all modules here (scenes)
 
@@ -27,6 +28,7 @@ public:
 	ModuleAudio* audio;
 	ModulePlayer* player;
 	ModuleFadeToBlack* fade;
+	ModuleTimer* timer;
 	ModuleScene* scene;
 	//TODO:
 	//YourModule* yourM;
