@@ -17,7 +17,7 @@ enum update_status
 
 // Configuration -----------
 #define SCREEN_WIDTH 256
-#define SCREEN_HEIGHT 210
+#define SCREEN_HEIGHT 226
 #define SCREEN_SIZE 3  
 #define TILE 16
 #define TILE_WIDTH 16

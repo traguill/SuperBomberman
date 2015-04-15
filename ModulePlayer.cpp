@@ -13,34 +13,34 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	position.y = 120;
 
 	// idle animation (just the ship)
-	idle.frames.PushBack({ 69, 37, 17, 26 });
+	idle.frames.PushBack({ 70, 38, 16, 24 });
 
 	// walk Right
-	right.frames.PushBack({ 178, 38, 18, 23 });
-	right.frames.PushBack({ 160, 38, 18, 23 });
-	right.frames.PushBack({ 178, 38, 18, 23 });
-	right.frames.PushBack({ 197, 38, 18, 23 });
+	right.frames.PushBack({ 179, 38, 16, 24 });
+	right.frames.PushBack({ 161, 38, 16, 24 });
+	right.frames.PushBack({ 179, 38, 16, 24 });
+	right.frames.PushBack({ 197, 38, 16, 24 });
 	right.speed = 0.1f;
 
 	// walk Left
-	left.frames.PushBack({ 124, 38, 18, 23 });
-	left.frames.PushBack({ 106, 38, 18, 23 });
-	left.frames.PushBack({ 124, 38, 18, 23 });
-	left.frames.PushBack({ 143, 38, 18, 23 });
+	left.frames.PushBack({ 124, 38, 16, 24 });
+	left.frames.PushBack({ 105, 38, 16, 24 });
+	left.frames.PushBack({ 124, 38, 16, 24 });
+	left.frames.PushBack({ 142, 38, 16, 24 });
 	left.speed = 0.1f;
 
 	// walk Down
-	down.frames.PushBack({ 70, 38, 15, 23 });
-	down.frames.PushBack({ 52, 38, 15, 23 });
-	down.frames.PushBack({ 70, 38, 15, 23 });
-	down.frames.PushBack({ 88, 38, 15, 23 });
+	down.frames.PushBack({ 70, 38, 16, 24 });
+	down.frames.PushBack({ 52, 38, 16, 24 });
+	down.frames.PushBack({ 70, 38, 16, 24 });
+	down.frames.PushBack({ 88, 38, 16, 22 });
 	down.speed = 0.1f;
 
 	// walk Up
-	up.frames.PushBack({ 237, 38, 15, 23 });
-	up.frames.PushBack({ 219, 38, 15, 23 });
-	up.frames.PushBack({ 237, 38, 15, 23 });
-	up.frames.PushBack({ 255, 38, 15, 23 });
+	up.frames.PushBack({ 237, 38, 16, 24 });
+	up.frames.PushBack({ 219, 38, 16, 24 });
+	up.frames.PushBack({ 237, 38, 16, 24 });
+	up.frames.PushBack({ 255, 38, 16, 24 });
 	up.speed = 0.1f;
 
 	//TODO
