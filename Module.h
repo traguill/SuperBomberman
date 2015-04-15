@@ -29,7 +29,6 @@ public:
 
 	void Disable()
 	{
-		// TODO 0: Cridar al CleanUp() al fer un Disable
 		if (enabled == true)
 		{
 			enabled = false;

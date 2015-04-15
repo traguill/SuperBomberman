@@ -18,9 +18,13 @@ public:
 
 	SDL_Texture* graphics;
 	Animation* current_animation;
-	//TODO: la variable de current_orientation serveix per quan es quedi quiet es quedi mirant en la direccio en la que es movia
-	//pero de moment nomes aconsegueixo que segueixi canviant els frames en aquella direcció
-	//Animation current_orientation;
+	enum looking {				//Les variables tenen una D al final de direccio, no es poden dir up,down,right i left perque es confonen amb les animacions.		
+		downD = 0,
+		rightD = 1,
+		leftD = 2,
+		upD = 3
+	};
+	looking direction; 
 	Animation idle;
 	Animation right;
 	Animation left;
