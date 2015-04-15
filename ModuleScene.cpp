@@ -12,19 +12,18 @@ ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, sta
 	//tiles distribution to numbers
 	tiles.PushBack({ 305, 49, 16, 16 });//0//terra estandard
 	tiles.PushBack({ 305, 32, 16, 16 });//1//terra sota edifici
-	tiles.PushBack({ 305, 15, 16, 16 });//2
-	tiles.PushBack({ 288, 49, 16, 16 });//3
-	tiles.PushBack({ 271, 15, 16, 16 });//4
-	tiles.PushBack({ 271, 49, 16, 16 });//5
-	tiles.PushBack({ 254, 32, 16, 16 });//6
-	tiles.PushBack({ 254, 15, 16, 16 });//7
-	tiles.PushBack({ 254, 49, 16, 16 });//8
-	tiles.PushBack({ 271, 32, 16, 16 });//9//Son les cases del mig de l'escenari
-	tiles.PushBack({ 288, 32, 16, 16 });//10//terra a sota de edifici, no colisionable
+	tiles.PushBack({ 305, 15, 16, 16 });//2/pared superior
+	tiles.PushBack({ 288, 49, 16, 16 });//3/pared inferior
+	tiles.PushBack({ 271, 15, 16, 16 });//4//*pareds del costat esquerra 
+	tiles.PushBack({ 271, 49, 16, 16 });//5*/
+	tiles.PushBack({ 254, 32, 16, 16 });//6*/
+	tiles.PushBack({ 254, 15, 16, 16 });//7*7
+	tiles.PushBack({ 254, 49, 16, 16 });//8*/
+	tiles.PushBack({ 271, 32, 16, 16 });//9*/
+	tiles.PushBack({ 288, 32, 16, 16 });//10//Son les cases del mig de l'escenari
 
-	//tiles distribution to level (preguntar al ricard perque no em funciona
-	//level[0][0] = 2;
-	//level[0] = { 7, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 7 };
+	//TODO: s'han de copiar i invertir les imatges dels tiles de l'esquerra per poderles utilitzar a la dreta
+	//Cuidado, pot fer que el archiu sigui incompatible segons com es fagi, en tot cas, els cambis millor guardarlos en un archiu apart per comprovar
 
 	
 	int l[13][17] = {   { 7, 4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, 4, 7 },
