@@ -20,8 +20,7 @@ bool ModuleTimer::Start()
 {
 	LOG("Loading scene");
 
-	graphics = App->textures->Load("Game/GameAssets.png");
-	App->scene->Enable();
+	graphics = App->textures->Load("GameAssets.png");
 
 	return true;
 }
@@ -32,7 +31,6 @@ bool ModuleTimer::CleanUp()
 	LOG("Unloading space scene");
 
 	App->textures->Unload(graphics);
-	App->scene->Disable();
 
 	return true;
 }
