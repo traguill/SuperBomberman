@@ -58,6 +58,10 @@ void ModuleScene::PaintLevel()
 	}
 }
 
+void ModuleScene::SetColliders()
+{
+	App->collision->AddCollider({0,0, 16, 16 }, COLLIDER_WALL, this);
+}
 
 // Load assets
 bool ModuleScene::Start()
@@ -67,6 +71,8 @@ bool ModuleScene::Start()
 	graphics = App->textures->Load("GameTiles.png");
 	App->collision->Enable(); // enable before player
 	App->player->Enable();
+
+	SetColliders();
 
 	return true;
 }

@@ -17,6 +17,7 @@ public:
 	//other methods
 
 	void PaintLevel();
+	void SetColliders();
 
 public:
 
