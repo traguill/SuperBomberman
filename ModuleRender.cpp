@@ -40,6 +40,7 @@ bool ModuleRender::Init()
 // PreUpdate: clear buffer
 update_status ModuleRender::PreUpdate()
 {
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	SDL_RenderClear(renderer);
 	return UPDATE_CONTINUE;
 }
@@ -47,7 +48,19 @@ update_status ModuleRender::PreUpdate()
 // Update: debug camera
 update_status ModuleRender::Update()
 {
-	//We don't move the camera in our game.
+	int speed = 3;
+
+	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+		App->renderer->camera.y += speed;
+
+	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+		App->renderer->camera.y -= speed;
+
+	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+		App->renderer->camera.x += speed;
+
+	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+		App->renderer->camera.x -= speed;
 
 	return UPDATE_CONTINUE;
 }
@@ -97,6 +110,31 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 	if(SDL_RenderCopy(renderer, texture, section, &rect) != 0)
 	{
 		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+		ret = false;
+	}
+
+	return ret;
+}
+
+bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool use_camera)
+{
+	bool ret = true;
+
+	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawColor(renderer, r, g, b, a);
+
+	SDL_Rect rec(rect);
+	if(use_camera)
+	{
+		rec.x = (int)(camera.x + rect.x * SCREEN_SIZE);
+		rec.y = (int)(camera.y + rect.y * SCREEN_SIZE);
+		rec.w *= SCREEN_SIZE;
+		rec.h *= SCREEN_SIZE;
+	}
+
+	if(SDL_RenderFillRect(renderer, &rec) != 0)
+	{
+		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
 		ret = false;
 	}
 

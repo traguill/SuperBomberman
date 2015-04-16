@@ -27,6 +27,9 @@
     <ClInclude Include="Module.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="ModuleRender.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -45,9 +48,6 @@
     <ClInclude Include="p2DynArray.h">
       <Filter>Header Files\Containers</Filter>
     </ClInclude>
-    <ClInclude Include="List.h">
-      <Filter>Header Files\Containers</Filter>
-    </ClInclude>
     <ClInclude Include="ModulePlayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -57,10 +57,13 @@
     <ClInclude Include="ModuleAudio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleWindow.h">
+    <ClInclude Include="ModuleParticles.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleTimer.h">
+    <ClInclude Include="p2List.h">
+      <Filter>Header Files\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleCollision.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ModuleScene.h">
@@ -98,7 +101,10 @@
     <ClCompile Include="ModuleAudio.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleTimer.cpp">
+    <ClCompile Include="ModuleParticles.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleCollision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ModuleScene.cpp">

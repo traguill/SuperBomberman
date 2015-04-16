@@ -177,5 +177,42 @@ public:
 		start = end = NULL;
 		size = 0;
 	}
+
+	/**
+	* returns the first apperance of data as index (-1 if not found)
+	*/
+	int find(const tdata& data)
+	{
+		p2List_item<tdata>* tmp = start;
+		int index = 0;
+
+		while(tmp != NULL)
+		{
+			if(tmp->data == data)
+				return(index);
+
+			++index;
+			tmp = tmp->next;
+		}
+		return (-1);
+	}
+
+
+	/**
+	* returns the first apperance of data as index (-1 if not found)
+	*/
+	p2List_item<tdata>* findNode(const tdata& data)
+	{
+		p2List_item<tdata>* tmp = start;
+
+		while(tmp != NULL)
+		{
+			if(tmp->data == data)
+				return(tmp);
+			tmp = tmp->next;
+		}
+
+		return (NULL);
+	}
 };
 #endif /*__p2List_H__*/

@@ -31,7 +31,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	left.frames.PushBack({ 124, 38, 16, 24 });
 	left.frames.PushBack({ 105, 38, 16, 24 });
 	left.frames.PushBack({ 124, 38, 16, 24 });
-	
+
 	left.speed = 0.1f;
 
 	// walk Down
@@ -39,7 +39,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	down.frames.PushBack({ 70, 38, 16, 24 });
 	down.frames.PushBack({ 52, 38, 16, 24 });
 	down.frames.PushBack({ 70, 38, 16, 24 });
-	
+
 	down.speed = 0.1f;
 
 	// walk Up
@@ -47,7 +47,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	up.frames.PushBack({ 237, 38, 16, 24 });
 	up.frames.PushBack({ 219, 38, 16, 24 });
 	up.frames.PushBack({ 237, 38, 16, 24 });
-	
+
 	up.speed = 0.1f;
 
 
@@ -61,8 +61,10 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 
-	graphics = App->textures->Load("Game/GameAssets.png");
-	
+	graphics = App->textures->Load("GameAssets.png");
+
+	collider = App->collision->AddCollider({ position.x-8, position.y-12, 16, 24 }, COLLIDER_PLAYER, this);
+
 	direction = downD;
 
 	return true;
@@ -86,35 +88,35 @@ update_status ModulePlayer::Update()
 
 	int speed = 1;
 
-	if (App->input->keyboard[SDL_SCANCODE_A])
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		current_animation = &left;
 		position.x -= speed;
 		direction = leftD;
-		
+
 	}
 
-	if (App->input->keyboard[SDL_SCANCODE_D])
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		current_animation = &right;
 		position.x += speed;
 		direction = rightD;
 	}
 
-	if (App->input->keyboard[SDL_SCANCODE_S])
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
 		current_animation = &down;
 		position.y += speed;
 		direction = downD;
-		
+
 	}
 
-	if (App->input->keyboard[SDL_SCANCODE_W])
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		current_animation = &up;
 		position.y -= speed;
 		direction = upD;
-		
+
 	}
 	//AIXO ho guardo per si es pot aprofitar mes endavant
 	/*if(App->input->keyboard_down[SDL_SCANCODE_B] == 1)
@@ -126,8 +128,12 @@ update_status ModulePlayer::Update()
 	}
 	*/
 
-	
-	
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+	{
+		App->particles->AddParticle(App->particles->bomb, position.x, position.y-13, COLLIDER_PLAYER_SHOT);
+	}
+
+	collider->SetPos(position.x, position.y-24);
 
 	// Draw everything --------------------------------------
 	SDL_Rect r;
@@ -136,7 +142,7 @@ update_status ModulePlayer::Update()
 	else
 		r = current_animation->frames[direction];
 
-	App->renderer->Blit(graphics, position.x, position.y -r.h, &r);
+	App->renderer->Blit(graphics, position.x, position.y - r.h, &r);
 
 	return UPDATE_CONTINUE;
 }

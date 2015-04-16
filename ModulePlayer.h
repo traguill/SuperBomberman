@@ -17,6 +17,7 @@ public:
 public:
 
 	SDL_Texture* graphics;
+	Collider* collider;
 	Animation* current_animation;
 	enum looking {				//Les variables tenen una D al final de direccio, no es poden dir up,down,right i left perque es confonen amb les animacions.		
 		downD = 0,
@@ -24,7 +25,7 @@ public:
 		leftD = 2,
 		upD = 3
 	};
-	looking direction; 
+	looking direction;
 	Animation idle;
 	Animation right;
 	Animation left;

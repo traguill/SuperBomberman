@@ -31,6 +31,14 @@ public:
 		Alloc(capacity);
 	}
 
+	p2DynArray(const p2DynArray& array) : mem_capacity(0), num_elements(0), data(NULL)
+	{
+		Alloc(array.num_elements);
+
+		for(unsigned int i = 0; i < array.num_elements; ++i)
+			PushBack(array.data[i]);
+	}
+
 	// Destructor
 	~p2DynArray()
 	{

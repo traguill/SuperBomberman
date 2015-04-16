@@ -7,14 +7,12 @@ Application::Application()
 	window = new ModuleWindow(this);
 	textures = new ModuleTextures(this);
 	input = new ModuleInput(this);
-	audio = new ModuleAudio(this);
-	timer = new ModuleTimer(this, true);
-	//TODO:
-	//Init the modules/scenes here:
-	//yourscene = new ModuleYourScene(this, false);  -->Set to true the first scene.
-	player = new ModulePlayer(this, false);
-	scene = new ModuleScene(this, false);
+	audio = new ModuleAudio(this, false);
+	scene = new ModuleScene(this, true);
 	fade = new ModuleFadeToBlack(this);
+	particles = new ModuleParticles(this);
+	player = new ModulePlayer(this, false);
+	collision = new ModuleCollision(this, false);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -26,17 +24,21 @@ Application::Application()
 	AddModule(textures);
 	AddModule(input);
 	AddModule(audio);
-
+	
+	
 	// Scenes
 	AddModule(scene);
-
-	// Timer and status
-	AddModule(timer);
 	
+	
+
+	// Misc
+	AddModule(particles);
+	AddModule(collision);
+
 	// Characters
 	AddModule(player);
 
-	// Misc
+
 	AddModule(fade); // let this after all drawing
 }
 
@@ -46,13 +48,12 @@ Application::~Application()
 	delete window;
 	delete textures;
 	delete input;
+	delete particles;
 	delete audio;
-	//TODO:
-	//Delete the modules here, IN THE SAME ORDER!
-	delete timer;
+	delete scene;
 	delete player;
 	delete fade;
-	
+	delete collision;
 }
 
 bool Application::Init()
@@ -100,7 +101,7 @@ update_status Application::Update()
 	while(item != NULL && ret == UPDATE_CONTINUE)
 	{
 		if(item->data->IsEnabled())
-			ret = item->data->Update();
+  			ret = item->data->Update();
 		item = item->next;
 	}
 

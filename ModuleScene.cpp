@@ -6,8 +6,7 @@ ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, sta
 {
 	graphics = NULL;
 
-	position.x = -8;
-	position.y = 26;
+	
 
 	//tiles distribution to numbers
 	tiles.PushBack({ 305, 49, 16, 16 });//0//terra estandard
@@ -25,20 +24,20 @@ ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, sta
 	//TODO: s'han de copiar i invertir les imatges dels tiles de l'esquerra per poderles utilitzar a la dreta
 	//Cuidado, pot fer que el archiu sigui incompatible segons com es fagi, en tot cas, els cambis millor guardarlos en un archiu apart per comprovar
 
-	
-	int l[13][17] = {   { 7, 4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, 4, 7 },
-						{ 6, 9,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 9, 6 },
-						{ 6, 9,  0, 10,  0, 10,  0, 10,  0, 10,  0, 10,  0, 10,  0, 9, 6 },
-						{ 6, 9,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0, 9, 6 },
-						{ 6, 9,  0, 10,  0, 10,  0, 10,  0, 10,  0, 10,  0, 10,  0, 9, 6 },
-						{ 6, 9,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0, 9, 6 },
-						{ 6, 9,  0, 10,  0, 10,  0, 10,  0, 10,  0, 10,  0, 10,  0, 9, 6 },
-						{ 6, 9,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0, 9, 6 },
-						{ 6, 9,  0, 10,  0, 10,  0, 10,  0, 10,  0, 10,  0, 10,  0, 9, 6 },
-						{ 6, 9,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0, 9, 6 },
-						{ 6, 9,  0, 10,  0, 10,  0, 10,  0, 10,  0, 10,  0, 10,  0, 9, 6 },
-						{ 6, 9,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0, 9, 6 },
-						{ 8, 5,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3, 5, 8 } 
+
+	int l[13][17] = { { 7, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 7 },
+	{ 6, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9, 6 },
+	{ 6, 9, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 9, 6 },
+	{ 6, 9, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 9, 6 },
+	{ 6, 9, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 9, 6 },
+	{ 6, 9, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 9, 6 },
+	{ 6, 9, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 9, 6 },
+	{ 6, 9, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 9, 6 },
+	{ 6, 9, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 9, 6 },
+	{ 6, 9, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 9, 6 },
+	{ 6, 9, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 9, 6 },
+	{ 6, 9, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 9, 6 },
+	{ 8, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 5, 8 }
 	};
 
 	memcpy(level, l, sizeof(level));
@@ -54,7 +53,7 @@ void ModuleScene::PaintLevel()
 		for (int j = 0; j < 17; j++)
 		{
 			int a = level[i][j];
-			App->renderer->Blit(graphics, position.x + j*TILE, position.y + i*TILE, &(tiles[a]));
+			App->renderer->Blit(graphics, -8 + j*TILE, 26 + i*TILE, &(tiles[a]));
 		}
 	}
 }
@@ -65,7 +64,8 @@ bool ModuleScene::Start()
 {
 	LOG("Loading scene");
 
-	graphics = App->textures->Load("Game/GameTiles.png");
+	graphics = App->textures->Load("GameTiles.png");
+	App->collision->Enable(); // enable before player
 	App->player->Enable();
 
 	return true;
@@ -78,6 +78,7 @@ bool ModuleScene::CleanUp()
 
 	App->textures->Unload(graphics);
 	App->player->Disable();
+	App->collision->Disable();
 
 	return true;
 }

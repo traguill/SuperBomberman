@@ -22,8 +22,8 @@ public:
 
 	SDL_Texture* graphics;
 	p2DynArray<SDL_Rect> tiles;
-	p2Point<int> position;
 	int level[13][17];
+
 
 
 };

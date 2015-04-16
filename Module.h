@@ -1,6 +1,7 @@
 #pragma once
 
 class Application;
+struct Collider;
 
 class Module
 {
@@ -29,7 +30,7 @@ public:
 
 	void Disable()
 	{
-		if (enabled == true)
+		if(enabled == true)
 		{
 			enabled = false;
 			CleanUp();
@@ -65,4 +66,7 @@ public:
 	{ 
 		return true; 
 	}
+
+	virtual void OnCollision(Collider* col1, Collider* col2)
+	{ }
 };

@@ -12,6 +12,15 @@ public:
 
 	TYPE x, y;
 
+	p2Point()
+	{}
+
+	p2Point(const p2Point& p)
+	{
+		x = p.x;
+		y = p.y;
+	}
+
 	// Math ------------------------------------------------
 	p2Point operator -(const p2Point &v) const
 	{
