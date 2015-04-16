@@ -83,6 +83,7 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
+	last_position = position;
 
 	Animation* current_animation = &idle; //Posem la animacio de quiet per defecte i despres comprovem si ha apretat alguna tecla aixi evitem fer la comprovació que havies fet al final.
 
@@ -126,10 +127,9 @@ update_status ModulePlayer::Update()
 	{
 		App->particles->AddParticle(App->particles->bomb, position.x, position.y-13, COLLIDER_BOMB, bombT);
 	}
-
 	collider->SetPos(position.x, position.y-24);
 
-	last_position = position; //Executar SEMPRE despres d'actualitzar el collider
+	
 
 	// Draw everything --------------------------------------
 	SDL_Rect r;
