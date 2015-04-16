@@ -6,6 +6,12 @@
 #include "p2List.h"
 #include "ModuleCollision.h"
 
+enum Type{  //Guarda el tipus de particle per saber si ha d'explotar.
+	bombT,
+	explosionT,
+	nullT,
+};
+
 struct Particle
 {
 	Animation anim;
@@ -16,7 +22,7 @@ struct Particle
 	Uint32 life;
 	bool fx_played;
 	Collider* collider;
-
+	Type type;
 	Particle();
 	Particle(const Particle& p);
 	~Particle();
@@ -34,7 +40,7 @@ public:
 	bool CleanUp();
 	void OnCollision(Collider*, Collider*);
 
-	void AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE = COLLIDER_NONE, Uint32 delay = 0);
+	void AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE = COLLIDER_NONE, Type _type = nullT,Uint32 delay = 0);
 
 private:
 
@@ -43,7 +49,7 @@ private:
 
 public:
 
-
 	Particle bomb;
+	Particle explosion;
 
 };

@@ -118,22 +118,18 @@ update_status ModulePlayer::Update()
 		direction = upD;
 
 	}
-	//AIXO ho guardo per si es pot aprofitar mes endavant
-	/*if(App->input->keyboard_down[SDL_SCANCODE_B] == 1)
-	{
-	App->particles->AddParticle(App->particles->explosion, position.x, position.y + 25);
-	App->particles->AddParticle(App->particles->explosion, position.x - 25, position.y, 500);
-	App->particles->AddParticle(App->particles->explosion, position.x, position.y - 25, 1000);
-	App->particles->AddParticle(App->particles->explosion, position.x + 25, position.y, 1500);
-	}
-	*/
+
+
+	
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
-		App->particles->AddParticle(App->particles->bomb, position.x, position.y-13, COLLIDER_PLAYER_SHOT);
+		App->particles->AddParticle(App->particles->bomb, position.x, position.y-13, COLLIDER_BOMB, bombT);
 	}
 
 	collider->SetPos(position.x, position.y-24);
+
+	last_position = position; //Executar SEMPRE despres d'actualitzar el collider
 
 	// Draw everything --------------------------------------
 	SDL_Rect r;
@@ -145,4 +141,12 @@ update_status ModulePlayer::Update()
 	App->renderer->Blit(graphics, position.x, position.y - r.h, &r);
 
 	return UPDATE_CONTINUE;
+}
+
+void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
+{
+	if (c2->type == COLLIDER_BLOCK || c2->type == COLLIDER_WALL)
+	{
+		position = last_position;
+	}
 }

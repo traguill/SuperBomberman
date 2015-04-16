@@ -13,6 +13,7 @@ public:
 	bool Start();
 	update_status Update();
 	bool CleanUp();
+	void OnCollision(Collider*, Collider*);
 
 public:
 
@@ -32,5 +33,6 @@ public:
 	Animation up;
 	Animation down;
 	p2Point<int> position;
+	p2Point<int> last_position;
 
 };

@@ -15,9 +15,14 @@ bool ModuleParticles::Start()
 	LOG("Loading particles");
 	graphics = App->textures->Load("GameTiles.png");
 
-	
+	// Explosion particle
+	explosion.anim.frames.PushBack({ 288, 151, 16, 16 });
+	explosion.anim.frames.PushBack({ 305, 151, 16, 16 });
+	explosion.anim.frames.PushBack({ 322, 151, 16, 16 });
+	explosion.anim.frames.PushBack({ 339, 151, 16, 16 });
+	explosion.anim.speed = 0.1f;
 
-	// Laser particle
+	// Bomb particle
 	bomb.anim.frames.PushBack({356, 151, 16, 16});
 	bomb.anim.frames.PushBack({373, 151, 16, 16});
 	bomb.anim.frames.PushBack({390, 151, 16, 16 });
@@ -49,6 +54,8 @@ update_status ModuleParticles::Update()
 
 		if(p->Update() == false)
 		{
+			if (p->type == bombT)
+				App->particles->AddParticle(App->particles->explosion, p->position.x, p->position.y, COLLIDER_EXPLOSION); //DOIT: si es una bomba crea una particula explosio
 			delete p;
 			active.del(tmp);
 		}
@@ -71,7 +78,7 @@ update_status ModuleParticles::Update()
 // Always destroy particles that collide
 void ModuleParticles::OnCollision(Collider* c1, Collider* c2)
 {
-	// TODO 5: Fer que cada vegada que un laser collisini sorti una explosio
+	/*
   	p2List_item<Particle*>* tmp = active.getFirst();
 
 	while(tmp != NULL)
@@ -84,15 +91,17 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2)
 		}
 
 		tmp = tmp->next;
-	}
+	}*/
 }
 
-void ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type, Uint32 delay)
+void ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type, Type _type, Uint32 delay)
 {
 	Particle* p = new Particle(particle);
 	p->born = SDL_GetTicks() + delay;
 	p->position.x = x;
 	p->position.y = y;
+
+	p->type = _type;
 
 	if(collider_type != COLLIDER_NONE)
 	{
