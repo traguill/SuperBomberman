@@ -71,6 +71,7 @@ bool ModuleScene::Start()
 	graphics = App->textures->Load("GameTiles.png");
 	App->collision->Enable(); // enable before player
 	App->player->Enable();
+	App->timer->Enable();
 
 	SetColliders();
 

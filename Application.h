@@ -14,7 +14,7 @@
 #include "ModuleFadeToBlack.h"
 #include "ModuleParticles.h"
 #include "ModuleCollision.h"
-
+#include "ModuleTimer.h"
 class Application
 {
 public:
@@ -28,6 +28,7 @@ public:
 	ModuleFadeToBlack* fade;
 	ModuleParticles* particles;
 	ModuleCollision* collision;
+	ModuleTimer* timer;
 
 private:
 

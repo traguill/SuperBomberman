@@ -13,6 +13,7 @@ Application::Application()
 	particles = new ModuleParticles(this);
 	player = new ModulePlayer(this, false);
 	collision = new ModuleCollision(this, false);
+	timer = new ModuleTimer(this, false);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -28,10 +29,11 @@ Application::Application()
 	
 	// Scenes
 	AddModule(scene);
-	
+	AddModule(timer);
 	
 
 	// Misc
+	
 	AddModule(particles);
 	AddModule(collision);
 
