@@ -60,7 +60,16 @@ void ModuleScene::PaintLevel()
 
 void ModuleScene::SetColliders()
 {
-	App->collision->AddCollider({0,0, 16, 16 }, COLLIDER_WALL, this);
+	for (int i = 0; i < 13; i++)
+	{
+		for (int j = 0; j < 17; j++)
+		{
+			int a = level[i][j];
+			if (a == 10)
+				App->collision->AddCollider({ -8 + j*TILE, 26 + i*TILE, 16, 16 }, COLLIDER_WALL, this);
+		}
+	}
+	
 }
 
 // Load assets

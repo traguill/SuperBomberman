@@ -9,8 +9,8 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	current_animation = NULL;
 
 
-	position.x = 150;
-	position.y = 120;
+	position.x = 0;
+	position.y = 0;
 
 	// idle animation (just the ship)
 	idle.frames.PushBack({ 70, 38, 16, 24 }); //LOOK DOWN
@@ -63,7 +63,7 @@ bool ModulePlayer::Start()
 
 	graphics = App->textures->Load("GameAssets.png");
 
-	collider = App->collision->AddCollider({ position.x-8, position.y-12, 16, 24 }, COLLIDER_PLAYER, this);
+	collider = App->collision->AddCollider({ position.x-8, position.y, 16, 16 }, COLLIDER_PLAYER, this);
 
 	direction = downD;
 
