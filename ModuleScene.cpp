@@ -80,12 +80,14 @@ bool ModuleScene::Start()
 
 	graphics = App->textures->Load("GameTiles.png");
 	App->collision->Enable(); // enable before player
+	App->enemy->Enable();
 	App->player->Enable();
 	App->timer->Enable();
 
 	SetColliders();
 
 	scene_transition = false;
+	game_over = false;
 
 	return true;
 }
@@ -98,6 +100,7 @@ bool ModuleScene::CleanUp()
 	App->textures->Unload(graphics);
 	App->timer->Disable();
 	App->player->Disable();
+	App->enemy->Disable();
 	App->collision->Disable();
 
 	return true;

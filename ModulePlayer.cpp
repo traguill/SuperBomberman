@@ -10,8 +10,8 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	last_bomb = NULL;
 
 
-	position.x = 10;
-	position.y = 10;
+	position.x = 30;
+	position.y = 30;
 
 	// idle animation (just the ship)
 	idle.frames.PushBack({ 70, 38, 16, 24 }); //LOOK DOWN
@@ -74,7 +74,7 @@ bool ModulePlayer::Start()
 
 	graphics = App->textures->Load("GameAssets.png");
 
-	collider = App->collision->AddCollider({ position.x-8, position.y-24, 16, 16 }, COLLIDER_PLAYER, this);
+	collider = App->collision->AddCollider({ position.x, position.y-12, 16, 16 }, COLLIDER_PLAYER, this);
 
 	direction = downD;
 
@@ -149,7 +149,7 @@ update_status ModulePlayer::Update()
 	}
 
 	
-	collider->SetPos(position.x, position.y-24);
+	collider->SetPos(position.x, position.y-12);
 
 	//check collisions with bomb
 	if (!bomb_collision)
@@ -193,11 +193,15 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		position = last_position;
 	}
 
-	if (c2->type == COLLIDER_EXPLOSION)
+	//Killing objects-----------------------------------------------------------------
+	if (c2->type == COLLIDER_EXPLOSION || c2->type == COLLIDER_ENEMY)
 	{
 		game_over_player = true;
 	}
 
+
+	
+	
 	
 	
 	
