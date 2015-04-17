@@ -18,6 +18,7 @@ public:
 
 	void PaintLevel();
 	void SetColliders();
+	void AddEnemies();
 
 public:
 

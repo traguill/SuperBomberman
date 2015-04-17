@@ -3,7 +3,20 @@
 #include "Animation.h"
 #include "Globals.h"
 #include "p2Point.h"
+#include "p2List.h"
+#include "ModuleCollision.h"
 
+struct Enemy
+{
+	Animation anim;
+	p2Point<int> position;
+	p2Point<int> speed;
+	Collider* collider;
+	Enemy();
+	Enemy(const Enemy& e);
+	~Enemy();
+	bool Update();
+};
 
 class ModuleEnemy : public Module
 {
@@ -16,20 +29,15 @@ public:
 	bool CleanUp();
 	void OnCollision(Collider*, Collider*);
 
+	Collider* AddEnemy(const Enemy& enemy, int x, int y, COLLIDER_TYPE = COLLIDER_NONE);
 
-
-public:
+private:
 
 	SDL_Texture* graphics;
-	Collider* collider;
-	Animation* current_animation;
-	Animation idle;
-	Animation right;
-	Animation left;
-	Animation up;
-	Animation down;
-	Animation die;
-	p2Point<int> position;
-	p2Point<int> last_position;
+	p2List<Enemy*> active;
+
+public:
+	Enemy copter;
+	
 
 };

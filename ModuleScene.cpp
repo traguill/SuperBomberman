@@ -73,6 +73,11 @@ void ModuleScene::SetColliders()
 	
 }
 
+void ModuleScene::AddEnemies()
+{
+	App->enemy->AddEnemy(App->enemy->copter, 60, 30, COLLIDER_ENEMY);
+}
+
 // Load assets
 bool ModuleScene::Start()
 {
@@ -85,6 +90,7 @@ bool ModuleScene::Start()
 	App->timer->Enable();
 
 	SetColliders();
+	AddEnemies();
 
 	scene_transition = false;
 	game_over = false;

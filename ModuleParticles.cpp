@@ -16,10 +16,10 @@ bool ModuleParticles::Start()
 	graphics = App->textures->Load("GameTiles.png");
 
 	// Explosion particle
-	explosion.anim.frames.PushBack({ 288, 151, 16, 16 });
-	explosion.anim.frames.PushBack({ 305, 151, 16, 16 });
-	explosion.anim.frames.PushBack({ 322, 151, 16, 16 });
-	explosion.anim.frames.PushBack({ 339, 151, 16, 16 });
+	explosion.anim.frames.PushBack({ 288, 151, 48, 48 });
+	explosion.anim.frames.PushBack({ 305, 151, 48, 48 });
+	explosion.anim.frames.PushBack({ 322, 151, 48, 48 });
+	explosion.anim.frames.PushBack({ 339, 151, 48, 48 });
 	explosion.anim.speed = 0.1f;
 
 	// Bomb particle
@@ -55,7 +55,7 @@ update_status ModuleParticles::Update()
 		if(p->Update() == false)
 		{
 			if (p->type == bombT)
-				App->particles->AddParticle(App->particles->explosion, p->position.x, p->position.y, COLLIDER_EXPLOSION); //DOIT: si es una bomba crea una particula explosio
+				App->particles->AddParticle(App->particles->explosion, p->position.x-16, p->position.y-16, COLLIDER_EXPLOSION); //DOIT: si es una bomba crea una particula explosio
 			delete p;
 			active.del(tmp);
 		}
