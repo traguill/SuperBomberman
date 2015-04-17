@@ -25,7 +25,8 @@ ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, sta
 	//Cuidado, pot fer que el archiu sigui incompatible segons com es fagi, en tot cas, els cambis millor guardarlos en un archiu apart per comprovar
 
 
-	int l[13][17] = { { 7, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 7 },
+	int l[13][17] = { 
+	{ 7, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 7 },
 	{ 6, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9, 6 },
 	{ 6, 9, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 9, 6 },
 	{ 6, 9, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 9, 6 },

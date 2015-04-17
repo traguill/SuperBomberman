@@ -7,10 +7,11 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 {
 	graphics = NULL;
 	current_animation = NULL;
+	last_bomb = NULL;
 
 
-	position.x = 0;
-	position.y = 0;
+	position.x = 10;
+	position.y = 10;
 
 	// idle animation (just the ship)
 	idle.frames.PushBack({ 70, 38, 16, 24 }); //LOOK DOWN
@@ -63,9 +64,11 @@ bool ModulePlayer::Start()
 
 	graphics = App->textures->Load("GameAssets.png");
 
-	collider = App->collision->AddCollider({ position.x-8, position.y, 16, 16 }, COLLIDER_PLAYER, this);
+	collider = App->collision->AddCollider({ position.x-8, position.y-24, 16, 16 }, COLLIDER_PLAYER, this);
 
 	direction = downD;
+
+	bomb_collision = false;
 
 	return true;
 }
@@ -125,10 +128,18 @@ update_status ModulePlayer::Update()
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
-		App->particles->AddParticle(App->particles->bomb, position.x, position.y-13, COLLIDER_BOMB, bombT);
+		 last_bomb = App->particles->AddParticle(App->particles->bomb, position.x, position.y-13, COLLIDER_BOMB, bombT);
+		 bomb_collision = true;
 	}
 	collider->SetPos(position.x, position.y-24);
 
+	//check collisions with bomb
+	if (!bomb_collision)
+	{
+		last_bomb = NULL;
+	}
+	bomb_collision = false;
+	
 	
 
 	// Draw everything --------------------------------------
@@ -140,13 +151,28 @@ update_status ModulePlayer::Update()
 
 	App->renderer->Blit(graphics, position.x, position.y - r.h, &r);
 
+
 	return UPDATE_CONTINUE;
 }
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
-	if (c2->type == COLLIDER_BLOCK || c2->type == COLLIDER_WALL)
+	if (c2 == last_bomb)
+	{
+		bomb_collision = true;
+		return;
+	}
+		
+
+	
+
+	//Blocks-----------------------------------------------------------------------
+	if (c2->type == COLLIDER_BLOCK || c2->type == COLLIDER_WALL || c2->type == COLLIDER_BOMB)
 	{
 		position = last_position;
 	}
+
+	
+	
+	
 }

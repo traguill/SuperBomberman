@@ -3,6 +3,7 @@
 #include "Animation.h"
 #include "Globals.h"
 #include "p2Point.h"
+#include "p2DynArray.h"
 
 class ModulePlayer : public Module
 {
@@ -34,5 +35,6 @@ public:
 	Animation down;
 	p2Point<int> position;
 	p2Point<int> last_position;
-
+	Collider* last_bomb;
+	bool bomb_collision;
 };

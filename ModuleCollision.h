@@ -28,6 +28,7 @@ struct Collider
 		type(type),
 		callback(callback),
 		to_delete(false)
+
 	{}
 
 	void SetPos(int x, int y)

@@ -94,7 +94,7 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2)
 	}*/
 }
 
-void ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type, Type _type, Uint32 delay)
+Collider* ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type, Type _type, Uint32 delay)
 {
 	Particle* p = new Particle(particle);
 	p->born = SDL_GetTicks() + delay;
@@ -109,6 +109,7 @@ void ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLID
 	}
 
 	active.add(p);
+	return p->collider;
 }
 
 // -------------------------------------------------------------
