@@ -51,6 +51,16 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 
 	up.speed = 0.1f;
 
+	//Dying
+	die.frames.PushBack({ 343, 38, 16, 24 }); //TODO 0: Posar imatges mort correcatament.
+	die.frames.PushBack({ 361, 38, 16, 24 });
+	die.frames.PushBack({ 379, 38, 16, 24 });
+	die.frames.PushBack({ 397, 38, 16, 24 });
+	die.speed = 0.1f;
+	die.loop = false;
+
+
+
 
 }
 
@@ -69,6 +79,8 @@ bool ModulePlayer::Start()
 	direction = downD;
 
 	bomb_collision = false;
+
+	game_over_player = false;
 
 	return true;
 }
@@ -92,45 +104,51 @@ update_status ModulePlayer::Update()
 
 	int speed = 1;
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	if (!game_over_player)
 	{
-		current_animation = &left;
-		position.x -= speed;
-		direction = leftD;
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		{
+			current_animation = &left;
+			position.x -= speed;
+			direction = leftD;
 
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		{
+			current_animation = &right;
+			position.x += speed;
+			direction = rightD;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		{
+			current_animation = &down;
+			position.y += speed;
+			direction = downD;
+
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		{
+			current_animation = &up;
+			position.y -= speed;
+			direction = upD;
+
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+		{
+			last_bomb = App->particles->AddParticle(App->particles->bomb, position.x, position.y - 13, COLLIDER_BOMB, bombT);
+			bomb_collision = true;
+		}
 	}
-
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	else
 	{
-		current_animation = &right;
-		position.x += speed;
-		direction = rightD;
+		current_animation = &die;
 	}
-
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-	{
-		current_animation = &down;
-		position.y += speed;
-		direction = downD;
-
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-	{
-		current_animation = &up;
-		position.y -= speed;
-		direction = upD;
-
-	}
-
 
 	
-
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
-	{
-		 last_bomb = App->particles->AddParticle(App->particles->bomb, position.x, position.y-13, COLLIDER_BOMB, bombT);
-		 bomb_collision = true;
-	}
 	collider->SetPos(position.x, position.y-24);
 
 	//check collisions with bomb
@@ -144,10 +162,16 @@ update_status ModulePlayer::Update()
 
 	// Draw everything --------------------------------------
 	SDL_Rect r;
-	if (current_animation != &idle)																//Comprovem si esta en una animacio o parat, si esta parat li asignem el frame manualment.
+	
+	if (current_animation != &idle)				//Comprovem si esta en una animacio o parat, si esta parat li asignem el frame manualment.
 		r = current_animation->GetCurrentFrame();
 	else
 		r = current_animation->frames[direction];
+	
+	
+	if (game_over_player && current_animation->Finished())
+		App->scene->game_over = true;
+	
 
 	App->renderer->Blit(graphics, position.x, position.y - r.h, &r);
 
@@ -163,13 +187,15 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		return;
 	}
 		
-
-	
-
 	//Blocks-----------------------------------------------------------------------
 	if (c2->type == COLLIDER_BLOCK || c2->type == COLLIDER_WALL || c2->type == COLLIDER_BOMB)
 	{
 		position = last_position;
+	}
+
+	if (c2->type == COLLIDER_EXPLOSION)
+	{
+		game_over_player = true;
 	}
 
 	

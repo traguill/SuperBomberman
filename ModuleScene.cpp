@@ -85,6 +85,8 @@ bool ModuleScene::Start()
 
 	SetColliders();
 
+	scene_transition = false;
+
 	return true;
 }
 
@@ -94,6 +96,7 @@ bool ModuleScene::CleanUp()
 	LOG("Unloading scene");
 
 	App->textures->Unload(graphics);
+	App->timer->Disable();
 	App->player->Disable();
 	App->collision->Disable();
 
@@ -104,6 +107,12 @@ bool ModuleScene::CleanUp()
 //nota mental: nunca poner un log dentro del update, se sobrecarag todo
 update_status ModuleScene::Update()
 {
+	//Check Game Over
+	if (game_over && !scene_transition)
+	{
+		App->fade->FadeToBlack(this, App->intro, 3.0f);
+		scene_transition = true;
+	}
 
 	// Draw everything --------------------------------------
 	PaintLevel();

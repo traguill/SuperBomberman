@@ -24,7 +24,8 @@ public:
 	SDL_Texture* graphics;
 	p2DynArray<SDL_Rect> tiles;
 	int level[13][17];
-
+	bool scene_transition;
+	bool game_over;
 
 
 };
