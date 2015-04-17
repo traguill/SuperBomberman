@@ -8,12 +8,13 @@ Application::Application()
 	textures = new ModuleTextures(this);
 	input = new ModuleInput(this);
 	audio = new ModuleAudio(this, false);
-	scene = new ModuleScene(this, true);
+	scene = new ModuleScene(this, false);
 	fade = new ModuleFadeToBlack(this);
 	particles = new ModuleParticles(this);
 	player = new ModulePlayer(this, false);
 	collision = new ModuleCollision(this, false);
 	timer = new ModuleTimer(this, false);
+	intro = new ModuleSceneIntro(this, true);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -28,6 +29,7 @@ Application::Application()
 	
 	
 	// Scenes
+	AddModule(intro);
 	AddModule(scene);
 	AddModule(timer);
 	

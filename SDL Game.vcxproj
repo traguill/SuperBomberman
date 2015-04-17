@@ -73,6 +73,7 @@
     <ClInclude Include="Globals.h" />
     <ClInclude Include="ModuleCollision.h" />
     <ClInclude Include="ModuleScene.h" />
+    <ClInclude Include="ModuleSceneIntro.h" />
     <ClInclude Include="ModuleTimer.h" />
     <ClInclude Include="p2List.h" />
     <ClInclude Include="Module.h" />
@@ -99,6 +100,7 @@
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModulePlayer.cpp" />
     <ClCompile Include="ModuleRender.cpp" />
+    <ClCompile Include="ModuleSceneIntro.cpp" />
     <ClCompile Include="ModuleTextures.cpp" />
     <ClCompile Include="ModuleTimer.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />

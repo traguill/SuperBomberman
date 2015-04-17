@@ -15,6 +15,7 @@
 #include "ModuleParticles.h"
 #include "ModuleCollision.h"
 #include "ModuleTimer.h"
+#include "ModuleSceneIntro.h"
 class Application
 {
 public:
@@ -29,6 +30,7 @@ public:
 	ModuleParticles* particles;
 	ModuleCollision* collision;
 	ModuleTimer* timer;
+	ModuleSceneIntro* intro;
 
 private:
 
