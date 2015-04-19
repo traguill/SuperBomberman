@@ -7,7 +7,7 @@ Application::Application()
 	window = new ModuleWindow(this);
 	textures = new ModuleTextures(this);
 	input = new ModuleInput(this);
-	audio = new ModuleAudio(this, false);
+	audio = new ModuleAudio(this);
 	scene = new ModuleScene(this, false);
 	fade = new ModuleFadeToBlack(this);
 	particles = new ModuleParticles(this);
