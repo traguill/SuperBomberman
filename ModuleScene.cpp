@@ -5,43 +5,24 @@
 ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	graphics = NULL;
-
+	background = NULL;
 	
+	stage = { 0, 0, 256, 192 };
 
-	//tiles distribution to numbers
-	tiles.PushBack({ 305, 49, 16, 16 });//0//terra estandard
-	tiles.PushBack({ 305, 32, 16, 16 });//1//terra sota edifici
-	tiles.PushBack({ 305, 15, 16, 16 });//2/pared superior
-	tiles.PushBack({ 288, 49, 16, 16 });//3/pared inferior
-	tiles.PushBack({ 271, 15, 16, 16 });//4//*pareds del costat esquerra 
-	tiles.PushBack({ 271, 49, 16, 16 });//5*/
-	tiles.PushBack({ 254, 32, 16, 16 });//6*/
-	tiles.PushBack({ 254, 15, 16, 16 });//7*7
-	tiles.PushBack({ 254, 49, 16, 16 });//8*/
-	tiles.PushBack({ 271, 32, 16, 16 });//9*/
+	tiles.PushBack({ 305, 32, 16, 16 });//No serveix de res nomes es per omplir
 	tiles.PushBack({ 288, 32, 16, 16 });//10//Son les cases del mig de l'escenari
 
-	//TODO: s'han de copiar i invertir les imatges dels tiles de l'esquerra per poderles utilitzar a la dreta
-	//Cuidado, pot fer que el archiu sigui incompatible segons com es fagi, en tot cas, els cambis millor guardarlos en un archiu apart per comprovar
-
-
-	int l[13][17] = { 
-	{ 7, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 7 },
-	{ 6, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9, 6 },
-	{ 6, 9, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 9, 6 },
-	{ 6, 9, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 9, 6 },
-	{ 6, 9, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 9, 6 },
-	{ 6, 9, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 9, 6 },
-	{ 6, 9, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 9, 6 },
-	{ 6, 9, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 9, 6 },
-	{ 6, 9, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 9, 6 },
-	{ 6, 9, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 9, 6 },
-	{ 6, 9, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 9, 6 },
-	{ 6, 9, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 9, 6 },
-	{ 8, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 5, 8 }
-	};
-
-	memcpy(level, l, sizeof(level));
+	for (int i = 0; i < 13; i++)
+	{
+		for (int j = 0; j < 11; j++)
+		{
+			if (i % 2 != 0 && j % 2 != 0)
+				level[i][j] = 1;
+			else
+				level[i][j] = 0;
+		}
+	}
+	
 }
 
 ModuleScene::~ModuleScene()
@@ -51,10 +32,11 @@ void ModuleScene::PaintLevel()
 {
 	for (int i = 0; i < 13; i++)
 	{
-		for (int j = 0; j < 17; j++)
+		for (int j = 0; j < 11; j++)
 		{
 			int a = level[i][j];
-			App->renderer->Blit(graphics, -8 + j*TILE, 26 + i*TILE, &(tiles[a]));
+			if (a != 0)
+			App->renderer->Blit(graphics, 24 + i*TILE, 40 + j*TILE, &(tiles[a]));
 		}
 	}
 }
@@ -63,11 +45,11 @@ void ModuleScene::SetColliders()
 {
 	for (int i = 0; i < 13; i++)
 	{
-		for (int j = 0; j < 17; j++)
+		for (int j = 0; j < 11; j++)
 		{
 			int a = level[i][j];
-			if (a == 10)
-				App->collision->AddCollider({ -8 + j*TILE, 26 + i*TILE, 16, 16 }, COLLIDER_WALL, this);
+			if (a == 1)
+				App->collision->AddCollider({ 24 + i*TILE, 40 + j*TILE, 16, 16 }, COLLIDER_WALL, this);
 		}
 	}
 	
@@ -84,6 +66,7 @@ bool ModuleScene::Start()
 	LOG("Loading scene");
 
 	graphics = App->textures->Load("GameTiles.png");
+	background = App->textures->Load("background_stage1.png");
 	App->collision->Enable(); // enable before player
 	App->enemy->Enable();
 	App->player->Enable();
@@ -94,6 +77,9 @@ bool ModuleScene::Start()
 
 	scene_transition = false;
 	game_over = false;
+
+	
+
 
 	return true;
 }
@@ -124,7 +110,9 @@ update_status ModuleScene::Update()
 	}
 
 	// Draw everything --------------------------------------
+	App->renderer->Blit(background, 0, 32, &stage);
 	PaintLevel();
+
 
 	return UPDATE_CONTINUE;
 }
