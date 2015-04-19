@@ -19,8 +19,13 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
+<<<<<<< HEAD
 	graphics = App->textures->Load("Game/TitleScreen.png");
 	App->audio->PlayMusic("Game/TitleMusic.ogg", 0.0f);
+=======
+	graphics = App->textures->Load("TitleScreen.png");
+	App->audio->PlayMusic("TitleMusic.ogg", 0.0f);
+>>>>>>> origin/master
 	//fx = App->audio->LoadFx("rtype/starting.wav");
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
