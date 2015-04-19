@@ -2,7 +2,7 @@
 #include "Application.h"
 #include "ModuleSceneIntro.h"
 
-// Reference at https://youtu.be/6OlenbCC4WI?t=382
+
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -19,8 +19,8 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	graphics = App->textures->Load("TitleScreen.png");
-	//App->audio->PlayMusic("rtype/intro.ogg", 0.0f);
+	graphics = App->textures->Load("Game/TitleScreen.png");
+	App->audio->PlayMusic("Game/TitleMusic.ogg", 0.0f);
 	//fx = App->audio->LoadFx("rtype/starting.wav");
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
