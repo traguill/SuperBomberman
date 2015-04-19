@@ -75,7 +75,7 @@ void ModuleScene::SetColliders()
 
 void ModuleScene::AddEnemies()
 {
-	App->enemy->AddEnemy(App->enemy->copter, 60, 30, COLLIDER_ENEMY);
+	App->enemy->AddEnemy(App->enemy->copter, 60, 10, COLLIDER_ENEMY);
 }
 
 // Load assets

@@ -43,7 +43,7 @@ update_status ModuleSceneIntro::Update()
 	// Draw everything --------------------------------------	
 	App->renderer->Blit(graphics, 0, 0, NULL);
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_UP)
 	{
 		//App->audio->PlayFx(fx);
 		App->fade->FadeToBlack(this, App->scene, 3.0f);

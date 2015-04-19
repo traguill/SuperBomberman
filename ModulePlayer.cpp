@@ -10,8 +10,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	last_bomb = NULL;
 
 
-	position.x = 30;
-	position.y = 30;
+	
 
 	// idle animation (just the ship)
 	idle.frames.PushBack({ 70, 38, 16, 24 }); //LOOK DOWN
@@ -81,6 +80,9 @@ bool ModulePlayer::Start()
 	bomb_collision = false;
 
 	game_over_player = false;
+
+	position.x = 30;
+	position.y = 30;
 
 	return true;
 }
