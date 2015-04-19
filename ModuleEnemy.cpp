@@ -3,60 +3,8 @@
 #include "ModuleEnemy.h"
 
 
-ModuleEnemy::ModuleEnemy(Application* app, bool start_enabled) : Module(app, start_enabled)
-{
-	graphics = NULL;
-	current_animation = NULL;
-
-
-
-	position.x = 60;
-	position.y = 30;
-
-	// idle 
-	idle.frames.PushBack({ 0, 1, 15, 23 }); //LOOK DOWN
-	idle.frames.PushBack({ 15, 1, 15, 23 }); //LOOK RIGHT
-	idle.frames.PushBack({ 31, 1, 15, 23 });//LOOK LEFT
-	idle.frames.PushBack({ 47, 1, 15, 23 });//LOOK UP
-	idle.speed = 0.1f;
-
-	// walk Right
-	right.frames.PushBack({ 197, 38, 16, 24 });
-	right.frames.PushBack({ 179, 38, 16, 24 });
-	right.frames.PushBack({ 161, 38, 16, 24 });
-	right.frames.PushBack({ 179, 38, 16, 24 });
-	right.speed = 0.1f;
-
-	// walk Left
-	left.frames.PushBack({ 142, 38, 16, 24 });
-	left.frames.PushBack({ 124, 38, 16, 24 });
-	left.frames.PushBack({ 105, 38, 16, 24 });
-	left.frames.PushBack({ 124, 38, 16, 24 });
-
-	left.speed = 0.1f;
-
-	// walk Down
-	down.frames.PushBack({ 88, 38, 16, 22 });
-	down.frames.PushBack({ 70, 38, 16, 24 });
-	down.frames.PushBack({ 52, 38, 16, 24 });
-	down.frames.PushBack({ 70, 38, 16, 24 });
-
-	down.speed = 0.1f;
-
-	// walk Up
-	up.frames.PushBack({ 255, 38, 16, 24 });
-	up.frames.PushBack({ 237, 38, 16, 24 });
-	up.frames.PushBack({ 219, 38, 16, 24 });
-	up.frames.PushBack({ 237, 38, 16, 24 });
-
-	up.speed = 0.1f;
-
-	
-
-
-
-
-}
+ModuleEnemy::ModuleEnemy(Application* app, bool start_enabled) : Module(app, start_enabled), graphics(NULL)
+{}
 
 ModuleEnemy::~ModuleEnemy()
 {}
@@ -68,7 +16,12 @@ bool ModuleEnemy::Start()
 
 	graphics = App->textures->Load("Enemy.png");
 
-	collider = App->collision->AddCollider({ position.x, position.y - 23, 16, 16 }, COLLIDER_ENEMY, this);
+	//Copter enemy
+	copter.anim.frames.PushBack({0,1,15,19});
+	copter.anim.frames.PushBack({ 16, 1, 15, 19 });
+	copter.anim.frames.PushBack({ 31, 1, 15, 19 });
+	copter.anim.frames.PushBack({ 48, 1, 15, 19 });
+	copter.anim.speed = 0.1f;
 
 	return true;
 }
@@ -86,38 +39,92 @@ bool ModuleEnemy::CleanUp()
 // Update: draw background
 update_status ModuleEnemy::Update()
 {
-	last_position = position;
+	p2List_item<Enemy*>* tmp = active.getFirst();
+	p2List_item<Enemy*>* tmp_next = active.getFirst();
 
-	Animation* current_animation = &idle; //Posem la animacio de quiet per defecte i despres comprovem si ha apretat alguna tecla aixi evitem fer la comprovació que havies fet al final.
+	while (tmp != NULL)
+	{
+		Enemy* e = tmp->data;
+		tmp_next = tmp->next;
 
-	int speed = 1;
-
-
-
-	collider->SetPos(position.x, position.y-23);
-
-
-
-
-
-	// Draw everything --------------------------------------
-	SDL_Rect r;
-
-	r = current_animation->GetCurrentFrame();
-
-
-	
-
-	App->renderer->Blit(graphics, position.x, position.y - r.h, &r);
-
-
+		if (e->Update() == false)
+		{
+			delete e;
+			active.del(tmp);
+		}
+		else
+		{
+			App->renderer->Blit(graphics, e->position.x, e->position.y, &(e->anim.GetCurrentFrame()));
+		}
+		tmp = tmp_next;
+	}
 	return UPDATE_CONTINUE;
 }
 
 void ModuleEnemy::OnCollision(Collider* c1, Collider* c2)
 {
-	
+	//DOIT: destrueix sempre que colisiona amb algu
+	p2List_item<Enemy*>* tmp = active.getFirst();
 
+	while (tmp != NULL)
+	{
+		if (tmp->data->collider == c1) //Hem trobat el enemic que ha colisionat
+		{
+			if (c2->type == COLLIDER_EXPLOSION) //Es borra l'enemic al colisionar amb una explosio
+			{
+				delete tmp->data;
+				active.del(tmp);
+				break;
+			}
+			
+		}
 
+		tmp = tmp->next;
+	}
 
+}
+
+Collider* ModuleEnemy::AddEnemy(const Enemy& enemy, int x, int y, COLLIDER_TYPE collider_type)
+{
+	Enemy* e = new Enemy(enemy);
+	e->position.x = x;
+	e->position.y = y;
+
+	if (collider_type != COLLIDER_NONE)
+	{
+		e->collider = App->collision->AddCollider({ e->position.x, e->position.y, 0, 0 }, collider_type, this);
+	}
+
+	active.add(e);
+	return e->collider;
+}
+
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+Enemy::Enemy() : collider(NULL)
+{
+	position.SetToZero();
+	speed.SetToZero();
+}
+
+Enemy::Enemy(const Enemy& e) : anim(e.anim), position(e.position), speed(e.speed), collider(e.collider)
+{}
+
+Enemy::~Enemy()
+{
+	if (collider)
+		collider->to_delete;
+}
+
+bool Enemy::Update()
+{
+	bool ret = true;
+
+	if (collider != NULL)
+	{
+		SDL_Rect r = anim.PeekCurrentFrame();
+		collider->rect = { position.x, position.y, r.w, r.h };
+	}
+
+	return ret;
 }
