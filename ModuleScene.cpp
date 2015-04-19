@@ -90,6 +90,7 @@ bool ModuleScene::CleanUp()
 	LOG("Unloading scene");
 
 	App->textures->Unload(graphics);
+	App->textures->Unload(background);
 	App->timer->Disable();
 	App->player->Disable();
 	App->enemy->Disable();

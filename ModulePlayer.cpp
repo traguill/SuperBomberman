@@ -13,10 +13,10 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	
 
 	// idle animation (just the ship)
-	idle.frames.PushBack({ 70, 38, 16, 24 }); //LOOK DOWN
-	idle.frames.PushBack({ 179, 38, 16, 24 }); //LOOK RIGHT
-	idle.frames.PushBack({ 124, 38, 16, 24 });//LOOK LEFT
-	idle.frames.PushBack({ 237, 38, 16, 24 });//LOOK UP
+	idle.frames.PushBack({ 66, 1, 16, 24 }); //LOOK DOWN
+	idle.frames.PushBack({ 1, 38, 16, 24 }); //LOOK RIGHT
+	idle.frames.PushBack({ 17, 1, 16, 24 });//LOOK LEFT
+	idle.frames.PushBack({ 114, 1, 16, 24 });//LOOK UP
 
 
 	// walk Right
@@ -27,26 +27,26 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	right.speed = 0.1f;
 
 	// walk Left
-	left.frames.PushBack({ 142, 38, 16, 24 });
-	left.frames.PushBack({ 124, 38, 16, 24 });
-	left.frames.PushBack({ 105, 38, 16, 24 });
-	left.frames.PushBack({ 124, 38, 16, 24 });
+	left.frames.PushBack({ 34, 1, 16, 24 });
+	left.frames.PushBack({ 17, 1, 16, 24 });
+	left.frames.PushBack({ 0, 1, 16, 24 });
+	left.frames.PushBack({ 17, 1, 16, 24 });
 
 	left.speed = 0.1f;
 
 	// walk Down
-	down.frames.PushBack({ 88, 38, 16, 22 });
-	down.frames.PushBack({ 70, 38, 16, 24 });
-	down.frames.PushBack({ 52, 38, 16, 24 });
-	down.frames.PushBack({ 70, 38, 16, 24 });
+	down.frames.PushBack({ 82, 1, 16, 24 });
+	down.frames.PushBack({ 66, 1, 16, 24 });
+	down.frames.PushBack({ 50, 1, 16, 24 });
+	down.frames.PushBack({ 66, 1, 16, 24 });
 
 	down.speed = 0.1f;
 
 	// walk Up
-	up.frames.PushBack({ 255, 38, 16, 24 });
-	up.frames.PushBack({ 237, 38, 16, 24 });
-	up.frames.PushBack({ 219, 38, 16, 24 });
-	up.frames.PushBack({ 237, 38, 16, 24 });
+	up.frames.PushBack({ 98, 1, 16, 24 });
+	up.frames.PushBack({ 114, 1, 16, 24 });
+	up.frames.PushBack({ 130, 1, 16, 24 });
+	up.frames.PushBack({ 114, 1, 16, 24 });
 
 	up.speed = 0.1f;
 
@@ -71,9 +71,9 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 
-	graphics = App->textures->Load("GameAssets.png");
+	graphics = App->textures->Load("Bomberman.png");
 
-	collider = App->collision->AddCollider({ position.x, position.y-12, 16, 16 }, COLLIDER_PLAYER, this);
+	collider = App->collision->AddCollider({ position.x, position.y-8, 12, 12 }, COLLIDER_PLAYER, this);
 
 	direction = downD;
 
