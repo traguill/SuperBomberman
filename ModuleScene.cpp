@@ -65,8 +65,8 @@ bool ModuleScene::Start()
 {
 	LOG("Loading scene");
 
-	graphics = App->textures->Load("Game/GameTiles.png");
-	background = App->textures->Load("Game/background_stage1.png");
+	graphics = App->textures->Load("GameTiles.png");
+	background = App->textures->Load("background_stage1.png");
 	App->collision->Enable(); // enable before player
 	App->enemy->Enable();
 	App->player->Enable();

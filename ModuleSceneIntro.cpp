@@ -20,7 +20,7 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 
 	graphics = App->textures->Load("TitleScreen.png");
-	//App->audio->PlayMusic("rtype/intro.ogg", 0.0f);
+	App->audio->PlayMusic("TitleMusic.ogg", 0.0f);
 	//fx = App->audio->LoadFx("rtype/starting.wav");
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
