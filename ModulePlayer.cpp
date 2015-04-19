@@ -14,16 +14,16 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 
 	// idle animation (just the ship)
 	idle.frames.PushBack({ 66, 1, 16, 24 }); //LOOK DOWN
-	idle.frames.PushBack({ 1, 38, 16, 24 }); //LOOK RIGHT
+	idle.frames.PushBack({ 162, 1, 16, 24 }); //LOOK RIGHT
 	idle.frames.PushBack({ 17, 1, 16, 24 });//LOOK LEFT
 	idle.frames.PushBack({ 114, 1, 16, 24 });//LOOK UP
 
 
 	// walk Right
-	right.frames.PushBack({ 197, 38, 16, 24 });
-	right.frames.PushBack({ 179, 38, 16, 24 });
-	right.frames.PushBack({ 161, 38, 16, 24 });
-	right.frames.PushBack({ 179, 38, 16, 24 });
+	right.frames.PushBack({ 178, 1, 16, 24 });
+	right.frames.PushBack({ 162, 1, 16, 24 });
+	right.frames.PushBack({ 146, 1, 16, 24 });
+	right.frames.PushBack({ 162, 1, 16, 24 });
 	right.speed = 0.1f;
 
 	// walk Left
@@ -73,7 +73,7 @@ bool ModulePlayer::Start()
 
 	graphics = App->textures->Load("Bomberman.png");
 
-	collider = App->collision->AddCollider({ position.x, position.y-8, 12, 12 }, COLLIDER_PLAYER, this);
+	collider = App->collision->AddCollider({ position.x, position.y-16, 16, 16 }, COLLIDER_PLAYER, this);
 
 	direction = downD;
 
@@ -81,8 +81,8 @@ bool ModulePlayer::Start()
 
 	game_over_player = false;
 
-	position.x = 30;
-	position.y = 30;
+	position.x = 24;
+	position.y = 56;
 
 	return true;
 }
@@ -141,7 +141,7 @@ update_status ModulePlayer::Update()
 
 		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 		{
-			last_bomb = App->particles->AddParticle(App->particles->bomb, position.x, position.y - 13, COLLIDER_BOMB, bombT);
+			last_bomb = App->particles->AddParticle(App->particles->bomb, 24 + collider->GetPosLevel().x * TILE, 40 + collider->GetPosLevel().y* TILE, COLLIDER_BOMB, bombT);
 			bomb_collision = true;
 		}
 	}
@@ -151,7 +151,7 @@ update_status ModulePlayer::Update()
 	}
 
 	
-	collider->SetPos(position.x, position.y-12);
+	collider->SetPos(position.x, position.y-16);
 
 	//check collisions with bomb
 	if (!bomb_collision)
@@ -192,6 +192,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	//Blocks-----------------------------------------------------------------------
 	if (c2->type == COLLIDER_BLOCK || c2->type == COLLIDER_WALL || c2->type == COLLIDER_BOMB)
 	{
+
 		position = last_position;
 	}
 
@@ -200,11 +201,10 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	{
 		game_over_player = true;
 	}
-
-
-	
-	
-	
-	
-	
 }
+
+
+/*bool ModulePlayer::ThrowWall(){
+
+}
+*/

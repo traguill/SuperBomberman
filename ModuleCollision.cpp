@@ -183,3 +183,11 @@ bool Collider::CheckCollision(SDL_Rect r) const
 			rect.y < r.y + r.h &&
 			rect.h + rect.y > r.y);
 }
+
+p2Point<int> Collider::GetPosLevel()const{
+	p2Point<int> p;
+	p.x = (rect.x - 24 + 8) / 16;
+	p.y = (rect.y - 40 + 8) / 16;
+
+	return p;
+}

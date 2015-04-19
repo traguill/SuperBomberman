@@ -24,6 +24,8 @@ struct Collider
 	COLLIDER_TYPE type;
 	Module* callback;
 
+	p2Point<int> posLevel;
+
 	Collider(SDL_Rect rectangle, COLLIDER_TYPE type, Module* callback = NULL) :
 		rect(rectangle),
 		type(type),
@@ -37,6 +39,8 @@ struct Collider
 		rect.x = x;
 		rect.y = y;
 	}
+
+	p2Point<int> GetPosLevel() const;
 
 	bool CheckCollision(SDL_Rect r) const;
 };

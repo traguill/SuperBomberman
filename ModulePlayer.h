@@ -17,7 +17,6 @@ public:
 	void OnCollision(Collider*, Collider*);
 
 
-
 public:
 
 	SDL_Texture* graphics;
@@ -37,6 +36,7 @@ public:
 	Animation down;
 	Animation die;
 	p2Point<int> position;
+	p2Point<int> positon_level; //Posició en la matriu nivell.
 	p2Point<int> last_position;
 	Collider* last_bomb;
 	bool bomb_collision;

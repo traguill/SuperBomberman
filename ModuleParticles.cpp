@@ -13,20 +13,20 @@ ModuleParticles::~ModuleParticles()
 bool ModuleParticles::Start()
 {
 	LOG("Loading particles");
-	graphics = App->textures->Load("GameTiles.png");
+	graphics = App->textures->Load("bomb_explosion.png");
 
 	// Explosion particle
-	explosion.anim.frames.PushBack({ 288, 151, 48, 48 });
-	explosion.anim.frames.PushBack({ 305, 151, 48, 48 });
-	explosion.anim.frames.PushBack({ 322, 151, 48, 48 });
-	explosion.anim.frames.PushBack({ 339, 151, 48, 48 });
+	explosion.anim.frames.PushBack({ 0, 49, 48, 48 });
+	explosion.anim.frames.PushBack({ 98, 0, 48, 48 });
+	explosion.anim.frames.PushBack({ 49, 0, 48, 48 });
+	explosion.anim.frames.PushBack({ 0, 0, 48, 48 });
 	explosion.anim.speed = 0.1f;
 
 	// Bomb particle
-	bomb.anim.frames.PushBack({356, 151, 16, 16});
-	bomb.anim.frames.PushBack({373, 151, 16, 16});
-	bomb.anim.frames.PushBack({390, 151, 16, 16 });
-	bomb.anim.frames.PushBack({373, 151, 16, 16 });
+	bomb.anim.frames.PushBack({113, 70, 16, 16});
+	bomb.anim.frames.PushBack({130, 70, 16, 16});
+	bomb.anim.frames.PushBack({147, 70, 16, 16 });
+	bomb.anim.frames.PushBack({130, 70, 16, 16 });
 	bomb.life = 3000;
 	bomb.anim.speed = 0.05f;
 
