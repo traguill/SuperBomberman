@@ -12,6 +12,8 @@ ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, sta
 	tiles.PushBack({ 305, 32, 16, 16 });//No serveix de res nomes es per omplir
 	tiles.PushBack({ 288, 32, 16, 16 });//10//Son les cases del mig de l'escenari
 
+	
+	//Crea l'escena basica amb aquesta funció
 	for (int i = 0; i < 13; i++)
 	{
 		for (int j = 0; j < 11; j++)
@@ -57,7 +59,7 @@ void ModuleScene::SetColliders()
 
 void ModuleScene::AddEnemies()
 {
-	App->enemy->AddEnemy(App->enemy->copter, 60, 10, COLLIDER_ENEMY);
+	App->enemy->AddEnemy(App->enemy->copter, 216, 197, COLLIDER_ENEMY);
 }
 
 // Load assets

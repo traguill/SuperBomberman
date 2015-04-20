@@ -122,9 +122,8 @@ bool Enemy::Update()
 
 	if (collider != NULL)
 	{
-		SDL_Rect r = anim.PeekCurrentFrame();
-		collider->rect = { position.x, position.y, r.w, r.h };
+		collider->rect = { position.x, position.y + 3, 16, 16 }; //Canviar el +3 nomes funciona pel copter
 	}
-
+	
 	return ret;
 }

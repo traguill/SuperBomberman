@@ -160,7 +160,7 @@ update_status ModulePlayer::Update()
 	}
 	bomb_collision = false;
 	
-	
+	CheckLimits();
 
 	// Draw everything --------------------------------------
 	SDL_Rect r;
@@ -303,4 +303,9 @@ int ModulePlayer::UpDown(const p2Point<int> p) const{
 		dir = 2;
 
 	return dir;
+}
+
+void ModulePlayer::CheckLimits(){
+	if (collider->rect.x < 24 || collider->rect.x + 16 > 232 || collider->rect.y < 40 || collider->rect.y > 216-16)
+		position = last_position;
 }

@@ -28,6 +28,7 @@ public:
 private:
 	int RightLeft(const p2Point<int> p)const;
 	int UpDown(const p2Point<int> p)const;
+	void CheckLimits();
 public:
 
 	SDL_Texture* graphics;
