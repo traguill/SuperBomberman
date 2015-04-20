@@ -192,8 +192,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	//Blocks-----------------------------------------------------------------------
 	if (c2->type == COLLIDER_BLOCK || c2->type == COLLIDER_WALL || c2->type == COLLIDER_BOMB)
 	{
-
-		position = last_position;
+		ThrowWall(direction, c2);
 	}
 
 	//Killing objects-----------------------------------------------------------------
@@ -204,7 +203,104 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 }
 
 
-/*bool ModulePlayer::ThrowWall(){
+void ModulePlayer::ThrowWall(Looking direction, Collider* c){
+
+	p2Point<int> tmp;
+	tmp.x = c->rect.x;
+	tmp.y = c->rect.y;
+
+	switch (direction)
+	{
+	case upD:
+		switch (RightLeft(tmp))
+		{
+		case 0:	//left
+			//GO UP LEFT
+			position.x = tmp.x - 16;
+			position.y = tmp.y + 28;
+			return;
+			break;
+		case 2: //right
+			//GO UP RIGHT
+			position.x = tmp.x + 16;
+			position.y = tmp.y + 28;
+			return;
+			break;
+		}
+		break;
+	case downD:
+		switch (RightLeft(tmp))
+		{
+		case 0:	//Left
+			//GO DOWN LEFT
+			position.x = tmp.x - 16;
+			position.y = tmp.y + 4;
+			return;
+			break;
+		case 2: //Right
+			//GO DOWN RIGHT
+			position.x = tmp.x + 16;
+			position.y = tmp.y + 4;
+			return;
+			break;
+		}
+		break;
+	case rightD:
+		switch (UpDown(tmp))
+		{
+		case 0:	//Up
+			//RIGHT UP
+			position.x = tmp.x - 12;
+			position.y = tmp.y;
+			return;
+			break;
+		case 2: //Down
+			//RIGHT DOWN
+			position.x = tmp.x - 12;
+			position.y = tmp.y + 32;
+			return;
+			break;
+		}
+		break;
+	case leftD:
+		switch (UpDown(tmp))
+		{
+		case 0:	//Up
+			//left UP
+			position.x = tmp.x + 12;
+			position.y = tmp.y;
+			return;
+			break;
+		case 2: //Down
+			//left DOWN
+			position.x = tmp.x + 12;
+			position.y = tmp.y + 32;
+			break;
+		}
+		break;
+	}
+	position = last_position;
 
 }
-*/
+
+int ModulePlayer::RightLeft(const p2Point<int> p) const{
+	int dir = 1; //Direction 0-left 1-NULL 2-right
+	int tolerance = 6;
+	if (collider->rect.x + 16 <= p.x + tolerance)
+		dir = 0;
+	if (collider->rect.x >= p.x +16 - tolerance)
+		dir = 2;
+
+	return dir;
+}
+
+int ModulePlayer::UpDown(const p2Point<int> p) const{
+	int dir = 1; //Direction 0-Up 1-NULL 2-Down
+	int tolerance = 6;
+	if (collider->rect.y +16 <= p.y + tolerance)
+		dir = 0;
+	if (collider->rect.y >= p.y + 16 - tolerance)
+		dir = 2;
+
+	return dir;
+}

@@ -4,6 +4,12 @@
 #include "Globals.h"
 #include "p2Point.h"
 
+enum Looking {				//Les variables tenen una D al final de direccio, no es poden dir up,down,right i left perque es confonen amb les animacions.		
+	downD = 0,
+	rightD = 1,
+	leftD = 2,
+	upD = 3
+};
 
 class ModulePlayer : public Module
 {
@@ -15,20 +21,20 @@ public:
 	update_status Update();
 	bool CleanUp();
 	void OnCollision(Collider*, Collider*);
+	void ThrowWall(Looking direction, Collider* c); //Mira si pots atravessar la paret en diagonal i et retorna la posicio que hauria d'estar
 
 
+	//Auxiliar methods
+private:
+	int RightLeft(const p2Point<int> p)const;
+	int UpDown(const p2Point<int> p)const;
 public:
 
 	SDL_Texture* graphics;
 	Collider* collider;
 	Animation* current_animation;
-	enum looking {				//Les variables tenen una D al final de direccio, no es poden dir up,down,right i left perque es confonen amb les animacions.		
-		downD = 0,
-		rightD = 1,
-		leftD = 2,
-		upD = 3
-	};
-	looking direction;
+	
+	Looking direction;
 	Animation idle;
 	Animation right;
 	Animation left;
