@@ -22,6 +22,7 @@ public:
 	bool CleanUp();
 	void OnCollision(Collider*, Collider*);
 	void ThrowWall(Looking direction, Collider* c); //Mira si pots atravessar la paret en diagonal i et retorna la posicio que hauria d'estar
+	//aixo ho modificare (Pep)
 
 
 	//Auxiliar methods

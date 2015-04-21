@@ -72,6 +72,8 @@ void ModuleEnemy::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (c2->type == COLLIDER_EXPLOSION) //Es borra l'enemic al colisionar amb una explosio
 			{
+
+				tmp->data->collider->to_delete= true;//he posta aixo perque el collider del enemic no es borraba
 				delete tmp->data;
 				active.del(tmp);
 				break;
