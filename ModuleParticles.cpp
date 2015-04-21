@@ -16,11 +16,12 @@ bool ModuleParticles::Start()
 	graphics = App->textures->Load("bomb_explosion.png");
 
 	// Explosion particle
+	explosion.anim.frames.PushBack({ 49, 49, 48, 48 });
 	explosion.anim.frames.PushBack({ 0, 49, 48, 48 });
 	explosion.anim.frames.PushBack({ 98, 0, 48, 48 });
 	explosion.anim.frames.PushBack({ 49, 0, 48, 48 });
 	explosion.anim.frames.PushBack({ 0, 0, 48, 48 });
-	explosion.anim.speed = 0.1f;
+	explosion.anim.speed = 0.17f;
 
 	// Bomb particle
 	bomb.anim.frames.PushBack({113, 70, 16, 16});

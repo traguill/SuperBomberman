@@ -13,6 +13,8 @@ public:
 	bool Start();
 	update_status Update();
 	bool CleanUp();
+	void OnCollision(Collider*, Collider*);
+
 
 	void DrawLevel();
 	void SetColliders();
@@ -22,5 +24,6 @@ public:
 
 	SDL_Texture* graphics;
 	SDL_Rect wall;
+	Animation block;
 	int level[13][11];
 };
