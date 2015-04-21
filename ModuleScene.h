@@ -15,7 +15,7 @@ public:
 	bool CleanUp();
 
 	//other methods
-
+	
 	
 	void AddEnemies();
 
@@ -27,5 +27,6 @@ public:
 	bool scene_transition;
 	bool game_over;
 
+	int current_enemies;
 
 };

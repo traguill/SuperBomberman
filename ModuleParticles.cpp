@@ -28,8 +28,8 @@ bool ModuleParticles::Start()
 	bomb.anim.frames.PushBack({132, 70, 16, 16});
 	bomb.anim.frames.PushBack({149, 70, 16, 16 });
 	bomb.anim.frames.PushBack({132, 70, 16, 16 });
-	bomb.life = 3000;
-	bomb.anim.speed = 0.05f;
+	bomb.life = 2000;
+	bomb.anim.speed = 0.075f;
 
 
 	//Block explosion

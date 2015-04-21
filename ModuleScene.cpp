@@ -20,6 +20,9 @@ ModuleScene::~ModuleScene()
 void ModuleScene::AddEnemies()
 {
 	App->enemy->AddEnemy(App->enemy->copter, 216, 197, COLLIDER_ENEMY);
+	App->enemy->AddEnemy(App->enemy->copter, 104, 197, COLLIDER_ENEMY);
+
+	current_enemies = 2;
 }
 
 // Load assets
@@ -34,6 +37,8 @@ bool ModuleScene::Start()
 	App->player->Enable();
 	App->timer->Enable();
 	App->level->Enable();
+	
+	current_enemies = 0;
 
 	AddEnemies();
 
@@ -65,6 +70,8 @@ bool ModuleScene::CleanUp()
 //nota mental: nunca poner un log dentro del update, se sobrecarag todo
 update_status ModuleScene::Update()
 {
+	if (current_enemies == 0)
+		game_over = true;
 	//Check Game Over
 	if (game_over && !scene_transition)
 	{

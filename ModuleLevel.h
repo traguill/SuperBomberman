@@ -18,7 +18,7 @@ public:
 
 	void DrawLevel();
 	void SetColliders();
-	
+	void InitLevel();
 
 public:
 
