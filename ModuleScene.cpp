@@ -28,6 +28,7 @@ bool ModuleScene::Start()
 	LOG("Loading scene");
 
 	graphics = App->textures->Load("background_stage1.png");
+	App->audio->PlayMusic("Area1.ogg", 0.0f);
 	App->collision->Enable(); // enable before player
 	App->enemy->Enable();
 	App->player->Enable();
