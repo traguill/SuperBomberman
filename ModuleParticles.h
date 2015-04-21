@@ -9,6 +9,7 @@
 enum Type{  //Guarda el tipus de particle per saber si ha d'explotar.
 	bombT,
 	explosionT,
+	blockT,
 	nullT,
 };
 
@@ -51,5 +52,7 @@ public:
 
 	Particle bomb;
 	Particle explosion;
+	Particle block;
+
 
 };

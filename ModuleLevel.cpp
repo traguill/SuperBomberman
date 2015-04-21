@@ -9,10 +9,20 @@ ModuleLevel::ModuleLevel(Application* app, bool start_enabled) : Module(app, sta
 
 	wall = { 288, 32, 16, 16 };
 
-	block.frames.PushBack({ 98, 49, 16, 16 });
+	block.frames.PushBack({ 322, 15, 16, 16 });
+	block.frames.PushBack({ 339, 15, 16, 16 });
+	block.frames.PushBack({ 356, 15, 16, 16 });
+	block.frames.PushBack({ 373, 15, 16, 16 });
 	block.speed = 0.1f;
 
+	
 	//Crea l'escena basica amb aquesta funció
+
+	//0- Nothing
+	//1-Wall
+	//2-Block
+	//3-Breaking block
+
 	for (int i = 0; i < 13; i++)
 	{
 		for (int j = 0; j < 11; j++)
@@ -106,8 +116,9 @@ void ModuleLevel::OnCollision(Collider* c1, Collider* c2)
 	{
 		if (c2->type == COLLIDER_EXPLOSION)
 		{
-			level[c1->GetPosLevel().x][c1->GetPosLevel().y] = 0;
+			level[c1->GetPosLevel().x][c1->GetPosLevel().y] = 3;
 			c1->to_delete = true;
+			App->particles->AddParticle(App->particles->block, c1->rect.x,c1->rect.y, COLLIDER_WALL, blockT);
 		}
 	}
 }
