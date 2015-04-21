@@ -155,7 +155,6 @@ update_status ModulePlayer::Update()
 	else
 	{
 		current_animation = &die;
-		collider->to_delete = true;//ha d'eliminar el collider
 	}
 
 	
