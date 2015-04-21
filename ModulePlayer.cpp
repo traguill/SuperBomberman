@@ -205,7 +205,6 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	//Killing objects-----------------------------------------------------------------
 	if (c2->type == COLLIDER_EXPLOSION || c2->type == COLLIDER_ENEMY)
 	{
-		die.Reset();
 		game_over_player = true;
 	}
 }
