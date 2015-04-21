@@ -16,6 +16,7 @@ Application::Application()
 	collision = new ModuleCollision(this, false);
 	timer = new ModuleTimer(this, false);
 	intro = new ModuleSceneIntro(this, true);
+	level = new ModuleLevel(this, false);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -39,6 +40,7 @@ Application::Application()
 	
 	AddModule(particles);
 	AddModule(collision);
+	AddModule(level);
 
 	// Characters
 	AddModule(player);
@@ -58,6 +60,7 @@ Application::~Application()
 	delete audio;
 	delete scene;
 	delete player;
+	delete level;
 	delete enemy;
 	delete fade;
 	delete collision;

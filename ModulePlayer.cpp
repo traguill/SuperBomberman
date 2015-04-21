@@ -51,11 +51,15 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	up.speed = 0.1f;
 
 	//Dying
-	die.frames.PushBack({ 343, 38, 16, 24 }); //TODO 0: Posar imatges mort correcatament.
-	die.frames.PushBack({ 361, 38, 16, 24 });
-	die.frames.PushBack({ 379, 38, 16, 24 });
-	die.frames.PushBack({ 397, 38, 16, 24 });
-	die.speed = 0.1f;
+	die.frames.PushBack({ 0, 68, 16, 24 }); //TODO 0: Posar imatges mort correcatament.
+	die.frames.PushBack({ 16, 59, 16, 33 });
+	die.frames.PushBack({ 32, 68, 16, 24 });
+	die.frames.PushBack({ 48, 68, 16, 24 });
+	die.frames.PushBack({ 64, 68, 16, 24 });
+	die.frames.PushBack({ 80, 68, 16, 24 });
+	die.frames.PushBack({ 96, 68, 16, 24 });
+	die.frames.PushBack({ 112, 68, 16, 24 });
+	die.speed = 0.2f;
 	die.loop = false;
 
 
@@ -80,6 +84,8 @@ bool ModulePlayer::Start()
 	bomb_collision = false;
 
 	game_over_player = false;
+
+	current_bombs = 0;
 
 	position.x = 24;
 	position.y = 56;
@@ -139,10 +145,11 @@ update_status ModulePlayer::Update()
 
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP && current_bombs < MAX_BOMBS)
 		{
 			last_bomb = App->particles->AddParticle(App->particles->bomb, 24 + collider->GetPosLevel().x * TILE, 40 + collider->GetPosLevel().y* TILE, COLLIDER_BOMB, bombT);
 			bomb_collision = true;
+			current_bombs++;
 		}
 	}
 	else

@@ -48,4 +48,5 @@ public:
 	Collider* last_bomb;
 	bool bomb_collision;
 	bool game_over_player; //S'encarrega de gestionar tot lo del player abans de tancar el joc.
+	int current_bombs;
 };

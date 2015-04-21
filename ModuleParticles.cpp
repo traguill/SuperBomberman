@@ -55,7 +55,9 @@ update_status ModuleParticles::Update()
 		if(p->Update() == false)
 		{
 			if (p->type == bombT)
-				App->particles->AddParticle(App->particles->explosion, p->position.x-16, p->position.y-16, COLLIDER_EXPLOSION); //DOIT: si es una bomba crea una particula explosio
+				App->particles->AddParticle(App->particles->explosion, p->position.x-16, p->position.y-16, COLLIDER_EXPLOSION, explosionT); //DOIT: si es una bomba crea una particula explosio
+			if (p->type == explosionT)
+				 App->player->current_bombs = 0;
 			delete p;
 			active.del(tmp);
 		}
