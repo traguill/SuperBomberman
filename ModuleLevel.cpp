@@ -167,9 +167,13 @@ void ModuleLevel::OnCollision(Collider* c1, Collider* c2)
 	{
 		if (c2->type == COLLIDER_EXPLOSION)
 		{
-			level[c1->GetPosLevel().x][c1->GetPosLevel().y] = 3;
-			c1->to_delete = true;
-			App->particles->AddParticle(App->particles->block, c1->rect.x,c1->rect.y, COLLIDER_WALL, blockT);
+			if (c1->GetPosLevel().x == c2->GetPosLevel().x || c1->GetPosLevel().y == c2->GetPosLevel().y)
+			{
+				level[c1->GetPosLevel().x][c1->GetPosLevel().y] = 3;
+				c1->to_delete = true;
+				App->particles->AddParticle(App->particles->block, c1->rect.x, c1->rect.y, COLLIDER_WALL, blockT);
+			}
+			
 		}
 	}
 }
