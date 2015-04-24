@@ -63,6 +63,7 @@ Application::~Application()
 	delete level;
 	delete enemy;
 	delete fade;
+	delete timer;
 	delete collision;
 }
 
