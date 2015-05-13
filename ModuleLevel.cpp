@@ -58,7 +58,7 @@ void ModuleLevel::SetColliders()
 // Load assets
 bool ModuleLevel::Start()
 {
-	LOG("Loading scene");
+	LOG("Loading Level");
 
 	graphics = App->textures->Load("GameTiles.png");
 

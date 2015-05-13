@@ -4,7 +4,15 @@
 
 
 ModuleEnemy::ModuleEnemy(Application* app, bool start_enabled) : Module(app, start_enabled), graphics(NULL)
-{}
+{
+	//Copter enemy
+	copter.anim.frames.PushBack({ 0, 1, 15, 19 });
+	copter.anim.frames.PushBack({ 16, 1, 15, 19 });
+	copter.anim.frames.PushBack({ 31, 1, 15, 19 });
+	copter.anim.frames.PushBack({ 48, 1, 15, 19 });
+	copter.anim.speed = 0.1f;
+
+}
 
 ModuleEnemy::~ModuleEnemy()
 {}
@@ -16,12 +24,7 @@ bool ModuleEnemy::Start()
 
 	graphics = App->textures->Load("Enemy.png");
 
-	//Copter enemy
-	copter.anim.frames.PushBack({0,1,15,19});
-	copter.anim.frames.PushBack({ 16, 1, 15, 19 });
-	copter.anim.frames.PushBack({ 31, 1, 15, 19 });
-	copter.anim.frames.PushBack({ 48, 1, 15, 19 });
-	copter.anim.speed = 0.1f;
+	
 
 	return true;
 }
@@ -63,7 +66,6 @@ update_status ModuleEnemy::Update()
 
 void ModuleEnemy::OnCollision(Collider* c1, Collider* c2)
 {
-	//DOIT: destrueix sempre que colisiona amb algu
 	p2List_item<Enemy*>* tmp = active.getFirst();
 
 	while (tmp != NULL)

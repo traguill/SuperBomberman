@@ -8,8 +8,8 @@ ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, sta
 	
 	stage = { 0, 0, 256, 192 };
 
-	
-	
+	current_enemies = 0;
+
 }
 
 ModuleScene::~ModuleScene()
@@ -38,7 +38,7 @@ bool ModuleScene::Start()
 	App->timer->Enable();
 	App->level->Enable();
 	
-	current_enemies = 0;
+	
 
 	AddEnemies();
 
@@ -55,7 +55,6 @@ bool ModuleScene::Start()
 bool ModuleScene::CleanUp()
 {
 	LOG("Unloading scene");
-
 	App->textures->Unload(graphics);
 	App->level->Disable();
 	App->timer->Disable();
