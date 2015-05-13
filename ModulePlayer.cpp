@@ -205,7 +205,10 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 
 	//Killing objects-----------------------------------------------------------------
 	if (c2->type == COLLIDER_ENEMY)
+	{
 		game_over_player = true;
+		return;
+	}
 	if (c2->type == COLLIDER_EXPLOSION)
 	{
 		if (c1->GetPosLevel().x == c2->GetPosLevel().x || c1->GetPosLevel().y == c2->GetPosLevel().y)

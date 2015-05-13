@@ -33,10 +33,10 @@ bool ModuleScene::Start()
 	graphics = App->textures->Load("background_stage1.png");
 	App->audio->PlayMusic("Area1.ogg", 0.0f);
 	App->collision->Enable(); // enable before player
-	//App->level->Enable();
+	App->level->Enable();
 	App->enemy->Enable();
 	App->player->Enable();
-	//App->timer->Enable();
+	App->timer->Enable();
 
 	
 	
@@ -58,10 +58,10 @@ bool ModuleScene::CleanUp()
 	LOG("Unloading scene");
 	App->textures->Unload(graphics);
 	
-	//App->timer->Disable();
+	App->timer->Disable();
 	App->player->Disable();
 	App->enemy->Disable();
-	//App->level->Disable();
+	App->level->Disable();
 	App->collision->Disable();
 
 	return true;

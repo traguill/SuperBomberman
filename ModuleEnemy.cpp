@@ -5,6 +5,7 @@
 
 ModuleEnemy::ModuleEnemy(Application* app, bool start_enabled) : Module(app, start_enabled), graphics(NULL)
 {
+	
 	//Copter enemy
 	copter.anim.frames.PushBack({ 0, 1, 15, 19 });
 	copter.anim.frames.PushBack({ 16, 1, 15, 19 });
