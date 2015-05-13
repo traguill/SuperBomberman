@@ -8,8 +8,8 @@ ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, sta
 	
 	stage = { 0, 0, 256, 192 };
 
-	
-	
+	current_enemies = 0;
+
 }
 
 ModuleScene::~ModuleScene()
@@ -33,12 +33,13 @@ bool ModuleScene::Start()
 	graphics = App->textures->Load("background_stage1.png");
 	App->audio->PlayMusic("Area1.ogg", 0.0f);
 	App->collision->Enable(); // enable before player
+	//App->level->Enable();
 	App->enemy->Enable();
 	App->player->Enable();
-	App->timer->Enable();
-	App->level->Enable();
+	//App->timer->Enable();
+
 	
-	current_enemies = 0;
+	
 
 	AddEnemies();
 
@@ -55,12 +56,12 @@ bool ModuleScene::Start()
 bool ModuleScene::CleanUp()
 {
 	LOG("Unloading scene");
-
 	App->textures->Unload(graphics);
-	App->level->Disable();
-	App->timer->Disable();
+	
+	//App->timer->Disable();
 	App->player->Disable();
 	App->enemy->Disable();
+	//App->level->Disable();
 	App->collision->Disable();
 
 	return true;
