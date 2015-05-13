@@ -18,7 +18,7 @@ ModuleTimer::~ModuleTimer()
 // Load assets
 bool ModuleTimer::Start()
 {
-	LOG("Loading scene");
+	LOG("Loading Timer");
 
 	graphics = App->textures->Load("GameAssets.png");
 
@@ -28,7 +28,7 @@ bool ModuleTimer::Start()
 // UnLoad assets
 bool ModuleTimer::CleanUp()
 {
-	LOG("Unloading space scene");
+	LOG("Unloading Timer");
 
 	App->textures->Unload(graphics);
 
