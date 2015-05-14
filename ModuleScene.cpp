@@ -8,8 +8,8 @@ ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, sta
 	
 	stage = { 0, 0, 256, 192 };
 
-	
-	
+
+
 }
 
 ModuleScene::~ModuleScene()
@@ -17,13 +17,7 @@ ModuleScene::~ModuleScene()
 
 
 
-void ModuleScene::AddEnemies()
-{
-	App->enemy->AddEnemy(App->enemy->copter, 216, 197, COLLIDER_ENEMY);
-	App->enemy->AddEnemy(App->enemy->copter, 104, 197, COLLIDER_ENEMY);
 
-	current_enemies = 2;
-}
 
 // Load assets
 bool ModuleScene::Start()
@@ -33,18 +27,17 @@ bool ModuleScene::Start()
 	graphics = App->textures->Load("background_stage1.png");
 	App->audio->PlayMusic("Area1.ogg", 0.0f);
 	App->collision->Enable(); // enable before player
-	App->enemy->Enable();
+	App->level->Enable();
 	App->player->Enable();
 	App->timer->Enable();
-	App->level->Enable();
-	
-	current_enemies = 0;
 
-	AddEnemies();
+	
+	
+
 
 	scene_transition = false;
 	game_over = false;
-
+	current_enemies = 1; //TODO: canviar a 0 quan hi hagi enemics
 	
 
 
@@ -55,12 +48,11 @@ bool ModuleScene::Start()
 bool ModuleScene::CleanUp()
 {
 	LOG("Unloading scene");
-
 	App->textures->Unload(graphics);
-	App->level->Disable();
+	
 	App->timer->Disable();
 	App->player->Disable();
-	App->enemy->Disable();
+	App->level->Disable();
 	App->collision->Disable();
 
 	return true;

@@ -25,5 +25,5 @@ public:
 	SDL_Texture* graphics;
 	SDL_Rect wall;
 	Animation block;
-	int level[13][11];
+	int level[11][13];
 };

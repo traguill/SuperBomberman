@@ -70,7 +70,7 @@ update_status ModuleParticles::Update()
 			if (p->type == explosionT)
 				 App->player->current_bombs = 0;
 			if (p->type == blockT)
-				App->level->level[p->collider->GetPosLevel().x][p->collider->GetPosLevel().y] = 0; //actualitzem la matriu nivell i li diem que no hi ha res.
+				App->level->level[p->collider->GetPosLevel().y][p->collider->GetPosLevel().x] = 0; //actualitzem la matriu nivell i li diem que no hi ha res.
 			delete p;
 			active.del(tmp);
 		}

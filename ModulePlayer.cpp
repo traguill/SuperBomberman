@@ -90,6 +90,7 @@ bool ModulePlayer::Start()
 	position.x = 24;
 	position.y = 56;
 
+	speed = 1;
 	return true;
 }
 
@@ -110,7 +111,7 @@ update_status ModulePlayer::Update()
 
 	Animation* current_animation = &idle; //Posem la animacio de quiet per defecte i despres comprovem si ha apretat alguna tecla aixi evitem fer la comprovació que havies fet al final.
 
-	int speed = 1;
+	
 
 	if (!game_over_player)
 	{
@@ -204,7 +205,10 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 
 	//Killing objects-----------------------------------------------------------------
 	if (c2->type == COLLIDER_ENEMY)
+	{
 		game_over_player = true;
+		return;
+	}
 	if (c2->type == COLLIDER_EXPLOSION)
 	{
 		if (c1->GetPosLevel().x == c2->GetPosLevel().x || c1->GetPosLevel().y == c2->GetPosLevel().y)
@@ -226,14 +230,12 @@ void ModulePlayer::ThrowWall(Looking direction, Collider* c){
 		{
 		case 0:	//left
 			//GO UP LEFT
-			position.x = tmp.x - 16;
-			position.y = tmp.y + 28;
+			position.x -= speed;
 			return;
 			break;
 		case 2: //right
 			//GO UP RIGHT
-			position.x = tmp.x + 16;
-			position.y = tmp.y + 28;
+			position.x += speed;
 			return;
 			break;
 		}
@@ -243,14 +245,12 @@ void ModulePlayer::ThrowWall(Looking direction, Collider* c){
 		{
 		case 0:	//Left
 			//GO DOWN LEFT
-			position.x = tmp.x - 16;
-			position.y = tmp.y + 4;
+			position.x -= speed;
 			return;
 			break;
 		case 2: //Right
 			//GO DOWN RIGHT
-			position.x = tmp.x + 16;
-			position.y = tmp.y + 4;
+			position.x += speed;
 			return;
 			break;
 		}
@@ -260,14 +260,12 @@ void ModulePlayer::ThrowWall(Looking direction, Collider* c){
 		{
 		case 0:	//Up
 			//RIGHT UP
-			position.x = tmp.x - 12;
-			position.y = tmp.y;
+			position.y -= speed;
 			return;
 			break;
 		case 2: //Down
 			//RIGHT DOWN
-			position.x = tmp.x - 12;
-			position.y = tmp.y + 32;
+			position.y += speed;
 			return;
 			break;
 		}
@@ -277,14 +275,12 @@ void ModulePlayer::ThrowWall(Looking direction, Collider* c){
 		{
 		case 0:	//Up
 			//left UP
-			position.x = tmp.x + 12;
-			position.y = tmp.y;
+			position.y -= speed;
 			return;
 			break;
 		case 2: //Down
 			//left DOWN
-			position.x = tmp.x + 12;
-			position.y = tmp.y + 32;
+			position.y += speed;
 			break;
 		}
 		break;

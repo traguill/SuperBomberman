@@ -17,7 +17,6 @@ public:
 	//other methods
 	
 	
-	void AddEnemies();
 
 public:
 
