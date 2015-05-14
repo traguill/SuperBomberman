@@ -16,7 +16,6 @@
 #include "ModuleCollision.h"
 #include "ModuleTimer.h"
 #include "ModuleSceneIntro.h"
-#include "ModuleEnemy.h"
 #include "ModuleLevel.h"
 
 
@@ -30,7 +29,6 @@ public:
 	ModuleAudio* audio;
 	ModuleScene* scene;
 	ModulePlayer* player;
-	ModuleEnemy* enemy;
 	ModuleFadeToBlack* fade;
 	ModuleParticles* particles;
 	ModuleCollision* collision;

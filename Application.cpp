@@ -12,7 +12,6 @@ Application::Application()
 	fade = new ModuleFadeToBlack(this);
 	particles = new ModuleParticles(this);
 	player = new ModulePlayer(this, false);
-	enemy = new ModuleEnemy(this, false);
 	collision = new ModuleCollision(this, false);
 	timer = new ModuleTimer(this, false);
 	intro = new ModuleSceneIntro(this, true);
@@ -44,7 +43,6 @@ Application::Application()
 
 	// Characters
 	AddModule(player);
-	AddModule(enemy);
 
 
 	AddModule(fade); // let this after all drawing
@@ -61,7 +59,6 @@ Application::~Application()
 	delete scene;
 	delete player;
 	delete level;
-	delete enemy;
 	delete fade;
 	delete timer;
 	delete collision;
