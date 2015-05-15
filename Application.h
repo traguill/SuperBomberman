@@ -17,6 +17,7 @@
 #include "ModuleTimer.h"
 #include "ModuleSceneIntro.h"
 #include "ModuleLevel.h"
+#include "ModuleEnemy.h"
 
 
 class Application
@@ -35,6 +36,7 @@ public:
 	ModuleTimer* timer;
 	ModuleSceneIntro* intro;
 	ModuleLevel* level;
+	ModuleEnemy* enemy;
 
 private:
 
