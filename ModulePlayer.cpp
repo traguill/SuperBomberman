@@ -9,7 +9,8 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	current_animation = NULL;
 	last_bomb = NULL;
 
-
+	fx = 0;
+	audioChannel = 0;
 	
 
 	// idle animation (just the ship)
@@ -76,13 +77,13 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 
 	graphics = App->textures->Load("Bomberman.png");
+	fx = App->audio->LoadFx("Game/Audios/Gameplay/Step.wav");
 
 	collider = App->collision->AddCollider({ position.x, position.y-16, 16, 16 }, COLLIDER_PLAYER, this);
 
 	direction = downD;
 
 	bomb_collision = false;
-
 	game_over_player = false;
 
 	current_bombs = 0;
@@ -121,7 +122,15 @@ update_status ModulePlayer::Update()
 			position.x -= speed;
 			direction = leftD;
 
+			if (!App->audio->IsPlaying(audioChannel))
+			{
+				audioChannel = App->audio->PlayFx(fx);
+			}
+
 		}
+
+
+			
 
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{

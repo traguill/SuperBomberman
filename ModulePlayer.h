@@ -5,7 +5,7 @@
 #include "p2Point.h"
 
 enum Looking {				//Les variables tenen una D al final de direccio, no es poden dir up,down,right i left perque es confonen amb les animacions.		
-	downD = 0,
+	 downD = 0,
 	rightD = 1,
 	leftD = 2,
 	upD = 3
@@ -21,9 +21,7 @@ public:
 	update_status Update();
 	bool CleanUp();
 	void OnCollision(Collider*, Collider*);
-	void ThrowWall(Looking direction, Collider* c); //Mira si pots atravessar la paret en diagonal i et retorna la posicio que hauria d'estar
-	//aixo ho modificare (Pep)
-
+	void ThrowWall(Looking direction, Collider* c); 
 
 	//Auxiliar methods
 private:
@@ -51,4 +49,7 @@ public:
 	bool game_over_player; //S'encarrega de gestionar tot lo del player abans de tancar el joc.
 	int current_bombs;
 	int speed;
+
+	unsigned int fx;
+	int audioChannel;
 };
