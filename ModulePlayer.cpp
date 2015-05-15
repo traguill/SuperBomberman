@@ -62,6 +62,23 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	die.speed = 0.2f;
 	die.loop = false;
 
+	//Win
+	win.frames.PushBack({ 0, 26, 16, 24 });
+	win.frames.PushBack({ 17, 26, 16, 24 });
+	win.frames.PushBack({ 34, 26, 16, 24 });
+	win.frames.PushBack({ 49, 26, 16, 24 });
+	win.frames.PushBack({ 66, 26, 16, 24 });
+	win.frames.PushBack({ 83, 26, 16, 24 });
+	win.frames.PushBack({ 98, 26, 16, 24 });
+	win.frames.PushBack({ 115, 26, 16, 24 });
+	win.frames.PushBack({ 132, 26, 16, 24 });
+	win.frames.PushBack({ 149, 26, 16, 24 });
+	win.frames.PushBack({ 166, 26, 16, 24 });
+	win.frames.PushBack({ 183, 26, 16, 24 });
+	win.speed = 0.05f;
+	win.loop = false;
+
+
 
 
 
@@ -84,6 +101,9 @@ bool ModulePlayer::Start()
 	bomb_collision = false;
 
 	game_over_player = false;
+
+	game_win = false;
+
 
 	current_bombs = 0;
 
@@ -169,6 +189,11 @@ update_status ModulePlayer::Update()
 	bomb_collision = false;
 	
 	CheckLimits();
+	
+	//Check win game
+
+	if (game_win)
+		current_animation = &win;
 
 	// Draw everything --------------------------------------
 	SDL_Rect r;
@@ -182,6 +207,9 @@ update_status ModulePlayer::Update()
 	if (game_over_player && current_animation->Finished())
 		App->scene->game_over = true;
 	
+	if (game_win && current_animation->Finished())
+		App->scene->game_over = true;
+			
 
 	App->renderer->Blit(graphics, position.x, position.y - r.h, &r);
 

@@ -37,7 +37,7 @@ bool ModuleScene::Start()
 
 	scene_transition = false;
 	game_over = false;
-	current_enemies = 1; //TODO: canviar a 0 quan hi hagi enemics
+	current_enemies = 0; //TODO: canviar a 0 quan hi hagi enemics
 	
 
 
@@ -62,8 +62,8 @@ bool ModuleScene::CleanUp()
 //nota mental: nunca poner un log dentro del update, se sobrecarag todo
 update_status ModuleScene::Update()
 {
-	if (current_enemies == 0)
-		game_over = true;
+	if (current_enemies == 0 && App->player->position.x == 24 + (6 * 16) && App->player->position.y == 56 + (1 * 16))
+		App->player->game_win = true;
 	//Check Game Over
 	if (game_over && !scene_transition)
 	{

@@ -6,15 +6,20 @@ ModuleLevel::ModuleLevel(Application* app, bool start_enabled) : Module(app, sta
 {
 	graphics = NULL;
 
-	wall = { 288, 32, 16, 16 };
+	wall = { 195, 0, 17, 17 };
 
-	block.frames.PushBack({ 322, 15, 16, 16 });
-	block.frames.PushBack({ 339, 15, 16, 16 });
-	block.frames.PushBack({ 356, 15, 16, 16 });
-	block.frames.PushBack({ 373, 15, 16, 16 });
+	block.frames.PushBack({ 128, 0, 17, 18 });
+	block.frames.PushBack({ 145, 0, 17, 18 });
+	block.frames.PushBack({ 162, 0, 17, 18 });
+	block.frames.PushBack({ 179, 0, 16, 18 });
 	block.speed = 0.1f;
 
-	
+
+	portal.frames.PushBack({ 80, 32, 16, 15 });
+	portal.frames.PushBack({ 80, 48, 16, 15 });
+	portal.speed = 0.1f;
+
+	num_portals = 0; 
 	
 }
 
@@ -24,6 +29,7 @@ ModuleLevel::~ModuleLevel()
 void ModuleLevel::DrawLevel()
 {
 	SDL_Rect block_r = block.GetCurrentFrame();
+	SDL_Rect portal_r = portal.GetCurrentFrame();
 	for (int i = 0; i < 13; i++)
 	{
 		for (int j = 0; j < 11; j++)
@@ -33,6 +39,8 @@ void ModuleLevel::DrawLevel()
 				App->renderer->Blit(graphics, 24 + i*TILE, 40 + j*TILE, &wall);
 			if (a == 2)
 				App->renderer->Blit(graphics, 24 + i*TILE, 40 + j*TILE, &block_r);
+			if (a == 3)
+				App->renderer->Blit(graphics, 24 + i*TILE, 40 + j*TILE, &portal_r);
 		}
 	}
 }
@@ -60,7 +68,7 @@ bool ModuleLevel::Start()
 {
 	LOG("Loading Level");
 
-	graphics = App->textures->Load("GameTiles.png");
+	graphics = App->textures->Load("powerups_obstacles.png");
 
 	InitLevel();
 	SetColliders();
@@ -95,7 +103,7 @@ void ModuleLevel::InitLevel(){
 		
 		{ 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 		{ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -137,6 +145,7 @@ void ModuleLevel::OnCollision(Collider* c1, Collider* c2)
 				level[c1->GetPosLevel().x][c1->GetPosLevel().y] = 0;
 				c1->to_delete = true;
 				App->particles->AddParticle(App->particles->block, c1->rect.x, c1->rect.y, COLLIDER_WALL, blockT);
+				
 			}
 			
 		}
