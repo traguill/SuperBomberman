@@ -69,8 +69,22 @@ update_status ModuleParticles::Update()
 				App->particles->AddParticle(App->particles->explosion, p->position.x-16, p->position.y-16, COLLIDER_EXPLOSION, explosionT); //DOIT: si es una bomba crea una particula explosio
 			if (p->type == explosionT)
 				 App->player->current_bombs = 0;
-			if (p->type == blockT)
-				App->level->level[p->collider->GetPosLevel().y][p->collider->GetPosLevel().x] = 0; //actualitzem la matriu nivell i li diem que no hi ha res.
+			if (p->type == blockT ){
+
+
+				if (App->level->num_portals == 0)
+				{
+					App->level->level[p->collider->GetPosLevel().y][p->collider->GetPosLevel().x] = 3; //posem portal
+					App->level->num_portals++;
+				}
+				else
+				{
+					App->level->level[p->collider->GetPosLevel().y][p->collider->GetPosLevel().x] = 0; //actualitzem la matriu nivell i li diem que no hi ha res.
+				}
+				
+
+			}
+			
 			delete p;
 			active.del(tmp);
 		}

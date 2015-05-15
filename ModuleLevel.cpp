@@ -103,13 +103,13 @@ void ModuleLevel::InitLevel(){
 		
 		{ 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 		{ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-		{ 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		
@@ -142,12 +142,15 @@ void ModuleLevel::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (c1->GetPosLevel().x == c2->GetPosLevel().x || c1->GetPosLevel().y == c2->GetPosLevel().y)
 			{
-				level[c1->GetPosLevel().x][c1->GetPosLevel().y] = 0;
-				c1->to_delete = true;
+								
 				App->particles->AddParticle(App->particles->block, c1->rect.x, c1->rect.y, COLLIDER_WALL, blockT);
+
+				c1->to_delete = true;
 				
 			}
-			
+						
 		}
+		
 	}
+	
 }
