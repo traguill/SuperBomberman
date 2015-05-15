@@ -14,7 +14,7 @@ ModuleLevel::ModuleLevel(Application* app, bool start_enabled) : Module(app, sta
 	block.frames.PushBack({ 373, 15, 16, 16 });
 	block.speed = 0.1f;
 
-	InitLevel();
+	
 	
 }
 
@@ -62,7 +62,7 @@ bool ModuleLevel::Start()
 
 	graphics = App->textures->Load("GameTiles.png");
 
-
+	InitLevel();
 	SetColliders();
 
 	return true;
@@ -134,7 +134,7 @@ void ModuleLevel::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (c1->GetPosLevel().x == c2->GetPosLevel().x || c1->GetPosLevel().y == c2->GetPosLevel().y)
 			{
-				level[c1->GetPosLevel().x][c1->GetPosLevel().y] = 3;
+				level[c1->GetPosLevel().x][c1->GetPosLevel().y] = 0;
 				c1->to_delete = true;
 				App->particles->AddParticle(App->particles->block, c1->rect.x, c1->rect.y, COLLIDER_WALL, blockT);
 			}
