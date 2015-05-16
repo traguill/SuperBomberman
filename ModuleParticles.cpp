@@ -4,17 +4,7 @@
 #include "ModuleParticles.h"
 
 ModuleParticles::ModuleParticles(Application* app, bool start_enabled) : Module(app, start_enabled), graphics(NULL)
-{}
-
-ModuleParticles::~ModuleParticles()
-{}
-
-// Load assets
-bool ModuleParticles::Start()
 {
-	LOG("Loading particles");
-	graphics = App->textures->Load("particles.png");
-
 	// Explosion particle
 	explosion.anim.frames.PushBack({ 49, 49, 48, 48 });
 	explosion.anim.frames.PushBack({ 0, 49, 48, 48 });
@@ -24,10 +14,10 @@ bool ModuleParticles::Start()
 	explosion.anim.speed = 0.17f;
 
 	// Bomb particle
-	bomb.anim.frames.PushBack({115, 70, 16, 16});
-	bomb.anim.frames.PushBack({132, 70, 16, 16});
-	bomb.anim.frames.PushBack({149, 70, 16, 16 });
-	bomb.anim.frames.PushBack({132, 70, 16, 16 });
+	bomb.anim.frames.PushBack({ 115, 70, 16, 16 });
+	bomb.anim.frames.PushBack({ 132, 70, 16, 16 });
+	bomb.anim.frames.PushBack({ 149, 70, 16, 16 });
+	bomb.anim.frames.PushBack({ 132, 70, 16, 16 });
 	bomb.life = 2000;
 	bomb.anim.speed = 0.075f;
 
@@ -40,6 +30,19 @@ bool ModuleParticles::Start()
 	block.anim.frames.PushBack({ 215, 0, 16, 16 });
 	block.anim.frames.PushBack({ 232, 0, 16, 16 });
 	block.anim.speed = 0.18f;
+
+}
+
+ModuleParticles::~ModuleParticles()
+{}
+
+// Load assets
+bool ModuleParticles::Start()
+{
+	LOG("Loading particles");
+	graphics = App->textures->Load("particles.png");
+
+	
 
 	return true;
 }
@@ -80,7 +83,7 @@ update_status ModuleParticles::Update()
 			if (p->type == bombT)
 				App->particles->AddParticle(App->particles->explosion, p->position.x-16, p->position.y-16, COLLIDER_EXPLOSION, explosionT); //DOIT: si es una bomba crea una particula explosio
 			if (p->type == explosionT)
-				 App->player->current_bombs--;
+				 App->player->current_bombs = 0;
 			if (p->type == blockT)
 				App->level->level[p->collider->GetPosLevel().y][p->collider->GetPosLevel().x] = 0; //actualitzem la matriu nivell i li diem que no hi ha res.
 			delete p;
