@@ -19,7 +19,7 @@ bool ModuleAudio::Init()
 	SDL_Init(0);
 
 
-	/*
+	
 	if(SDL_InitSubSystem(SDL_INIT_AUDIO) < 0)
 
 	{
@@ -45,7 +45,7 @@ bool ModuleAudio::Init()
 
 	}
 	
-	*/
+	
 
 
 	return ret;
