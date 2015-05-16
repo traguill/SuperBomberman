@@ -81,13 +81,13 @@ bool ModulePlayer::Start()
 
 	collider = App->collision->AddCollider({ position.x, position.y-16, 16, 16 }, COLLIDER_PLAYER, this);
 
-	direction = downD;
+	direction_player = downD;
 
 	bomb_collision = false;
 	game_over_player = false;
 
 	current_bombs = 0;
-
+	max_bombs = 1;
 	position.x = 24;
 	position.y = 56;
 
@@ -120,7 +120,7 @@ update_status ModulePlayer::Update()
 		{
 			current_animation = &left;
 			position.x -= speed;
-			direction = leftD;
+			direction_player = leftD;
 
 			if (!App->audio->IsPlaying(audioChannel))
 			{
@@ -136,14 +136,14 @@ update_status ModulePlayer::Update()
 		{
 			current_animation = &right;
 			position.x += speed;
-			direction = rightD;
+			direction_player = rightD;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 		{
 			current_animation = &down;
 			position.y += speed;
-			direction = downD;
+			direction_player = downD;
 
 		}
 
@@ -151,13 +151,13 @@ update_status ModulePlayer::Update()
 		{
 			current_animation = &up;
 			position.y -= speed;
-			direction = upD;
+			direction_player = upD;
 
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP && current_bombs < MAX_BOMBS)
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP && current_bombs < max_bombs)
 		{
-			last_bomb = App->particles->AddParticle(App->particles->bomb, 24 + collider->GetPosLevel().x * TILE, 40 + collider->GetPosLevel().y* TILE, COLLIDER_BOMB, bombT);
+			last_bomb = App->particles->AddParticle(App->particles->bomb, DELAY_LEVEL_X + collider->GetPosLevel().x * TILE, DELAY_LEVEL_Y + collider->GetPosLevel().y* TILE, COLLIDER_BOMB, bombT);
 			bomb_collision = true;
 			current_bombs++;
 		}
@@ -185,7 +185,7 @@ update_status ModulePlayer::Update()
 	if (current_animation != &idle)				//Comprovem si esta en una animacio o parat, si esta parat li asignem el frame manualment.
 		r = current_animation->GetCurrentFrame();
 	else
-		r = current_animation->frames[direction];
+		r = current_animation->frames[direction_player];
 	
 	
 	if (game_over_player && current_animation->Finished())
@@ -209,7 +209,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	//Blocks-----------------------------------------------------------------------
 	if (c2->type == COLLIDER_BLOCK || c2->type == COLLIDER_WALL || c2->type == COLLIDER_BOMB)
 	{
-		ThrowWall(direction, c2);
+		ThrowWall(direction_player, c2);
 	}
 
 	//Killing objects-----------------------------------------------------------------
@@ -226,13 +226,13 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 }
 
 
-void ModulePlayer::ThrowWall(Looking direction, Collider* c){
+void ModulePlayer::ThrowWall(Looking direction_player, Collider* c){
 
 	p2Point<int> tmp;
 	tmp.x = c->rect.x;
 	tmp.y = c->rect.y;
 
-	switch (direction)
+	switch (direction_player)
 	{
 	case upD:
 		switch (RightLeft(tmp))
@@ -299,7 +299,7 @@ void ModulePlayer::ThrowWall(Looking direction, Collider* c){
 }
 
 int ModulePlayer::RightLeft(const p2Point<int> p) const{
-	int dir = 1; //Direction 0-left 1-NULL 2-right
+	int dir = 1; //direction_player 0-left 1-NULL 2-right
 	int tolerance = 6;
 	if (collider->rect.x + 16 <= p.x + tolerance)
 		dir = 0;

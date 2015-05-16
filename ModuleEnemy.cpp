@@ -82,20 +82,45 @@ update_status ModuleEnemy::Update()
 // Always destroy Enemy that collide
 void ModuleEnemy::OnCollision(Collider* c1, Collider* c2)
 {
-	/*
-	p2List_item<Enemy*>* tmp = active.getFirst();
+	//Blocks-----------------------------------------------------------------------
+	if (c2->type == COLLIDER_BLOCK || c2->type == COLLIDER_WALL || c2->type == COLLIDER_BOMB)
+	{
+		p2List_item<Enemy*>* tmp = active.getFirst();
 
-	while(tmp != NULL)
-	{
-	if(tmp->data->collider == c1 )
-	{
-	delete tmp->data;
-	active.del(tmp);
-	break;
+		while (tmp != NULL)
+		{
+			if (tmp->data->collider == c1)
+			{
+				tmp->data->position = tmp->data->last_position;
+				tmp->data->GetNewDirection();
+				break;
+			}
+
+			tmp = tmp->next;
+		}
 	}
 
-	tmp = tmp->next;
-	}*/
+	//Explosions
+	if (c2->type == COLLIDER_EXPLOSION)
+	{
+		p2List_item<Enemy*>* tmp = active.getFirst();
+
+		while (tmp != NULL)
+		{
+			if (tmp->data->collider == c1)
+			{
+				delete tmp->data;
+				active.del(tmp);
+				App->scene->current_enemies--;
+				break;
+			}
+
+			tmp = tmp->next;
+		}
+
+	}
+	
+	
 }
 
 Collider* ModuleEnemy::AddEnemy(const Enemy& enemy, int x, int y, COLLIDER_TYPE collider_type, TypeE _type)
@@ -110,6 +135,10 @@ Collider* ModuleEnemy::AddEnemy(const Enemy& enemy, int x, int y, COLLIDER_TYPE 
 	{
 		p->collider = App->collision->AddCollider({ p->position.x, p->position.y, 0, 0 }, collider_type, this);
 	}
+
+	srand(SDL_GetTicks());
+	int random_direction = rand() % (3 - 0 + 1) + 0; //3-max 0-min
+	p->direction_enemy = (Looking) random_direction; //TODO: Posar random a la direcció inicial.
 
 	active.add(p);
 	return p->collider;
@@ -138,16 +167,51 @@ Enemy::~Enemy()
 bool Enemy::Update()
 {
 	bool ret = true;
+	last_position = position;
 
-	//TODO: posar condicio de retornar false quan volguem matar-lo
-		
+	switch (direction_enemy)
+	{
+	case upD:
+		position.y -= VELOCITY_ENEMY;
+		break;
+	case downD:
+		position.y += VELOCITY_ENEMY;
+		break;
+	case rightD:
+		position.x += VELOCITY_ENEMY;
+		break;
+	case leftD:
+		position.x -= VELOCITY_ENEMY;
+		break;
+	}
 
 
 	if (collider != NULL)
 	{
 		SDL_Rect r = anim.PeekCurrentFrame();
-		collider->rect = { position.x, position.y, r.w, r.h };
+		collider->rect = { position.x, position.y+(r.h-TILE), TILE, TILE };
+	}
+
+	//Limits-----------------------------------------------------------------
+	if (collider->rect.x < 24 || collider->rect.x + 16 > 232 || collider->rect.y < 40 || collider->rect.y > 216 - 16)
+	{
+		position = last_position;
+		GetNewDirection();
 	}
 
 	return ret;
+}
+
+void Enemy::GetNewDirection(){
+	Looking new_direction = direction_enemy;
+	
+	srand(SDL_GetTicks());
+	while (new_direction == direction_enemy)
+	{
+		int random = rand() % (3 - 0 + 1) + 0; //3-max 0-min
+		new_direction = (Looking)random;
+	}
+
+	direction_enemy = new_direction;
+
 }
