@@ -19,6 +19,7 @@ public:
 	void DrawLevel();
 	void SetColliders();
 	void InitLevel();
+	void InitEnemies();
 
 public:
 

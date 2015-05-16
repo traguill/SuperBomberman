@@ -4,17 +4,7 @@
 #include "ModuleParticles.h"
 
 ModuleParticles::ModuleParticles(Application* app, bool start_enabled) : Module(app, start_enabled), graphics(NULL)
-{}
-
-ModuleParticles::~ModuleParticles()
-{}
-
-// Load assets
-bool ModuleParticles::Start()
 {
-	LOG("Loading particles");
-	graphics = App->textures->Load("particles.png");
-
 	// Explosion particle
 	explosion.anim.frames.PushBack({ 49, 49, 48, 48 });
 	explosion.anim.frames.PushBack({ 0, 49, 48, 48 });
@@ -24,10 +14,10 @@ bool ModuleParticles::Start()
 	explosion.anim.speed = 0.17f;
 
 	// Bomb particle
-	bomb.anim.frames.PushBack({115, 70, 16, 16});
-	bomb.anim.frames.PushBack({132, 70, 16, 16});
-	bomb.anim.frames.PushBack({149, 70, 16, 16 });
-	bomb.anim.frames.PushBack({132, 70, 16, 16 });
+	bomb.anim.frames.PushBack({ 115, 70, 16, 16 });
+	bomb.anim.frames.PushBack({ 132, 70, 16, 16 });
+	bomb.anim.frames.PushBack({ 149, 70, 16, 16 });
+	bomb.anim.frames.PushBack({ 132, 70, 16, 16 });
 	bomb.life = 2000;
 	bomb.anim.speed = 0.075f;
 
@@ -41,6 +31,19 @@ bool ModuleParticles::Start()
 	block.anim.frames.PushBack({ 232, 0, 16, 16 });
 	block.anim.speed = 0.18f;
 
+}
+
+ModuleParticles::~ModuleParticles()
+{}
+
+// Load assets
+bool ModuleParticles::Start()
+{
+	LOG("Loading particles");
+	graphics = App->textures->Load("particles.png");
+
+	
+
 	return true;
 }
 
@@ -49,6 +52,18 @@ bool ModuleParticles::CleanUp()
 {
 	LOG("Unloading particles");
 	App->textures->Unload(graphics);
+
+	p2List_item<Particle*>* item = active.getLast();
+
+	while (item != NULL)
+	{
+		delete item->data;
+		item = item->prev;
+	}
+
+	active.clear();
+
+
 	return true;
 }
 

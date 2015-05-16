@@ -24,6 +24,8 @@ ModuleLevel::~ModuleLevel()
 void ModuleLevel::DrawLevel()
 {
 	SDL_Rect block_r = block.GetCurrentFrame();
+
+	//Blocks
 	for (int i = 0; i < 13; i++)
 	{
 		for (int j = 0; j < 11; j++)
@@ -35,6 +37,8 @@ void ModuleLevel::DrawLevel()
 				App->renderer->Blit(graphics, 24 + i*TILE, 40 + j*TILE, &block_r);
 		}
 	}
+
+
 }
 
 void ModuleLevel::SetColliders()
@@ -64,6 +68,7 @@ bool ModuleLevel::Start()
 
 	InitLevel();
 	SetColliders();
+	InitEnemies();
 
 	return true;
 }
@@ -112,6 +117,9 @@ void ModuleLevel::InitLevel(){
 	memcpy(level, l, 13*11*sizeof(int));
 }
 
+void ModuleLevel::InitEnemies(){
+	App->enemy->AddEnemy(App->enemy->copter, 24 + 5 * TILE, 40 + 6* TILE, COLLIDER_ENEMY, copterT);
+}
 
 
 // Update: draw background
