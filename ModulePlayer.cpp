@@ -175,7 +175,16 @@ update_status ModulePlayer::Update()
 	}
 	else
 	{
-		current_animation = &die;
+		if (game_win)
+		{
+
+			current_animation = &win;
+		}
+		else
+		{
+			current_animation = &die;
+		}
+		
 	}
 
 	
@@ -192,10 +201,7 @@ update_status ModulePlayer::Update()
 	
 	//Check win game
 
-	if (game_win)
-	{
-		current_animation = &win;
-	}
+	
 		
 
 	// Draw everything --------------------------------------
