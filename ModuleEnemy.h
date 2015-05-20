@@ -13,9 +13,15 @@ enum TypeE{
 
 struct Enemy
 {
-	Animation anim;
+	Looking direction_enemy;
+	Animation* current_anim;
+	Animation right;
+	Animation left;
+	Animation up;
+	Animation down;
 	unsigned int fx;
 	p2Point<int> position;
+	p2Point<int> last_position;
 	p2Point<int> speed;
 	bool fx_played;
 	Collider* collider;
@@ -24,6 +30,7 @@ struct Enemy
 	Enemy(const Enemy& p);
 	~Enemy();
 	bool Update();
+	void GetNewDirection();
 };
 
 class ModuleEnemy : public Module
