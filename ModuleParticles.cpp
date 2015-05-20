@@ -71,8 +71,10 @@ update_status ModuleParticles::Update()
 				 App->player->current_bombs = 0;
 			if (p->type == blockT ){
 
+				random_portal = rand() % (int)(5);
+				
 
-				if (App->level->num_portals == 0)
+				if (App->level->num_portals == 0 && random_portal == 2)
 				{
 					App->level->level[p->collider->GetPosLevel().y][p->collider->GetPosLevel().x] = 3; //posem portal
 					App->level->num_portals++;

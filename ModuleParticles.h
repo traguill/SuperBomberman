@@ -53,6 +53,7 @@ public:
 	Particle bomb;
 	Particle explosion;
 	Particle block;
+	int random_portal;
 
 
 };
