@@ -17,6 +17,8 @@ public:
 
 	SDL_Texture* background;
 	SDL_Texture* planes;
-	SDL_Rect globus;
+	SDL_Rect ballon;
+	SDL_Rect zepelin;
+	SDL_Rect zepelin_fire;
 	unsigned int fx;
 };
