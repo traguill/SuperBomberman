@@ -14,7 +14,11 @@ enum TypeE{
 struct Enemy
 {
 	Looking direction_enemy;
-	Animation anim;
+	Animation* current_anim;
+	Animation right;
+	Animation left;
+	Animation up;
+	Animation down;
 	unsigned int fx;
 	p2Point<int> position;
 	p2Point<int> last_position;
