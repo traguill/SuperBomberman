@@ -15,6 +15,8 @@ public:
 
 public:
 
-	SDL_Texture* graphics;
+	SDL_Texture* background;
+	SDL_Texture* planes;
+	SDL_Rect globus;
 	unsigned int fx;
 };

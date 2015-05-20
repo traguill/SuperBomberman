@@ -6,7 +6,7 @@
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	graphics = NULL;
+	background = NULL;
 	fx = 0;
 }
 
@@ -20,7 +20,7 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 
 
-	graphics = App->textures->Load("TitleScreen.png");
+	background = App->textures->Load("buildings.png");
 	App->audio->PlayMusic("TitleMusic.ogg", 0.0f);
 
 	fx = App->audio->LoadFx("Game/Audios/Menu/enter.wav");  
@@ -34,7 +34,7 @@ bool ModuleSceneIntro::CleanUp()
 {
 	LOG("Unloading Intro scene");
 
-	App->textures->Unload(graphics);
+	App->textures->Unload(background);
 
 	return true;
 }
@@ -43,7 +43,7 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update()
 {
 	// Draw everything --------------------------------------	
-	App->renderer->Blit(graphics, 0, 0, NULL);
+	App->renderer->Blit(background, 0, 0, NULL);
 
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_UP)
 	{
