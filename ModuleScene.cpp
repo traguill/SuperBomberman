@@ -62,6 +62,7 @@ bool ModuleScene::CleanUp()
 //nota mental: nunca poner un log dentro del update, se sobrecarag todo
 update_status ModuleScene::Update()
 {
+	if (current_enemies == 0 && App->player->position.x == App->particles->position_portal_y && App->player->position.y - 15 == App->particles->position_portal_x)
 		App->player->game_win = true;
 	//Check Game Over
 	if (game_over && !scene_transition)
