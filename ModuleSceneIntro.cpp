@@ -34,6 +34,9 @@ bool ModuleSceneIntro::Start()
 	fx = App->audio->LoadFx("Game/Audios/Menu/enter.wav");  
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
+	//Items
+
+
 	return ret;
 }
 

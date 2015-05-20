@@ -5,6 +5,9 @@
 
 ModuleParticles::ModuleParticles(Application* app, bool start_enabled) : Module(app, start_enabled), graphics(NULL)
 {
+
+	graphics = NULL;
+
 	// Explosion particle
 	explosion.anim.frames.PushBack({ 49, 49, 48, 48 });
 	explosion.anim.frames.PushBack({ 0, 49, 48, 48 });

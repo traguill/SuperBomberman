@@ -17,8 +17,14 @@ public:
 
 	SDL_Texture* background;
 	SDL_Texture* planes;
+
 	SDL_Rect ballon;
 	SDL_Rect zepelin;
 	SDL_Rect zepelin_fire;
+
+	p2Point<int> ballon_position;
+	p2Point<int> zepelin_position;
+	p2Point<int> zepelin_fire_position;
+
 	unsigned int fx;
 };
