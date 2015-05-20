@@ -19,7 +19,7 @@ ModuleLevel::ModuleLevel(Application* app, bool start_enabled) : Module(app, sta
 	portal.frames.PushBack({ 80, 48, 16, 15 });
 	portal.speed = 0.1f;
 
-	num_portals = 0; 
+	
 	
 }
 
@@ -69,6 +69,9 @@ bool ModuleLevel::Start()
 	LOG("Loading Level");
 
 	graphics = App->textures->Load("powerups_obstacles.png");
+	num_portals = 0;
+	num_blocks = 7;
+
 
 	InitLevel();
 	SetColliders();
@@ -143,6 +146,8 @@ void ModuleLevel::OnCollision(Collider* c1, Collider* c2)
 			if (c1->GetPosLevel().x == c2->GetPosLevel().x || c1->GetPosLevel().y == c2->GetPosLevel().y)
 			{
 								
+				num_blocks--;
+
 				App->particles->AddParticle(App->particles->block, c1->rect.x, c1->rect.y, COLLIDER_WALL, blockT);
 
 				c1->to_delete = true;

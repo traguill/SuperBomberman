@@ -54,6 +54,8 @@ public:
 	Particle explosion;
 	Particle block;
 	int random_portal;
+	int position_portal_x;
+	int position_portal_y;
 
 
 };

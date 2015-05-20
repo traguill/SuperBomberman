@@ -28,4 +28,5 @@ public:
 	Animation portal;
 	int level[11][13];
 	int num_portals;
+	int num_blocks;
 };
