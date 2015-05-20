@@ -1,7 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleSceneIntro.h"
-
+#include <math.h>
 
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -35,7 +35,14 @@ bool ModuleSceneIntro::Start()
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	//Items
+	zepelin_fire_position.x = 242;
+	zepelin_fire_position.y = 88;
 
+	zepelin_position.x = 60;
+	zepelin_position.y = 130;
+
+	ballon_position.x = 5;
+	ballon_position.y = 10;
 
 	return ret;
 }
@@ -53,13 +60,19 @@ bool ModuleSceneIntro::CleanUp()
 
 update_status ModuleSceneIntro::Update()
 {
+	zepelin_position.x += 0.3f;
+	zepelin_fire_position.x -= 0.8f;
+	ballon_position.x += 0.4f;
+	ballon_position.y += sin(0.003f*SDL_GetTicks())*0.3f;
+	
+
 	// Draw background --------------------------------------	
 	App->renderer->Blit(background, 0, 0, NULL);
 	
 	//Draw items----------------------------------------------
-	App->renderer->Blit(planes, 0, 0, &zepelin);
-	App->renderer->Blit(planes, 100, 100, &zepelin_fire);
-	App->renderer->Blit(planes, 0, 0, &ballon);
+	App->renderer->Blit(planes, zepelin_position.x, zepelin_position.y, &zepelin);
+	App->renderer->Blit(planes, zepelin_fire_position.x, zepelin_fire_position.y, &zepelin_fire);
+	App->renderer->Blit(planes, ballon_position.x, ballon_position.y, &ballon);
 
 
 
