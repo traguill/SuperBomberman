@@ -18,6 +18,7 @@
 #include "ModuleSceneIntro.h"
 #include "ModuleLevel.h"
 #include "ModuleEnemy.h"
+#include "ModulePowerUp.h"
 
 
 class Application
@@ -37,6 +38,7 @@ public:
 	ModuleSceneIntro* intro;
 	ModuleLevel* level;
 	ModuleEnemy* enemy;
+	//ModulePowerUp* powerUp;
 
 private:
 

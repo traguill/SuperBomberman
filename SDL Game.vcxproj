@@ -74,6 +74,7 @@
     <ClInclude Include="ModuleCollision.h" />
     <ClInclude Include="ModuleEnemy.h" />
     <ClInclude Include="ModuleLevel.h" />
+    <ClInclude Include="ModulePowerUp.h" />
     <ClInclude Include="ModuleScene.h" />
     <ClInclude Include="ModuleSceneIntro.h" />
     <ClInclude Include="ModuleTimer.h" />
