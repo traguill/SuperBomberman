@@ -193,7 +193,10 @@ update_status ModulePlayer::Update()
 	//Check win game
 
 	if (game_win)
+	{
 		current_animation = &win;
+	}
+		
 
 	// Draw everything --------------------------------------
 	SDL_Rect r;
