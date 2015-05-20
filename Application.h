@@ -38,7 +38,7 @@ public:
 	ModuleSceneIntro* intro;
 	ModuleLevel* level;
 	ModuleEnemy* enemy;
-	//ModulePowerUp* powerUp;
+	ModulePowerUp* powerUp;
 
 private:
 

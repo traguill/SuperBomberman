@@ -14,8 +14,6 @@ ModuleLevel::ModuleLevel(Application* app, bool start_enabled) : Module(app, sta
 	block.frames.PushBack({ 373, 15, 16, 16 });
 	block.speed = 0.1f;
 
-	
-	
 }
 
 ModuleLevel::~ModuleLevel()
@@ -52,6 +50,10 @@ void ModuleLevel::SetColliders()
 				App->collision->AddCollider({ 24 + i*TILE, 40 + j*TILE, 16, 16 }, COLLIDER_WALL, this);
 			if (a == 2)
 				App->collision->AddCollider({ 24 + i*TILE, 40 + j*TILE, 16, 16 }, COLLIDER_BLOCK, this);
+			if (a == 3)
+			{
+				App->powerUp->ActivePowerUp(24 + i*TILE, 40 + j*TILE);
+			}
 		}
 	}
 
@@ -65,6 +67,10 @@ bool ModuleLevel::Start()
 	LOG("Loading Level");
 
 	graphics = App->textures->Load("GameTiles.png");
+
+	App->powerUp->AddPowerUp(POWERUP_BOMB);
+	App->powerUp->AddPowerUp(POWERUP_SPEED);
+	App->powerUp->AddPowerUp(POWERUP_FIRE);
 
 	InitLevel();
 	SetColliders();
@@ -101,12 +107,12 @@ void ModuleLevel::InitLevel(){
 		{ 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 		{ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 3, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		

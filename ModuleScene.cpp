@@ -7,9 +7,6 @@ ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, sta
 	graphics = NULL;
 	
 	stage = { 0, 0, 256, 192 };
-
-
-
 }
 
 ModuleScene::~ModuleScene()
@@ -27,11 +24,12 @@ bool ModuleScene::Start()
 	graphics = App->textures->Load("background_stage1.png");
 	App->audio->PlayMusic("Area1.ogg", 0.0f);
 	App->collision->Enable(); // enable before player
-	App->enemy->Enable(); //Enable before level
+	App->enemy->Enable(); //Enable before level//enemy s'hauria de fer enable a level, ja que son diferents per cadascun
 	App->level->Enable();
 	App->player->Enable();
 	App->timer->Enable();
 	App->particles->Enable();
+	App->powerUp->Enable();
 
 	
 	
@@ -57,6 +55,7 @@ bool ModuleScene::CleanUp()
 	App->level->Disable();
 	App->enemy->Disable();
 	App->collision->Disable();
+	App->powerUp->Disable();
 
 	return true;
 }

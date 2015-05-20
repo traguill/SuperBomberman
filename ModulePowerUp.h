@@ -2,6 +2,7 @@
 #define _ModulePowerUP_H_
 
 #include "Module.h"
+#include "p2DynArray.h"
 #include "p2List.h"
 
 enum POWERUP_TYPE
@@ -9,25 +10,19 @@ enum POWERUP_TYPE
 	POWERUP_NONE = -1,
 	POWERUP_SPEED,
 	POWERUP_BOMB,
+	POWERUP_FIRE,
 
 	POWEUP_MAX
 };
 
 struct PowerUp
 {
-	SDL_Rect rect;
-	bool to_delete;
+	p2Point<int> position;
+	Collider* collider;
 	POWERUP_TYPE type;
 
 
-	PowerUp(SDL_Rect rectangle, POWERUP_TYPE type) :
-		rect(rectangle),
-		type(type),
-		to_delete(false)
-	{}
-
-
-
+	PowerUp(POWERUP_TYPE type_);
 };
 
 class ModulePowerUp : public Module
@@ -35,20 +30,24 @@ class ModulePowerUp : public Module
 public:
 
 	ModulePowerUp(Application* app, bool start_enabled = true);
-	//destructor, ponerModulePowerUp();
+	~ModulePowerUp();
 
-	update_status PreUpdate();
+	bool Start();
 	update_status Update();
 	bool CleanUp();
 
-	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, Module* callback = NULL);
-	void DrawDebug(Collider* col);
-
+	void AddPowerUp(POWERUP_TYPE type);
+	void ActivePowerUp(int x, int y);
+	void DrawPowerUp(PowerUp* power);
+	//TODO: especificar el modul, ONcollision per afegir els efectes de cada PowerUp
 private:
 
-	p2List<Collider*>	colliders;
-	bool matrix[COLLIDER_MAX][COLLIDER_MAX];
-	bool debug;
+	p2DynArray<PowerUp*> levelPowerUps;
+	p2List<PowerUp*> active;
+	SDL_Texture* graphics;
+	Animation PowerSpeed;
+	Animation PowerBomb;
+	Animation PowerFire;
 };
 
-#endif // __ModuleCollision_H__
+#endif // __ModulePowerUp_H__
