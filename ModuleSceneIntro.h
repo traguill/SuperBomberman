@@ -22,9 +22,9 @@ public:
 	SDL_Rect zepelin;
 	SDL_Rect zepelin_fire;
 
-	p2Point<int> ballon_position;
-	p2Point<int> zepelin_position;
-	p2Point<int> zepelin_fire_position;
+	p2Point<float> ballon_position;
+	p2Point<float> zepelin_position;
+	p2Point<float> zepelin_fire_position;
 
 	unsigned int fx;
 };
