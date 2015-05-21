@@ -15,6 +15,14 @@ enum update_status
 	UPDATE_ERROR
 };
 
+enum Looking {				//Les variables tenen una D al final de direccio, no es poden dir up,down,right i left perque es confonen amb les animacions.		
+	downD = 0,
+	rightD = 1,
+	leftD = 2,
+	upD = 3
+};
+
+
 // Configuration -----------
 #define SCREEN_WIDTH 256
 #define SCREEN_HEIGHT 224
@@ -29,5 +37,8 @@ enum update_status
 #define VSYNC true
 #define TITLE "SuperBomberman"
 
+
 //BOMBERMAN
-#define MAX_BOMBS 1
+#define VELOCITY_ENEMY 1
+#define DELAY_LEVEL_X 24
+#define DELAY_LEVEL_Y 40

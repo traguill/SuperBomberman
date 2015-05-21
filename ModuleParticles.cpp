@@ -5,6 +5,12 @@
 
 ModuleParticles::ModuleParticles(Application* app, bool start_enabled) : Module(app, start_enabled), graphics(NULL)
 {
+
+
+
+	graphics = NULL;
+
+
 	// Explosion particle
 	explosion.anim.frames.PushBack({ 49, 49, 48, 48 });
 	explosion.anim.frames.PushBack({ 0, 49, 48, 48 });
@@ -32,6 +38,8 @@ ModuleParticles::ModuleParticles(Application* app, bool start_enabled) : Module(
 	block.anim.speed = 0.18f;
 
 
+
+
 }
 
 ModuleParticles::~ModuleParticles()
@@ -43,7 +51,9 @@ bool ModuleParticles::Start()
 	LOG("Loading particles");
 	graphics = App->textures->Load("particles.png");
 
+
 	position_portal_x = position_portal_y = 0;
+
 
 	return true;
 }
@@ -53,6 +63,18 @@ bool ModuleParticles::CleanUp()
 {
 	LOG("Unloading particles");
 	App->textures->Unload(graphics);
+
+	p2List_item<Particle*>* item = active.getLast();
+
+	while (item != NULL)
+	{
+		delete item->data;
+		item = item->prev;
+	}
+
+	active.clear();
+
+
 	return true;
 }
 

@@ -19,7 +19,7 @@ bool ModuleAudio::Init()
 	SDL_Init(0);
 
 
-
+	
 	if(SDL_InitSubSystem(SDL_INIT_AUDIO) < 0)
 
 	{
@@ -45,7 +45,7 @@ bool ModuleAudio::Init()
 
 	}
 	
-
+	
 
 
 	return ret;
@@ -153,20 +153,25 @@ unsigned int ModuleAudio::LoadFx(const char* path)
 }
 
 // Play WAV
-bool ModuleAudio::PlayFx(unsigned int id, int repeat)
+int ModuleAudio::PlayFx(unsigned int id, int repeat)
 {
 	if(IsEnabled() == false)
 		return false;
 
-	bool ret = false;
+	int ret = -1;
 
 	Mix_Chunk* chunk = NULL;
 	
 	if(fx.at(id-1, chunk) == true)
 	{
-		Mix_PlayChannel(-1, chunk, repeat);
-		ret = true;
+		ret = Mix_PlayChannel(-1, chunk, repeat);
 	}
 
 	return ret;
 }
+
+bool ModuleAudio::IsPlaying( int channel)
+{
+	return Mix_Playing(channel);
+}
+
