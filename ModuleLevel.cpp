@@ -170,9 +170,8 @@ void ModuleLevel::OnCollision(Collider* c1, Collider* c2)
 			{
 								
 				num_blocks--;
-
+				level[c1->GetPosLevel().y][c1->GetPosLevel().x] = 0;
 				App->particles->AddParticle(App->particles->block, c1->rect.x, c1->rect.y, COLLIDER_WALL, blockT);
-
 				c1->to_delete = true;
 				
 			}
