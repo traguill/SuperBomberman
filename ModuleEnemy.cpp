@@ -13,22 +13,22 @@ ModuleEnemy::ModuleEnemy(Application* app, bool start_enabled) : Module(app, sta
 	copter.left.speed = 0.17f;
 
 
-	copter.down.frames.PushBack({ 64, 0, 16, 24 });
-	copter.down.frames.PushBack({ 80, 0, 16, 24 });
-	copter.down.frames.PushBack({ 96, 0, 16, 24 });
-	copter.down.frames.PushBack({ 112, 0, 16, 24 });
+	copter.down.frames.PushBack({ 65, 0, 16, 24 });
+	copter.down.frames.PushBack({ 81, 0, 16, 24 });
+	copter.down.frames.PushBack({ 97, 0, 16, 24 });
+	copter.down.frames.PushBack({ 113, 0, 16, 24 });
 	copter.down.speed = 0.17f;
 
-	copter.up.frames.PushBack({ 128, 0, 16, 24 });
-	copter.up.frames.PushBack({ 144, 0, 16, 24 });
-	copter.up.frames.PushBack({ 160, 0, 16, 24 });
-	copter.up.frames.PushBack({ 176, 0, 16, 24 });
+	copter.up.frames.PushBack({ 130, 0, 16, 24 });
+	copter.up.frames.PushBack({ 146, 0, 16, 24 });
+	copter.up.frames.PushBack({ 162, 0, 16, 24 });
+	copter.up.frames.PushBack({ 178, 0, 16, 24 });
 	copter.up.speed = 0.17f;
 
-	copter.right.frames.PushBack({ 0, 0, 16, 24 });
-	copter.right.frames.PushBack({ 16, 0, 16, 24 });
-	copter.right.frames.PushBack({ 32, 0, 16, 24 });
-	copter.right.frames.PushBack({ 48, 0, 16, 24 });
+	copter.right.frames.PushBack({ 195, 0, 16, 24 });
+	copter.right.frames.PushBack({ 211, 0, 16, 24 });
+	copter.right.frames.PushBack({ 227, 0, 16, 24 });
+	copter.right.frames.PushBack({ 243, 0, 16, 24 });
 	copter.right.speed = 0.17f;
 }
 

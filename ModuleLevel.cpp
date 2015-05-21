@@ -83,12 +83,12 @@ bool ModuleLevel::Start()
 
 	graphics = App->textures->Load("powerups_obstacles.png");
 	num_portals = 0;
-	num_blocks = 7;
+	num_blocks = 5;
 
 
 	App->powerUp->AddPowerUp(POWERUP_BOMB);
 	App->powerUp->AddPowerUp(POWERUP_SPEED);
-	App->powerUp->AddPowerUp(POWERUP_FIRE);
+	//App->powerUp->AddPowerUp(POWERUP_FIRE);
 
 	InitLevel();
 	SetColliders();
@@ -124,16 +124,16 @@ void ModuleLevel::InitLevel(){
 	{ 
 		
 		{ 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-		{ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0 },
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0 },
-		{ 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0 },
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-		{ 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0 },
-		{ 0, 4, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0 },
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-		{ 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 1, 4, 1, 0, 1, 2, 1, 0, 1, 0, 1, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2 },
+		{ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 },
+		{ 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0 },
+		{ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 },
+		{ 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0 },
+		{ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 },
+		{ 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		
 
 		
@@ -143,7 +143,7 @@ void ModuleLevel::InitLevel(){
 }
 
 void ModuleLevel::InitEnemies(){
-	App->enemy->AddEnemy(App->enemy->copter, 24 + 5 * TILE, 40 + 6* TILE, COLLIDER_ENEMY, copterT);
+	App->enemy->AddEnemy(App->enemy->copter, 24 + 6 * TILE, 40 + 7* TILE, COLLIDER_ENEMY, copterT);
  	App->scene->current_enemies++;
 }
 
