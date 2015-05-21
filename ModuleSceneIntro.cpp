@@ -87,10 +87,10 @@ update_status ModuleSceneIntro::Update()
 {
 	actual_time = SDL_GetTicks() - start_time;
 
-	zepelin_position.x += 0.3f;
-	zepelin_fire_position.x -= 0.8f;
-	ballon_position.x += 0.4f;
-	ballon_position.y += sin(0.003f*SDL_GetTicks())*0.3f;
+	zepelin_position.x += 0.1f;
+	zepelin_fire_position.x -= 0.6f;
+	ballon_position.x += 0.2f;
+	ballon_position.y += sin(0.003f*SDL_GetTicks())*0.1f;
 
 	//Text apears after 3s---------------------------------------
 	if (actual_time > 3000) 
