@@ -12,11 +12,17 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 
 	zepelin = { 75, 0, 32, 19};
 	ballon = { 80, 47, 44, 77};
-	zepelin_fire = { 0, 0, 73, 41 };
+	zepelin_fire.frames.PushBack({ 0, 0, 73, 41 });
+	zepelin_fire.frames.PushBack({ 0, 41, 73, 41 });
+	zepelin_fire.frames.PushBack({ 0, 0, 73, 41 });
+	zepelin_fire.frames.PushBack({ 0, 82, 73, 41 });
+	zepelin_fire.speed = 0.1f;
 
 	text_up = {0,0,255,66};
 
 	text_down = {0, 66, 255, 85};
+
+	text_menu = { 0, 150, 255, 74 };
 
 	fx = 0;
 }
@@ -115,8 +121,11 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(background, 0, 0, NULL);
 	
 	//Draw items----------------------------------------------
+
+	SDL_Rect zepelin_fire_r = zepelin_fire.GetCurrentFrame();
+
 	App->renderer->Blit(planes, zepelin_position.x, zepelin_position.y, &zepelin);
-	App->renderer->Blit(planes, zepelin_fire_position.x, zepelin_fire_position.y, &zepelin_fire);
+	App->renderer->Blit(planes, zepelin_fire_position.x, zepelin_fire_position.y, &zepelin_fire_r);
 	App->renderer->Blit(planes, ballon_position.x, ballon_position.y, &ballon);
 
 	//Draw text------------------------------------------------
@@ -125,6 +134,9 @@ update_status ModuleSceneIntro::Update()
 
 	if (flash == 1 && actual_time - 50 <= flash_startime)
 		App->renderer->DrawQuad({0,0,1000,1000}, 255, 255, 255, 255, false);
+	else
+		if (actual_time - 50 > flash_startime && flash == 1)
+			App->renderer->Blit(text, 0, 150, &text_menu);
 
 
 	//Change scene--------------------------------------------

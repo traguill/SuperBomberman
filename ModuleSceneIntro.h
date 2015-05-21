@@ -21,10 +21,11 @@ public:
 
 	SDL_Rect ballon;
 	SDL_Rect zepelin;
-	SDL_Rect zepelin_fire;
+	Animation zepelin_fire;
 
 	SDL_Rect text_up;
 	SDL_Rect text_down;
+	SDL_Rect text_menu;
 
 	p2Point<float> ballon_position;
 	p2Point<float> zepelin_position;
@@ -32,6 +33,7 @@ public:
 
 	p2Point<float> text_up_position;
 	p2Point<float> text_down_position;
+
 
 	int flash; //0- No 1-Need to flash 2-Has flashed
 	Uint32 flash_startime;
