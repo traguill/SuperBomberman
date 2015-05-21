@@ -108,7 +108,8 @@ bool ModulePlayer::Start()
 	game_over_player = false;
 
 	game_win = false;
-
+	win.Reset();
+	die.Reset();
 
 	current_bombs = 0;
 	max_bombs = 1;
@@ -220,7 +221,7 @@ update_status ModulePlayer::Update()
 		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP && current_bombs < max_bombs)
 		{
 
-			last_bomb = App->particles->AddParticle(App->particles->bomb, 24 + collider->GetPosLevel().x * TILE, 40 + collider->GetPosLevel().y* TILE, COLLIDER_BOMB, bombT);
+  			last_bomb = App->particles->AddParticle(App->particles->bomb, 24 + collider->GetPosLevel().x * TILE, 40 + collider->GetPosLevel().y* TILE, COLLIDER_BOMB, bombT);
 			App->audio->PlayFx(fxPut);
 			bomb_collision = true;
 			current_bombs++;
