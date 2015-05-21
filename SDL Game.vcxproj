@@ -74,6 +74,7 @@
     <ClInclude Include="ModuleCollision.h" />
     <ClInclude Include="ModuleEnemy.h" />
     <ClInclude Include="ModuleLevel.h" />
+    <ClInclude Include="ModulePowerUp.h" />
     <ClInclude Include="ModuleScene.h" />
     <ClInclude Include="ModuleSceneIntro.h" />
     <ClInclude Include="ModuleTimer.h" />
@@ -108,6 +109,7 @@
     <ClCompile Include="ModuleTextures.cpp" />
     <ClCompile Include="ModuleTimer.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
+    <ClCompile Include="ModulePowerUp.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

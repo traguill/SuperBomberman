@@ -39,6 +39,8 @@ enum Looking {				//Les variables tenen una D al final de direccio, no es poden 
 
 
 //BOMBERMAN
+
 #define VELOCITY_ENEMY 1
 #define DELAY_LEVEL_X 24
 #define DELAY_LEVEL_Y 40
+

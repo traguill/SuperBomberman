@@ -16,7 +16,8 @@ Application::Application()
 	timer = new ModuleTimer(this, false);
 	intro = new ModuleSceneIntro(this, true);
 	level = new ModuleLevel(this, false);
-	enemy = new ModuleEnemy(this,false);
+	enemy = new ModuleEnemy(this, false);
+	powerUp = new ModulePowerUp(this, false);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -41,6 +42,7 @@ Application::Application()
 	AddModule(particles);
 	AddModule(collision);
 	AddModule(level);
+	AddModule(powerUp);
 
 	// Characters
 	AddModule(player);
@@ -65,6 +67,7 @@ Application::~Application()
 	delete fade;
 	delete timer;
 	delete collision;
+	delete powerUp;
 }
 
 bool Application::Init()

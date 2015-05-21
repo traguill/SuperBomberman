@@ -47,6 +47,7 @@ public:
 	int max_bombs;
 	int speed;
 
-	unsigned int fx;
+	unsigned int fxStep;
+	unsigned int fxPut;
 	int audioChannel;
 };

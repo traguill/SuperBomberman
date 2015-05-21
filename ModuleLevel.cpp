@@ -15,12 +15,14 @@ ModuleLevel::ModuleLevel(Application* app, bool start_enabled) : Module(app, sta
 	block.speed = 0.1f;
 
 
+
 	portal.frames.PushBack({ 80, 32, 16, 15 });
 	portal.frames.PushBack({ 80, 48, 16, 15 });
 	portal.speed = 0.1f;
 
 	
 	
+
 }
 
 ModuleLevel::~ModuleLevel()
@@ -63,6 +65,10 @@ void ModuleLevel::SetColliders()
 				App->collision->AddCollider({ 24 + i*TILE, 40 + j*TILE, 16, 16 }, COLLIDER_WALL, this);
 			if (a == 2)
 				App->collision->AddCollider({ 24 + i*TILE, 40 + j*TILE, 16, 16 }, COLLIDER_BLOCK, this);
+			if (a == 4)
+			{
+				App->powerUp->ActivePowerUp(24 + i*TILE, 40 + j*TILE);
+			}
 		}
 	}
 
@@ -80,6 +86,10 @@ bool ModuleLevel::Start()
 	num_blocks = 7;
 
 
+	App->powerUp->AddPowerUp(POWERUP_BOMB);
+	App->powerUp->AddPowerUp(POWERUP_SPEED);
+	App->powerUp->AddPowerUp(POWERUP_FIRE);
+
 	InitLevel();
 	SetColliders();
 	InitEnemies();
@@ -94,6 +104,7 @@ bool ModuleLevel::CleanUp()
 
 	App->textures->Unload(graphics);
 
+	App->powerUp->levelPowerUps.Clear();
 
 	return true;
 }
@@ -115,11 +126,11 @@ void ModuleLevel::InitLevel(){
 		{ 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 		{ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0 },
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		{ 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0 },
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 4, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
