@@ -36,7 +36,7 @@ void ModulePowerUp::ActivePowerUp(int x, int y)
 	power->position.x = x;
 	power->position.y = y;
 
-	//power->collider = App->collision->AddCollider({ power->position.x, power->position.y, TILE, TILE }, COLLIDER_POWERUP);
+	power->collider = App->collision->AddCollider({ power->position.x, power->position.y, TILE, TILE }, COLLIDER_POWERUP, App->powerUp);
 	
 	active.add(power);
 }
@@ -60,6 +60,59 @@ void ModulePowerUp::DrawPowerUp(PowerUp* power)
 
 	App->renderer->Blit(graphics, power->position.x, power->position.y, &r);
 }
+
+void ModulePowerUp::DeletePowerUp(PowerUp* power)
+{
+	active.del(active.findNode(power));
+	delete power;
+}
+
+void ModulePowerUp::OnCollision(Collider* c1, Collider* c2)
+{
+	if (c2->type == COLLIDER_EXPLOSION)
+	{
+		p2List_item<PowerUp*>* tmp = active.getFirst();
+
+		while (tmp != NULL)
+		{
+			if (tmp->data->collider == c1)
+			{
+				c1->to_delete = true;
+				delete tmp->data;
+				active.del(tmp);
+				
+				break;
+			}
+			tmp = tmp->next;
+		}
+	}
+	if (c2->type == COLLIDER_PLAYER)
+	{
+		p2List_item<PowerUp*>* tmp = active.getFirst();
+
+		while (tmp != NULL)
+		{
+			if (tmp->data->collider == c1)
+			{
+				switch (tmp->data->type)
+				{
+				case POWERUP_BOMB:
+					App->player->max_bombs++;
+					break;
+				case POWERUP_SPEED:
+					App->player->speed++;
+					break;
+				}
+				c1->to_delete = true;
+				delete tmp->data;
+				active.del(tmp);
+				break;
+			}
+			tmp = tmp->next;
+		}
+	}
+}
+
 ModulePowerUp::~ModulePowerUp()
 {}
 
@@ -93,7 +146,17 @@ bool ModulePowerUp::CleanUp()
 	LOG("Unloading PowerUP");
 
 	App->textures->Unload(graphics);
+	//per quan fem nivells comprovar que l'array esta buit
+	p2List_item<PowerUp*>* item = active.getLast();
 
+	while (item != NULL)
+	{
+		delete item->data;
+		item = item->prev;
+	}
+
+	active.clear();
+	
 	return true;
 }
 

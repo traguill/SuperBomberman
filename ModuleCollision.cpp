@@ -159,6 +159,9 @@ void ModuleCollision::DrawDebug(Collider* col)
 		case COLLIDER_ENEMY:
 			App->renderer->DrawQuad(col->rect, 255, 0, 0, alpha);
 			break;
+		case COLLIDER_POWERUP:
+			App->renderer->DrawQuad(col->rect, 0, 0, 0, alpha);
+			break;
 	
 	}
 	

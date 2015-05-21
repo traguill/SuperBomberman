@@ -39,8 +39,11 @@ public:
 	void AddPowerUp(POWERUP_TYPE type);
 	void ActivePowerUp(int x, int y);
 	void DrawPowerUp(PowerUp* power);
+	void DeletePowerUp(PowerUp* power);
+	void OnCollision(Collider* c1, Collider* c2);
 	//TODO: especificar el modul, ONcollision per afegir els efectes de cada PowerUp
-private:
+
+public:
 
 	p2DynArray<PowerUp*> levelPowerUps;
 	p2List<PowerUp*> active;

@@ -42,8 +42,8 @@ bool ModuleParticles::Start()
 	LOG("Loading particles");
 	graphics = App->textures->Load("particles.png");
 
+	fxExplode = App->audio->LoadFx("game/Audios/Gameplay/Explode.wav");
 	
-
 	return true;
 }
 
@@ -52,7 +52,7 @@ bool ModuleParticles::CleanUp()
 {
 	LOG("Unloading particles");
 	App->textures->Unload(graphics);
-
+	 
 	p2List_item<Particle*>* item = active.getLast();
 
 	while (item != NULL)
@@ -81,9 +81,13 @@ update_status ModuleParticles::Update()
 		if(p->Update() == false)
 		{
 			if (p->type == bombT)
-				App->particles->AddParticle(App->particles->explosion, p->position.x-16, p->position.y-16, COLLIDER_EXPLOSION, explosionT); //DOIT: si es una bomba crea una particula explosio
+			{
+				App->particles->AddParticle(App->particles->explosion, p->position.x - 16, p->position.y - 16, COLLIDER_EXPLOSION, explosionT); //DOIT: si es una bomba crea una particula explosio
+				App->audio->PlayFx(fxExplode);
+			}
 			if (p->type == explosionT)
-				 App->player->current_bombs = 0;
+				App->player->current_bombs = 0;
+
 			if (p->type == blockT)
 				App->level->level[p->collider->GetPosLevel().y][p->collider->GetPosLevel().x] = 0; //actualitzem la matriu nivell i li diem que no hi ha res.
 			delete p;

@@ -8,8 +8,9 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	graphics = NULL;
 	current_animation = NULL;
 	last_bomb = NULL;
-
-	fx = 0;
+	
+	fxStep = 0;
+	fxPut = 0;
 	audioChannel = 0;
 	
 
@@ -77,7 +78,8 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 
 	graphics = App->textures->Load("Bomberman.png");
-	fx = App->audio->LoadFx("Game/Audios/Gameplay/Step.wav");
+	fxStep = App->audio->LoadFx("Game/Audios/Gameplay/Step.wav");
+	fxPut = App->audio->LoadFx("Game/Audios/Gameplay/PutBomb.wav");
 
 	collider = App->collision->AddCollider({ position.x, position.y-16, 16, 16 }, COLLIDER_PLAYER, this);
 
@@ -87,6 +89,7 @@ bool ModulePlayer::Start()
 	game_over_player = false;
 
 	current_bombs = 0;
+	max_bombs = 1;
 
 	position.x = 24;
 	position.y = 56;
@@ -119,12 +122,15 @@ update_status ModulePlayer::Update()
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
 			current_animation = &left;
-			position.x -= speed;
+			for (int i = 0; i < speed; i++)
+			{
+				position.x--;
+			}
 			direction = leftD;
 
 			if (!App->audio->IsPlaying(audioChannel))
 			{
-				audioChannel = App->audio->PlayFx(fx);
+				audioChannel = App->audio->PlayFx(fxStep);
 			}
 
 		}
@@ -135,29 +141,53 @@ update_status ModulePlayer::Update()
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
 			current_animation = &right;
-			position.x += speed;
+			for (int i = 0; i < speed; i++)
+			{
+				position.x++;
+			}
 			direction = rightD;
+
+			if (!App->audio->IsPlaying(audioChannel))
+			{
+				audioChannel = App->audio->PlayFx(fxStep);
+			}
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 		{
 			current_animation = &down;
-			position.y += speed;
+			for (int i = 0; i < speed; i++)
+			{
+				position.y++;
+			}
 			direction = downD;
+
+			if (!App->audio->IsPlaying(audioChannel))
+			{
+				audioChannel = App->audio->PlayFx(fxStep);
+			}
 
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 		{
 			current_animation = &up;
-			position.y -= speed;
+			for (int i = 0; i < speed; i++)
+			{
+				position.y--;
+			}
 			direction = upD;
 
+			if (!App->audio->IsPlaying(audioChannel))
+			{
+				audioChannel = App->audio->PlayFx(fxStep);
+			}
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP && current_bombs < MAX_BOMBS)
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP && current_bombs < max_bombs)
 		{
 			last_bomb = App->particles->AddParticle(App->particles->bomb, 24 + collider->GetPosLevel().x * TILE, 40 + collider->GetPosLevel().y* TILE, COLLIDER_BOMB, bombT);
+			App->audio->PlayFx(fxPut);
 			bomb_collision = true;
 			current_bombs++;
 		}
@@ -225,7 +255,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	}
 }
 
-
+//TODO: revisar perque al agafar el speed, els sprites es sobreposen
 void ModulePlayer::ThrowWall(Looking direction, Collider* c){
 
 	p2Point<int> tmp;
@@ -239,12 +269,12 @@ void ModulePlayer::ThrowWall(Looking direction, Collider* c){
 		{
 		case 0:	//left
 			//GO UP LEFT
-			position.x -= speed;
+			position.x -= 1;
 			return;
 			break;
 		case 2: //right
 			//GO UP RIGHT
-			position.x += speed;
+			position.x += 1;
 			return;
 			break;
 		}
@@ -254,12 +284,12 @@ void ModulePlayer::ThrowWall(Looking direction, Collider* c){
 		{
 		case 0:	//Left
 			//GO DOWN LEFT
-			position.x -= speed;
+			position.x -= 1;
 			return;
 			break;
 		case 2: //Right
 			//GO DOWN RIGHT
-			position.x += speed;
+			position.x += 1;
 			return;
 			break;
 		}
@@ -269,12 +299,12 @@ void ModulePlayer::ThrowWall(Looking direction, Collider* c){
 		{
 		case 0:	//Up
 			//RIGHT UP
-			position.y -= speed;
+			position.y -= 1;
 			return;
 			break;
 		case 2: //Down
 			//RIGHT DOWN
-			position.y += speed;
+			position.y += 1;
 			return;
 			break;
 		}
@@ -284,12 +314,12 @@ void ModulePlayer::ThrowWall(Looking direction, Collider* c){
 		{
 		case 0:	//Up
 			//left UP
-			position.y -= speed;
+			position.y -= 1;
 			return;
 			break;
 		case 2: //Down
 			//left DOWN
-			position.y += speed;
+			position.y += 1;
 			break;
 		}
 		break;

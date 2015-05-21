@@ -30,4 +30,3 @@ enum update_status
 #define TITLE "SuperBomberman"
 
 //BOMBERMAN
-#define MAX_BOMBS 1

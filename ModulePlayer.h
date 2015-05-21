@@ -48,8 +48,10 @@ public:
 	bool bomb_collision;
 	bool game_over_player; //S'encarrega de gestionar tot lo del player abans de tancar el joc.
 	int current_bombs;
+	int max_bombs;
 	int speed;
 
-	unsigned int fx;
+	unsigned int fxStep;
+	unsigned int fxPut;
 	int audioChannel;
 };
