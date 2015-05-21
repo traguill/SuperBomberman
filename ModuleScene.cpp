@@ -20,6 +20,8 @@ ModuleScene::~ModuleScene()
 bool ModuleScene::Start()
 {
 	LOG("Loading scene");
+	
+	current_enemies = 0;
 
 	graphics = App->textures->Load("background_stage1.png");
 	App->audio->PlayMusic("Area1.ogg", 0.0f);
@@ -37,7 +39,7 @@ bool ModuleScene::Start()
 
 	scene_transition = false;
 	game_over = false;
-	current_enemies = 1; //TODO: canviar a 0 quan hi hagi enemics
+	
 	
 
 
@@ -64,8 +66,12 @@ bool ModuleScene::CleanUp()
 //nota mental: nunca poner un log dentro del update, se sobrecarag todo
 update_status ModuleScene::Update()
 {
-	if (current_enemies == 0)
-		game_over = true;
+	if (current_enemies == 0 && App->player->position.x == App->particles->position_portal_y && App->player->position.y - 16 == App->particles->position_portal_x)
+	{
+		App->player->game_win = true;
+		App->player->game_over_player = true;
+	}
+		
 	//Check Game Over
 	if (game_over && !scene_transition)
 	{

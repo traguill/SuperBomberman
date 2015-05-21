@@ -64,6 +64,22 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	die.speed = 0.2f;
 	die.loop = false;
 
+	//Win
+	
+	win.frames.PushBack({ 34, 26, 16, 24 });
+	win.frames.PushBack({ 49, 26, 16, 24 });
+	win.frames.PushBack({ 66, 26, 16, 24 });
+	win.frames.PushBack({ 83, 26, 16, 24 });
+	win.frames.PushBack({ 98, 26, 16, 24 });
+	win.frames.PushBack({ 115, 26, 16, 24 });
+	win.frames.PushBack({ 132, 26, 16, 24 });
+	win.frames.PushBack({ 149, 26, 16, 24 });
+	win.frames.PushBack({ 166, 26, 16, 24 });
+	win.frames.PushBack({ 183, 26, 16, 24 });
+	win.speed = 0.05f;
+	win.loop = false;
+
+
 
 
 
@@ -81,18 +97,23 @@ bool ModulePlayer::Start()
 	fxStep = App->audio->LoadFx("Game/Audios/Gameplay/Step.wav");
 	fxPut = App->audio->LoadFx("Game/Audios/Gameplay/PutBomb.wav");
 
+	position.x = 24;
+	position.y = 56;
+
 	collider = App->collision->AddCollider({ position.x, position.y-16, 16, 16 }, COLLIDER_PLAYER, this);
 
-	direction = downD;
+	direction_player = downD;
 
 	bomb_collision = false;
 	game_over_player = false;
 
+	game_win = false;
+
+
 	current_bombs = 0;
 	max_bombs = 1;
 
-	position.x = 24;
-	position.y = 56;
+	
 
 	speed = 1;
 	return true;
@@ -122,11 +143,15 @@ update_status ModulePlayer::Update()
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
 			current_animation = &left;
+
 			for (int i = 0; i < speed; i++)
 			{
 				position.x--;
 			}
-			direction = leftD;
+			direction_player = leftD;
+
+		
+
 
 			if (!App->audio->IsPlaying(audioChannel))
 			{
@@ -141,16 +166,18 @@ update_status ModulePlayer::Update()
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
 			current_animation = &right;
+
 			for (int i = 0; i < speed; i++)
 			{
 				position.x++;
 			}
-			direction = rightD;
+			direction_player = rightD;
 
 			if (!App->audio->IsPlaying(audioChannel))
 			{
 				audioChannel = App->audio->PlayFx(fxStep);
 			}
+			
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
@@ -160,7 +187,9 @@ update_status ModulePlayer::Update()
 			{
 				position.y++;
 			}
-			direction = downD;
+			direction_player = downD;
+
+
 
 			if (!App->audio->IsPlaying(audioChannel))
 			{
@@ -172,11 +201,15 @@ update_status ModulePlayer::Update()
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 		{
 			current_animation = &up;
+
 			for (int i = 0; i < speed; i++)
 			{
 				position.y--;
 			}
-			direction = upD;
+			direction_player = upD;
+
+		
+
 
 			if (!App->audio->IsPlaying(audioChannel))
 			{
@@ -186,6 +219,7 @@ update_status ModulePlayer::Update()
 
 		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP && current_bombs < max_bombs)
 		{
+
 			last_bomb = App->particles->AddParticle(App->particles->bomb, 24 + collider->GetPosLevel().x * TILE, 40 + collider->GetPosLevel().y* TILE, COLLIDER_BOMB, bombT);
 			App->audio->PlayFx(fxPut);
 			bomb_collision = true;
@@ -194,7 +228,16 @@ update_status ModulePlayer::Update()
 	}
 	else
 	{
-		current_animation = &die;
+		if (game_win)
+		{
+
+			current_animation = &win;
+		}
+		else
+		{
+			current_animation = &die;
+		}
+		
 	}
 
 	
@@ -208,6 +251,11 @@ update_status ModulePlayer::Update()
 	bomb_collision = false;
 	
 	CheckLimits();
+	
+	//Check win game
+
+	
+		
 
 	// Draw everything --------------------------------------
 	SDL_Rect r;
@@ -215,12 +263,15 @@ update_status ModulePlayer::Update()
 	if (current_animation != &idle)				//Comprovem si esta en una animacio o parat, si esta parat li asignem el frame manualment.
 		r = current_animation->GetCurrentFrame();
 	else
-		r = current_animation->frames[direction];
+		r = current_animation->frames[direction_player];
 	
 	
 	if (game_over_player && current_animation->Finished())
 		App->scene->game_over = true;
 	
+	if (game_win && current_animation->Finished())
+		App->scene->game_over = true;
+			
 
 	App->renderer->Blit(graphics, position.x, position.y - r.h, &r);
 
@@ -239,7 +290,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	//Blocks-----------------------------------------------------------------------
 	if (c2->type == COLLIDER_BLOCK || c2->type == COLLIDER_WALL || c2->type == COLLIDER_BOMB)
 	{
-		ThrowWall(direction, c2);
+		ThrowWall(direction_player, c2);
 	}
 
 	//Killing objects-----------------------------------------------------------------
@@ -255,14 +306,18 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	}
 }
 
-//TODO: revisar perque al agafar el speed, els sprites es sobreposen
-void ModulePlayer::ThrowWall(Looking direction, Collider* c){
+
+
+
+
+void ModulePlayer::ThrowWall(Looking direction_player, Collider* c){
+
 
 	p2Point<int> tmp;
 	tmp.x = c->rect.x;
 	tmp.y = c->rect.y;
 
-	switch (direction)
+	switch (direction_player)
 	{
 	case upD:
 		switch (RightLeft(tmp))
@@ -329,7 +384,7 @@ void ModulePlayer::ThrowWall(Looking direction, Collider* c){
 }
 
 int ModulePlayer::RightLeft(const p2Point<int> p) const{
-	int dir = 1; //Direction 0-left 1-NULL 2-right
+	int dir = 1; //direction_player 0-left 1-NULL 2-right
 	int tolerance = 6;
 	if (collider->rect.x + 16 <= p.x + tolerance)
 		dir = 0;

@@ -6,13 +6,22 @@ ModuleLevel::ModuleLevel(Application* app, bool start_enabled) : Module(app, sta
 {
 	graphics = NULL;
 
-	wall = { 288, 32, 16, 16 };
+	wall = { 195, 0, 17, 17 };
 
-	block.frames.PushBack({ 322, 15, 16, 16 });
-	block.frames.PushBack({ 339, 15, 16, 16 });
-	block.frames.PushBack({ 356, 15, 16, 16 });
-	block.frames.PushBack({ 373, 15, 16, 16 });
+	block.frames.PushBack({ 128, 0, 17, 18 });
+	block.frames.PushBack({ 145, 0, 17, 18 });
+	block.frames.PushBack({ 162, 0, 17, 18 });
+	block.frames.PushBack({ 179, 0, 16, 18 });
 	block.speed = 0.1f;
+
+
+
+	portal.frames.PushBack({ 80, 32, 16, 15 });
+	portal.frames.PushBack({ 80, 48, 16, 15 });
+	portal.speed = 0.1f;
+
+	
+	
 
 }
 
@@ -23,7 +32,11 @@ void ModuleLevel::DrawLevel()
 {
 	SDL_Rect block_r = block.GetCurrentFrame();
 
+	SDL_Rect portal_r = portal.GetCurrentFrame();
+
+
 	//Blocks
+
 	for (int i = 0; i < 13; i++)
 	{
 		for (int j = 0; j < 11; j++)
@@ -33,6 +46,8 @@ void ModuleLevel::DrawLevel()
 				App->renderer->Blit(graphics, 24 + i*TILE, 40 + j*TILE, &wall);
 			if (a == 2)
 				App->renderer->Blit(graphics, 24 + i*TILE, 40 + j*TILE, &block_r);
+			if (a == 3)
+				App->renderer->Blit(graphics, 24 + i*TILE, 40 + j*TILE, &portal_r);
 		}
 	}
 
@@ -66,7 +81,10 @@ bool ModuleLevel::Start()
 {
 	LOG("Loading Level");
 
-	graphics = App->textures->Load("GameTiles.png");
+	graphics = App->textures->Load("powerups_obstacles.png");
+	num_portals = 0;
+	num_blocks = 7;
+
 
 	App->powerUp->AddPowerUp(POWERUP_BOMB);
 	App->powerUp->AddPowerUp(POWERUP_SPEED);
@@ -107,14 +125,14 @@ void ModuleLevel::InitLevel(){
 		
 		{ 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 		{ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0 },
 		{ 0, 4, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		
 
@@ -126,6 +144,7 @@ void ModuleLevel::InitLevel(){
 
 void ModuleLevel::InitEnemies(){
 	App->enemy->AddEnemy(App->enemy->copter, 24 + 5 * TILE, 40 + 6* TILE, COLLIDER_ENEMY, copterT);
+ 	App->scene->current_enemies++;
 }
 
 
@@ -149,11 +168,17 @@ void ModuleLevel::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (c1->GetPosLevel().x == c2->GetPosLevel().x || c1->GetPosLevel().y == c2->GetPosLevel().y)
 			{
-				level[c1->GetPosLevel().x][c1->GetPosLevel().y] = 0;
-				c1->to_delete = true;
+								
+				num_blocks--;
+
 				App->particles->AddParticle(App->particles->block, c1->rect.x, c1->rect.y, COLLIDER_WALL, blockT);
+
+				c1->to_delete = true;
+				
 			}
-			
+						
 		}
+		
 	}
+	
 }
