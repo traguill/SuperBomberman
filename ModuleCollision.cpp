@@ -12,6 +12,7 @@ ModuleCollision::ModuleCollision(Application* app, bool start_enabled) : Module(
 	matrix[COLLIDER_WALL][COLLIDER_BOMB] = false;
 	matrix[COLLIDER_WALL][COLLIDER_EXPLOSION] = false;
 	matrix[COLLIDER_WALL][COLLIDER_ENEMY] = true;
+	matrix[COLLIDER_WALL][COLLIDER_POWERUP] = false;
 
 	matrix[COLLIDER_PLAYER][COLLIDER_WALL] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
@@ -19,6 +20,7 @@ ModuleCollision::ModuleCollision(Application* app, bool start_enabled) : Module(
 	matrix[COLLIDER_PLAYER][COLLIDER_BOMB] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_EXPLOSION] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_POWERUP] = true;
 
 	matrix[COLLIDER_BLOCK][COLLIDER_WALL] = false;
 	matrix[COLLIDER_BLOCK][COLLIDER_PLAYER] = true;
@@ -26,6 +28,7 @@ ModuleCollision::ModuleCollision(Application* app, bool start_enabled) : Module(
 	matrix[COLLIDER_BLOCK][COLLIDER_BOMB] = false;
 	matrix[COLLIDER_BLOCK][COLLIDER_EXPLOSION] = true;
 	matrix[COLLIDER_BLOCK][COLLIDER_ENEMY] = true;
+	matrix[COLLIDER_BLOCK][COLLIDER_POWERUP] = false;
 
 	matrix[COLLIDER_BOMB][COLLIDER_WALL] = false;
 	matrix[COLLIDER_BOMB][COLLIDER_PLAYER] = true;
@@ -33,6 +36,7 @@ ModuleCollision::ModuleCollision(Application* app, bool start_enabled) : Module(
 	matrix[COLLIDER_BOMB][COLLIDER_BOMB] = false;
 	matrix[COLLIDER_BOMB][COLLIDER_EXPLOSION] = true;
 	matrix[COLLIDER_BOMB][COLLIDER_ENEMY] = true;
+	matrix[COLLIDER_BOMB][COLLIDER_POWERUP] = false;
 
 	matrix[COLLIDER_EXPLOSION][COLLIDER_WALL] = false;
 	matrix[COLLIDER_EXPLOSION][COLLIDER_PLAYER] = true;
@@ -40,6 +44,7 @@ ModuleCollision::ModuleCollision(Application* app, bool start_enabled) : Module(
 	matrix[COLLIDER_EXPLOSION][COLLIDER_BOMB] = true;
 	matrix[COLLIDER_EXPLOSION][COLLIDER_EXPLOSION] = false;
 	matrix[COLLIDER_EXPLOSION][COLLIDER_ENEMY] = true;
+	matrix[COLLIDER_EXPLOSION][COLLIDER_POWERUP] = true;
 
 	matrix[COLLIDER_ENEMY][COLLIDER_WALL] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = true;
@@ -47,6 +52,15 @@ ModuleCollision::ModuleCollision(Application* app, bool start_enabled) : Module(
 	matrix[COLLIDER_ENEMY][COLLIDER_BOMB] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_EXPLOSION] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_ENEMY] = false;
+	matrix[COLLIDER_ENEMY][COLLIDER_POWERUP] = true;//aixo ho he de comprovar
+
+	matrix[COLLIDER_POWERUP][COLLIDER_WALL] = false;
+	matrix[COLLIDER_POWERUP][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_POWERUP][COLLIDER_BLOCK] = false;
+	matrix[COLLIDER_POWERUP][COLLIDER_BOMB] = false;
+	matrix[COLLIDER_POWERUP][COLLIDER_EXPLOSION] = true;
+	matrix[COLLIDER_POWERUP][COLLIDER_ENEMY] = true;
+	matrix[COLLIDER_POWERUP][COLLIDER_POWERUP] = false;
 }
 
 // Destructor
