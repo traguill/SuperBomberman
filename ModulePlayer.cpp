@@ -63,8 +63,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	die.loop = false;
 
 	//Win
-	win.frames.PushBack({ 0, 26, 16, 24 });
-	win.frames.PushBack({ 17, 26, 16, 24 });
+	
 	win.frames.PushBack({ 34, 26, 16, 24 });
 	win.frames.PushBack({ 49, 26, 16, 24 });
 	win.frames.PushBack({ 66, 26, 16, 24 });
