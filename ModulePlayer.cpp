@@ -291,7 +291,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	//Blocks-----------------------------------------------------------------------
 	if (c2->type == COLLIDER_BLOCK || c2->type == COLLIDER_WALL || c2->type == COLLIDER_BOMB)
 	{
-		ThrowWall(direction_player, c2);
+		CrossWall(direction_player, c2);
 	}
 
 	//Killing objects-----------------------------------------------------------------
@@ -311,7 +311,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 
 
 
-void ModulePlayer::ThrowWall(Looking direction_player, Collider* c){
+void ModulePlayer::CrossWall(Looking direction_player, Collider* c){
 
 
 	p2Point<int> tmp;
@@ -376,6 +376,7 @@ void ModulePlayer::ThrowWall(Looking direction_player, Collider* c){
 		case 2: //Down
 			//left DOWN
 			position.y += 1;
+			return;
 			break;
 		}
 		break;

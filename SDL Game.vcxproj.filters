@@ -84,6 +84,9 @@
     <ClInclude Include="ModulePowerUp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleSceneBoss.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -138,6 +141,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ModulePowerUp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleSceneBoss.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

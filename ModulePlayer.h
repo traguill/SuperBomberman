@@ -15,7 +15,7 @@ public:
 	update_status Update();
 	bool CleanUp();
 	void OnCollision(Collider*, Collider*);
-	void ThrowWall(Looking direction_player, Collider* c); 
+	void CrossWall(Looking direction_player, Collider* c); 
 
 	//Auxiliar methods
 private:

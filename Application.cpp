@@ -9,15 +9,17 @@ Application::Application()
 	input = new ModuleInput(this);
 	audio = new ModuleAudio(this);
 	scene = new ModuleScene(this, false);
+	boss = new ModuleSceneBoss(this, true);
 	fade = new ModuleFadeToBlack(this);
 	particles = new ModuleParticles(this,false);
 	player = new ModulePlayer(this, false);
 	collision = new ModuleCollision(this, false);
 	timer = new ModuleTimer(this, false);
-	intro = new ModuleSceneIntro(this, true);
+	intro = new ModuleSceneIntro(this, false);
 	level = new ModuleLevel(this, false);
 	enemy = new ModuleEnemy(this, false);
 	powerUp = new ModulePowerUp(this, false);
+	
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -34,7 +36,9 @@ Application::Application()
 	// Scenes
 	AddModule(intro);
 	AddModule(scene);
+	AddModule(boss);
 	AddModule(timer);
+	
 	
 
 	// Misc
@@ -61,6 +65,7 @@ Application::~Application()
 	delete particles;
 	delete audio;
 	delete scene;
+	delete boss;
 	delete enemy;
 	delete player;
 	delete level;

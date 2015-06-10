@@ -76,6 +76,7 @@
     <ClInclude Include="ModuleLevel.h" />
     <ClInclude Include="ModulePowerUp.h" />
     <ClInclude Include="ModuleScene.h" />
+    <ClInclude Include="ModuleSceneBoss.h" />
     <ClInclude Include="ModuleSceneIntro.h" />
     <ClInclude Include="ModuleTimer.h" />
     <ClInclude Include="p2List.h" />
@@ -105,6 +106,7 @@
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModulePlayer.cpp" />
     <ClCompile Include="ModuleRender.cpp" />
+    <ClCompile Include="ModuleSceneBoss.cpp" />
     <ClCompile Include="ModuleSceneIntro.cpp" />
     <ClCompile Include="ModuleTextures.cpp" />
     <ClCompile Include="ModuleTimer.cpp" />

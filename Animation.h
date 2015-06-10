@@ -44,5 +44,11 @@ public:
 	void Reset()
 	{
 		current_frame = 0;
+		loops = 0;
+	}
+
+	int CurrentFrame() const
+	{
+		return current_frame;
 	}
 };
