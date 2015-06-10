@@ -35,6 +35,7 @@ Application::Application()
 	AddModule(intro);
 	AddModule(scene);
 	AddModule(timer);
+	AddModule(map);
 	
 
 	// Misc

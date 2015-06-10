@@ -9,7 +9,7 @@ ModuleMap::ModuleMap(Application* app, bool start_enabled) : Module(app, start_e
 	map.frames.PushBack({0,0,256,224});
 	map.frames.PushBack({256,0,256,224});
 	map.loop = true;
-	map.speed = 0.1f;
+	map.speed = 0.03f;
 
 
 }
@@ -39,7 +39,6 @@ bool ModuleMap::CleanUp()
 {
 	LOG("Unloading scene");
 	App->textures->Unload(graphics);
-	App->audio->Disable();
 
 	return true;
 }
