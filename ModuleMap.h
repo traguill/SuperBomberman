@@ -16,10 +16,12 @@ public:
 
 	//other methods
 
-	void DrawLevel();
 
 
 public:
+
+	SDL_Texture* graphics;
+	Animation map;
 
 	
 

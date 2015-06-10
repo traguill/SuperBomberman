@@ -17,6 +17,7 @@ Application::Application()
 	intro = new ModuleSceneIntro(this, true);
 	level = new ModuleLevel(this, false);
 	enemy = new ModuleEnemy(this,false);
+	map = new ModuleMap(this, false);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -65,6 +66,7 @@ Application::~Application()
 	delete fade;
 	delete timer;
 	delete collision;
+	delete map;
 }
 
 bool Application::Init()
