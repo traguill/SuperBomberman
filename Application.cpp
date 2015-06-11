@@ -19,6 +19,7 @@ Application::Application()
 	level = new ModuleLevel(this, false);
 	enemy = new ModuleEnemy(this, false);
 	powerUp = new ModulePowerUp(this, false);
+	boss_enemy = new ModuleBossEnemy(this, false);
 	
 
 	// The order of calls is very important!
@@ -37,7 +38,7 @@ Application::Application()
 	AddModule(intro);
 	AddModule(scene);
 	AddModule(boss);
-	AddModule(timer);
+	
 	
 	
 
@@ -51,6 +52,8 @@ Application::Application()
 	// Characters
 	AddModule(player);
 	AddModule(enemy);
+	AddModule(boss_enemy);
+	AddModule(timer);
 
 
 	AddModule(fade); // let this after all drawing
@@ -67,6 +70,7 @@ Application::~Application()
 	delete scene;
 	delete boss;
 	delete enemy;
+	delete boss_enemy;
 	delete player;
 	delete level;
 	delete fade;

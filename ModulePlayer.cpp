@@ -149,15 +149,18 @@ update_status ModulePlayer::Update()
 
 	Animation* current_animation = &idle; //Posem la animacio de quiet per defecte i despres comprovem si ha apretat alguna tecla aixi evitem fer la comprovació que havies fet al final.
 
-	bool can_start = false;
-	if (App->boss->IsEnabled() && !can_start)
+	//Checks the intro of the boss scene
+	bool can_start = true;
+	if (App->boss->IsEnabled())
+		can_start = false;
+	if (!can_start)
 	{
-		if (App->boss->start_time + 3000 < App->boss->time)
+		if (App->boss_enemy->start_time + 3000 < App->boss_enemy->time)
 			can_start = true;
 	}
 	
 
-	if (!game_over_player && can_start)
+	if (!game_over_player && can_start &&!game_win)
 	{
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{

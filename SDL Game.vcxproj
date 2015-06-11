@@ -71,6 +71,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="ModuleBossEnemy.h" />
     <ClInclude Include="ModuleCollision.h" />
     <ClInclude Include="ModuleEnemy.h" />
     <ClInclude Include="ModuleLevel.h" />
@@ -97,6 +98,7 @@
     <ClCompile Include="log.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ModuleAudio.cpp" />
+    <ClCompile Include="ModuleBossEnemy.cpp" />
     <ClCompile Include="ModuleCollision.cpp" />
     <ClCompile Include="ModuleEnemy.cpp" />
     <ClCompile Include="ModuleLevel.cpp" />

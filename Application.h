@@ -20,6 +20,7 @@
 #include "ModuleEnemy.h"
 #include "ModulePowerUp.h"
 #include "ModuleSceneBoss.h"
+#include "ModuleBossEnemy.h"
 
 
 class Application
@@ -41,6 +42,7 @@ public:
 	ModuleEnemy* enemy;
 	ModulePowerUp* powerUp;
 	ModuleSceneBoss* boss;
+	ModuleBossEnemy* boss_enemy;
 private:
 
 	p2List<Module*> list_modules;
