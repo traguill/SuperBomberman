@@ -107,7 +107,7 @@ void ModuleParticles::DetectBlock(Collider* c)
 {
 	fireUp = fireDown = fireRight = fireLeft = 0;
 
-	for (int i = 1; i < fire; i++)
+	for (int i = 0; i < fire; i++)
 	{
 		if (App->level->level[c->GetPosLevel().x][c->GetPosLevel().y + i] == 1 && fireDown == 0)
 			fireDown = i;
