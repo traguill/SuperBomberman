@@ -18,6 +18,7 @@ Application::Application()
 	level = new ModuleLevel(this, false);
 	enemy = new ModuleEnemy(this, false);
 	powerUp = new ModulePowerUp(this, false);
+	map = new ModuleMap(this, false);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -35,6 +36,7 @@ Application::Application()
 	AddModule(intro);
 	AddModule(scene);
 	AddModule(timer);
+	AddModule(map);
 	
 
 	// Misc
