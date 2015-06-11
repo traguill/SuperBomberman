@@ -6,7 +6,7 @@
 ModuleParticles::ModuleParticles(Application* app, bool start_enabled) : Module(app, start_enabled), graphics(NULL)
 {
 
-	fire = 1;
+	
 
 	graphics = NULL;
 
@@ -55,18 +55,18 @@ ModuleParticles::ModuleParticles(Application* app, bool start_enabled) : Module(
 	expLeft.anim.frames.PushBack({ 49, 65, 16, 16 });
 	expLeft.anim.speed = 0.17f;
 
-	expVert.anim.frames.PushBack({ 16, 256, 16, 16 });
-	expVert.anim.frames.PushBack({ 16, 305, 16, 16 });
-	expVert.anim.frames.PushBack({ 16, 353, 16, 16 });
-	expVert.anim.frames.PushBack({ 16, 402, 16, 16 });
-	expVert.anim.frames.PushBack({ 16, 451, 16, 16 });
+	expVert.anim.frames.PushBack({ 16, 292, 16, 16 });
+	expVert.anim.frames.PushBack({ 16, 341, 16, 16 });
+	expVert.anim.frames.PushBack({ 16, 389, 16, 16 });
+	expVert.anim.frames.PushBack({ 16, 438, 16, 16 });
+	expVert.anim.frames.PushBack({ 16, 487, 16, 16 });
 	expVert.anim.speed = 0.17f;
 
-	expHor.anim.frames.PushBack({ 32, 272, 16, 16 });
-	expHor.anim.frames.PushBack({ 32, 321, 16, 16 });
-	expHor.anim.frames.PushBack({ 32, 369, 16, 16 });
-	expHor.anim.frames.PushBack({ 32, 418, 16, 16 });
-	expHor.anim.frames.PushBack({ 32, 467, 16, 16 });
+	expHor.anim.frames.PushBack({ 32, 308, 16, 16 });
+	expHor.anim.frames.PushBack({ 32, 357, 16, 16 });
+	expHor.anim.frames.PushBack({ 32, 405, 16, 16 });
+	expHor.anim.frames.PushBack({ 32, 454, 16, 16 });
+	expHor.anim.frames.PushBack({ 32, 503, 16, 16 });
 	expHor.anim.speed = 0.17f;
 	// Bomb particle
 
@@ -114,7 +114,7 @@ bool ModuleParticles::Start()
 	fxExplode = App->audio->LoadFx("game/Audios/Gameplay/Explode.wav");
 	
 
-
+	fire = App->sceneManager->player_fire;
 	position_portal_x = position_portal_y = 0;
 
 
@@ -176,11 +176,10 @@ update_status ModuleParticles::Update()
 						App->particles->AddParticle(App->particles->expLeft, p->position.x - i*TILE, p->position.y, COLLIDER_EXPLOSION, explosionT);
 					}
 				}
+				App->player->current_bombs--;
 				App->audio->PlayFx(fxExplode);
 			}
-			if (p->type == explosionT)
-
-				App->player->current_bombs--;
+			
 
 			
 			if (p->type == blockT ){

@@ -86,22 +86,13 @@ bool ModuleLevel::Start()
 	num_blocks = 5;
 
 
-	/*App->powerUp->AddPowerUp(POWERUP_BOMB);
 	App->powerUp->AddPowerUp(POWERUP_BOMB);
+	App->powerUp->AddPowerUp(POWERUP_SPEED);
+	App->powerUp->AddPowerUp(POWERUP_FIRE);
 	App->powerUp->AddPowerUp(POWERUP_BOMB);
-	App->powerUp->AddPowerUp(POWERUP_BOMB);
-	
 	App->powerUp->AddPowerUp(POWERUP_SPEED);
-	App->powerUp->AddPowerUp(POWERUP_SPEED);
-	App->powerUp->AddPowerUp(POWERUP_SPEED);
-	App->powerUp->AddPowerUp(POWERUP_SPEED);*/
+	App->powerUp->AddPowerUp(POWERUP_FIRE);
 
-	App->powerUp->AddPowerUp(POWERUP_FIRE);
-	App->powerUp->AddPowerUp(POWERUP_FIRE);
-	App->powerUp->AddPowerUp(POWERUP_FIRE);
-	App->powerUp->AddPowerUp(POWERUP_FIRE);
-	App->powerUp->AddPowerUp(POWERUP_FIRE);
-	App->powerUp->AddPowerUp(POWERUP_FIRE);
 
 	InitLevel();
 	SetColliders();
@@ -136,17 +127,17 @@ void ModuleLevel::InitLevel(){
 	int l[11][13] =
 	{ 
 		
-		{ 0, 2, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 1 },
-		{ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 },
-		{ 0, 0, 4, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0 },
-		{ 0, 1, 0, 1, 0, 1, 2, 1, 0, 1, 0, 1, 0 },
-		{ 0, 0, 5, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2 },
-		{ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 },
-		{ 0, 0, 2, 0, 2, 0, 0, 0, 5, 0, 0, 2, 0 },
-		{ 5, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 },
-		{ 0, 0, 5, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0 },
-		{ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 },
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 2, 0, 1, 1, 0, 0, 5, 0, 0, 0, 0 },
+		{ 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 5, 1, 0 },
+		{ 0, 2, 2, 5, 2, 0, 0, 0, 0, 0, 0, 2, 0 },
+		{ 5, 1, 0, 1, 2, 1, 0, 1, 0, 1, 0, 1, 0 },
+		{ 0, 0, 0, 0, 2, 0, 0, 1, 0, 2, 0, 0, 0 },
+		{ 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0 },
+		{ 1, 0, 5, 0, 2, 2, 0, 1, 0, 0, 0, 5, 0 },
+		{ 5, 1, 0, 1, 0, 1, 2, 1, 0, 1, 0, 1, 0 },
+		{ 0, 0, 2, 0, 2, 0, 5, 2, 0, 0, 2, 2, 0 },
+		{ 0, 1, 2, 1, 2, 1, 2, 1, 1, 1, 0, 1, 2 },
+		{ 0, 2, 0, 0, 0, 0, 2, 2, 0, 2, 2, 2, 0 },
 		
 
 		
@@ -156,8 +147,10 @@ void ModuleLevel::InitLevel(){
 }
 
 void ModuleLevel::InitEnemies(){
-	App->enemy->AddEnemy(App->enemy->copter, 24 + 6 * TILE, 40 + 7* TILE, COLLIDER_ENEMY, copterT);
- 	App->scene->current_enemies++;
+	App->enemy->AddEnemy(App->enemy->copter, 24 + 0 * TILE, 40 + 4* TILE, COLLIDER_ENEMY, copterT);
+	App->enemy->AddEnemy(App->enemy->copter, 24 + 6 * TILE, 40 + 2 * TILE, COLLIDER_ENEMY, copterT);
+	App->enemy->AddEnemy(App->enemy->copter, 24 + 10 * TILE, 40 + 2 * TILE, COLLIDER_ENEMY, copterT);
+	App->scene->current_enemies = 3;
 }
 
 

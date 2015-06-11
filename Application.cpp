@@ -20,6 +20,7 @@ Application::Application()
 	enemy = new ModuleEnemy(this, false);
 	powerUp = new ModulePowerUp(this, false);
 	credits = new ModuleCredits(this, false);
+	sceneManager = new SceneManager(this);
 
 	boss_enemy = new ModuleBossEnemy(this, false);
 	
@@ -38,6 +39,7 @@ Application::Application()
 	AddModule(input);
 	AddModule(audio);
 	
+	AddModule(sceneManager);
 	
 	// Scenes
 	AddModule(intro);

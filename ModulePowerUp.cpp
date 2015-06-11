@@ -106,7 +106,7 @@ void ModulePowerUp::OnCollision(Collider* c1, Collider* c2)
 					break;
 				case POWERUP_SPEED:
 					if (App->player->speed < limitSpeed)
-						App->player->speed++;
+						App->player->speed+=0.5f;
 					break;
 				case POWERUP_FIRE:
 					if (App->particles->fire < limitFire)

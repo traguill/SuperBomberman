@@ -34,6 +34,10 @@ bool ModuleSceneBoss::Start()
 	App->boss_enemy->Enable();
 	App->timer->Enable();
 
+	scene_transition = false;
+	game_over = false;
+	game_win = false;
+
 	return true;
 }
 
@@ -64,6 +68,12 @@ update_status ModuleSceneBoss::Update()
 	if (game_over && !scene_transition)
 	{
 		App->fade->FadeToBlack(this, App->intro, 3.0f);
+		scene_transition = true;
+	}
+	//Check win
+	if (game_win && !scene_transition)
+	{
+		App->fade->FadeToBlack(this, App->credits, 3.0f);
 		scene_transition = true;
 	}
 		

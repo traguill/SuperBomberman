@@ -127,12 +127,11 @@ bool ModulePlayer::Start()
 	die.Reset();
 
 	current_bombs = 0;
-	max_bombs = 1;
+	max_bombs = App->sceneManager->player_max_bombs;
 	lifes = 5;
+	speed = App->sceneManager->player_speed;
 
-	
 
-	speed = 1;
 	return true;
 }
 
@@ -251,7 +250,7 @@ update_status ModulePlayer::Update()
 		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP && current_bombs < max_bombs)
 		{
 
-  			last_bomb = App->particles->AddParticle(App->particles->bomb, 24 + collider->GetPosLevel().x * TILE, 40 + collider->GetPosLevel().y* TILE, COLLIDER_BOMB, bombT);
+ 			last_bomb = App->particles->AddParticle(App->particles->bomb, 24 + collider->GetPosLevel().x * TILE, 40 + collider->GetPosLevel().y* TILE, COLLIDER_BOMB, bombT);
 			App->audio->PlayFx(fxPut);
 			bomb_collision = true;
 			current_bombs++;

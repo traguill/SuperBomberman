@@ -36,16 +36,16 @@ public:
 	Animation down;
 	Animation die;
 	Animation win;
-	p2Point<int> position;
+	p2Point<float> position;
 	p2Point<int> positon_level; //Posició en la matriu nivell.
-	p2Point<int> last_position;
+	p2Point<float> last_position;
 	Collider* last_bomb;
 	bool bomb_collision;
 	bool game_over_player; //S'encarrega de gestionar tot lo del player abans de tancar el joc.
 	bool game_win;
 	int current_bombs;
 	int max_bombs;
-	int speed;
+	float speed;
 	int lifes;
 
 	unsigned int fxStep;
