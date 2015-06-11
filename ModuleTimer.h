@@ -28,6 +28,7 @@ public:
 	SDL_Rect seven;
 	SDL_Rect eight;
 	SDL_Rect nine;
+	Animation clock;
 
 
 

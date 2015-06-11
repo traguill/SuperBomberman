@@ -19,6 +19,18 @@ ModuleTimer::ModuleTimer(Application* app, bool start_enabled) : Module(app, sta
 	eight = { 72, 33, 8, 12 };
 	nine = { 91, 33, 8, 12 };
 
+	clock.frames.PushBack({ 97, 33, 15, 22 });
+	clock.frames.PushBack({ 113, 33, 15, 22 });
+	clock.frames.PushBack({ 129, 33, 15, 22 });
+	clock.frames.PushBack({ 145, 33, 15, 22 });
+	clock.frames.PushBack({ 97,  56, 15, 22 });
+	clock.frames.PushBack({ 113, 56, 15, 22 });
+	clock.frames.PushBack({ 129, 56, 15, 22 });
+	clock.frames.PushBack({ 145, 56, 15, 22 });
+	clock.speed = 0.005f;
+	
+
+
 }
 
 ModuleTimer::~ModuleTimer()
@@ -86,6 +98,8 @@ update_status ModuleTimer::Update()
 	}
 
 	App->renderer->Blit(graphics, 23, 10, &r);
+
+	App->renderer->Blit(graphics, 120, 8, &clock.GetCurrentFrame());
 
 	return UPDATE_CONTINUE;
 }

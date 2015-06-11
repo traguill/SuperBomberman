@@ -77,7 +77,8 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	win.frames.PushBack({ 149, 26, 16, 24 });
 	win.frames.PushBack({ 166, 26, 16, 24 });
 	win.frames.PushBack({ 183, 26, 16, 24 });
-	win.speed = 0.05f;
+	win.frames.PushBack({ 209, 26, 16, 24 });
+	win.speed = 0.1f;
 	win.loop = false;
 
 
