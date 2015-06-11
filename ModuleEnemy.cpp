@@ -10,26 +10,37 @@ ModuleEnemy::ModuleEnemy(Application* app, bool start_enabled) : Module(app, sta
 	copter.left.frames.PushBack({ 16, 0, 16, 24 });
 	copter.left.frames.PushBack({ 32, 0, 16, 24 });
 	copter.left.frames.PushBack({ 48, 0, 16, 24 });
-	copter.left.speed = 0.17f;
+	copter.left.speed = 0.8f;
 
 
-	copter.down.frames.PushBack({ 65, 0, 16, 24 });
-	copter.down.frames.PushBack({ 81, 0, 16, 24 });
-	copter.down.frames.PushBack({ 97, 0, 16, 24 });
-	copter.down.frames.PushBack({ 113, 0, 16, 24 });
-	copter.down.speed = 0.17f;
+	copter.down.frames.PushBack({ 64, 0, 16, 24 });
+	copter.down.frames.PushBack({ 80, 0, 16, 24 });
+	copter.down.frames.PushBack({ 96, 0, 16, 24 });
+	copter.down.frames.PushBack({ 112, 0, 16, 24 });
+	copter.down.speed = 0.8f;
 
-	copter.up.frames.PushBack({ 130, 0, 16, 24 });
-	copter.up.frames.PushBack({ 146, 0, 16, 24 });
-	copter.up.frames.PushBack({ 162, 0, 16, 24 });
-	copter.up.frames.PushBack({ 178, 0, 16, 24 });
-	copter.up.speed = 0.17f;
+	copter.up.frames.PushBack({ 128, 0, 16, 24 });
+	copter.up.frames.PushBack({ 144, 0, 16, 24 });
+	copter.up.frames.PushBack({ 160, 0, 16, 24 });
+	copter.up.frames.PushBack({ 176, 0, 16, 24 });
+	copter.up.speed = 0.8f;
 
-	copter.right.frames.PushBack({ 195, 0, 16, 24 });
-	copter.right.frames.PushBack({ 211, 0, 16, 24 });
-	copter.right.frames.PushBack({ 227, 0, 16, 24 });
-	copter.right.frames.PushBack({ 243, 0, 16, 24 });
-	copter.right.speed = 0.17f;
+	copter.right.frames.PushBack({ 192, 0, 16, 24 });
+	copter.right.frames.PushBack({ 208, 0, 16, 24 });
+	copter.right.frames.PushBack({ 224, 0, 16, 24 });
+	copter.right.frames.PushBack({ 240, 0, 16, 24 });
+	copter.right.speed = 0.8f;
+
+	explosion_copter.up.frames.PushBack({ 0,   198, 22, 40});
+	explosion_copter.up.frames.PushBack({ 22,  198, 22, 40 });
+	explosion_copter.up.frames.PushBack({ 44,  198, 22, 40 });
+	explosion_copter.up.frames.PushBack({ 66,  198, 22, 40 });
+	explosion_copter.up.frames.PushBack({ 88,  198, 22, 40 });
+	explosion_copter.up.frames.PushBack({ 110,  198, 22, 40 });
+	explosion_copter.up.frames.PushBack({ 132, 198, 22, 40 });
+	explosion_copter.up.frames.PushBack({ 154, 198, 22, 40 });
+	explosion_copter.up.speed = 0.25f;
+	explosion_copter.up.loop = false;
 }
 
 ModuleEnemy::~ModuleEnemy()
@@ -40,6 +51,8 @@ bool ModuleEnemy::Start()
 {
 	LOG("Loading Enemy");
 	graphics = App->textures->Load("Enemy.png");
+
+	fxExplode = App->audio->LoadFx("game/Audios/Gameplay/enemy_explosion.wav");
 
 	return true;
 }
@@ -76,6 +89,7 @@ update_status ModuleEnemy::Update()
 
 		if (p->Update() == false)
 		{
+
 			
 			delete p;
 			active.del(tmp);
@@ -126,9 +140,11 @@ void ModuleEnemy::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (tmp->data->collider == c1)
 			{
+				App->enemy->AddEnemy(App->enemy->explosion_copter, tmp->data->position.x-2, tmp->data->position.y - 10, COLLIDER_NONE, explosionE);
 				delete tmp->data;
 				active.del(tmp);
 				App->scene->current_enemies--;
+				App->audio->PlayFx(fxExplode);
 				break;
 			}
 
@@ -167,11 +183,10 @@ Collider* ModuleEnemy::AddEnemy(const Enemy& enemy, int x, int y, COLLIDER_TYPE 
 Enemy::Enemy() : fx(0), fx_played(false), collider(NULL)
 {
 	position.SetToZero();
-	speed.SetToZero();
 	current_anim = NULL;
 }
 
-Enemy::Enemy(const Enemy& p) : left(p.left), right(p.right), up(p.up), down(p.down), position(p.position), speed(p.speed), fx_played(false), collider(p.collider)
+Enemy::Enemy(const Enemy& p) : left(p.left), right(p.right), up(p.up), down(p.down), position(p.position), fx_played(false), collider(p.collider)
 {
 	fx = p.fx;
 }
@@ -185,6 +200,16 @@ Enemy::~Enemy()
 bool Enemy::Update()
 {
 	bool ret = true;
+	
+	if (type == explosionE)
+	{
+		current_anim = &up;
+		if (current_anim->Finished())
+			ret = false;
+
+		return ret;
+	}
+
 	last_position = position;
 
 	current_anim = &right;

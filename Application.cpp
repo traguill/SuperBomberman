@@ -19,6 +19,7 @@ Application::Application()
 	level = new ModuleLevel(this, false);
 	enemy = new ModuleEnemy(this, false);
 	powerUp = new ModulePowerUp(this, false);
+	credits = new ModuleCredits(this, false);
 
 	boss_enemy = new ModuleBossEnemy(this, false);
 	
@@ -63,6 +64,8 @@ Application::Application()
 	AddModule(boss_enemy);
 	AddModule(timer);
 
+	AddModule(credits);
+
 
 	AddModule(fade); // let this after all drawing
 }
@@ -85,6 +88,7 @@ Application::~Application()
 	delete timer;
 	delete collision;
 	delete powerUp;
+	delete credits;
 }
 
 bool Application::Init()

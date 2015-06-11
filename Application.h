@@ -22,6 +22,7 @@
 #include "ModuleSceneBoss.h"
 #include "ModuleBossEnemy.h"
 #include "ModuleMap.h"
+#include "ModuleCredits.h"
 
 
 
@@ -46,6 +47,7 @@ public:
 	ModuleSceneBoss* boss;
 	ModuleBossEnemy* boss_enemy;
 	ModuleMap* map;
+	ModuleCredits* credits;
 	
 
 

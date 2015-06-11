@@ -46,8 +46,10 @@ public:
 	int current_bombs;
 	int max_bombs;
 	int speed;
+	int lifes;
 
 	unsigned int fxStep;
 	unsigned int fxPut;
+	unsigned int fxDie;
 	int audioChannel;
 };

@@ -69,6 +69,8 @@ bool ModuleSceneIntro::Start()
 	flash = 0;
 	start_time = SDL_GetTicks();
 
+	scene_transition = false;
+
 
 	return ret;
 }
@@ -142,10 +144,11 @@ update_status ModuleSceneIntro::Update()
 
 
 	//Change scene--------------------------------------------
-	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_UP)
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_UP && !scene_transition)
 	{
 		App->audio->PlayFx(fx);
-		App->fade->FadeToBlack(this, App->map, 3.0f);
+		App->fade->FadeToBlack(this, App->scene, 3.0f);
+		scene_transition = true;
 	}
 
 	return UPDATE_CONTINUE;
