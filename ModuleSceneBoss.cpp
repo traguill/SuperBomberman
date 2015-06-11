@@ -27,7 +27,7 @@ bool ModuleSceneBoss::Start()
 
 	graphics = App->textures->Load("boss_stage.png");
 	App->audio->PlayMusic("music_boss.ogg", 0.0f);
-	App->collision->Enable(); // enable before player
+	App->collision->Enable(); // enable before player s
 	App->particles->Enable();
 	App->powerUp->Enable();
 	App->player->Enable();
