@@ -41,5 +41,7 @@ public:
 	Uint32 start_time;
 	Uint32 actual_time;
 
+	bool scene_transition;
+
 	unsigned int fx;
 };

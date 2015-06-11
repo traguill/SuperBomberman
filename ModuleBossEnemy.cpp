@@ -227,16 +227,16 @@ void ModuleBossEnemy::BossIA(){
 	switch (direction_boss)
 	{
 	case upD:
-		position_boss.y -= VELOCITY_ENEMY;
+		position_boss.y -= VELOCITY_BOSS;
 		break;
 	case downD:
-		position_boss.y += VELOCITY_ENEMY;
+		position_boss.y += VELOCITY_BOSS;
 		break;
 	case rightD:
-		position_boss.x += VELOCITY_ENEMY;
+		position_boss.x += VELOCITY_BOSS;
 		break;
 	case leftD:
-		position_boss.x -= VELOCITY_ENEMY;
+		position_boss.x -= VELOCITY_BOSS;
 		break;
 	}
 

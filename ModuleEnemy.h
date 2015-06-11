@@ -8,6 +8,7 @@
 
 enum TypeE{  
 	copterT,
+	explosionE,
 	nullE,
 };
 
@@ -20,9 +21,9 @@ struct Enemy
 	Animation up;
 	Animation down;
 	unsigned int fx;
-	p2Point<int> position;
-	p2Point<int> last_position;
-	p2Point<int> speed;
+	p2Point<float> position;
+	p2Point<float> last_position;
+	//p2Point<int> speed;
 	bool fx_played;
 	Collider* collider;
 	TypeE type;
@@ -54,6 +55,9 @@ private:
 public:
 
 	Enemy copter;
+	Enemy explosion_copter;
+
+	unsigned int fxExplode;
 
 
 };

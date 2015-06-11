@@ -17,8 +17,18 @@ public:
 public:
 
 	SDL_Texture* graphics;
-	Animation* current_status;
-	Animation status;
+	SDL_Rect bar;
+	SDL_Rect zero;
+	SDL_Rect one;
+	SDL_Rect two;
+	SDL_Rect three;
+	SDL_Rect four;
+	SDL_Rect five;
+	SDL_Rect six;
+	SDL_Rect seven;
+	SDL_Rect eight;
+	SDL_Rect nine;
+
 
 
 };

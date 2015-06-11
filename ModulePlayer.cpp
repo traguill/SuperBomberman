@@ -61,6 +61,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	die.frames.PushBack({ 80, 68, 16, 24 });
 	die.frames.PushBack({ 96, 68, 16, 24 });
 	die.frames.PushBack({ 112, 68, 16, 24 });
+	die.frames.PushBack({ 112, 68, 16, 24 });
 	die.speed = 0.2f;
 	die.loop = false;
 
@@ -96,6 +97,7 @@ bool ModulePlayer::Start()
 	graphics = App->textures->Load("Bomberman.png");
 	fxStep = App->audio->LoadFx("Game/Audios/Gameplay/Step.wav");
 	fxPut = App->audio->LoadFx("Game/Audios/Gameplay/PutBomb.wav");
+	fxDie = App->audio->LoadFx("Game/Audios/Gameplay/bomberman_die.wav");
 
 	if (App->scene->IsEnabled())
 	{
@@ -125,6 +127,7 @@ bool ModulePlayer::Start()
 
 	current_bombs = 0;
 	max_bombs = 1;
+	lifes = 5;
 
 	
 
@@ -147,7 +150,12 @@ update_status ModulePlayer::Update()
 {
 	last_position = position;
 
+
+
 	Animation* current_animation = &idle; //Posem la animacio de quiet per defecte i despres comprovem si ha apretat alguna tecla aixi evitem fer la comprovació que havies fet al final.
+
+
+	
 
 	//Checks the intro of the boss scene
 	bool can_start = true;
@@ -160,7 +168,7 @@ update_status ModulePlayer::Update()
 	}
 	
 
-	if (!game_over_player && can_start &&!game_win)
+	if (!game_over_player && can_start &&!game_win && !App->boss_enemy->game_over_boss)
 	{
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
@@ -262,6 +270,38 @@ update_status ModulePlayer::Update()
 		
 	}
 
+	if (game_over_player && current_animation->Finished() && current_animation == &die)
+	{
+		if (App->scene->IsEnabled())
+		{
+			if (lifes != 0)
+			{
+				position.x = 24;
+				position.y = 56;
+				game_over_player = false;
+				current_animation = &idle;
+				direction_player = downD;
+			}
+			else
+				App->scene->game_over = true;
+		}
+
+
+		if (App->boss->IsEnabled())
+		{
+			if (lifes != 0)
+			{
+				position.x = 104;
+				position.y = 216;
+				direction_player = upD;
+				game_over_player = false;
+				current_animation = &idle;
+			}
+			else
+				App->boss->game_over = true;
+		}
+
+	}
 	
 	collider->SetPos(position.x, position.y-16);
 
@@ -288,14 +328,7 @@ update_status ModulePlayer::Update()
 		r = current_animation->frames[direction_player];
 	
 	
-	if (game_over_player && current_animation->Finished())
-	{
-		if (App->scene->IsEnabled())
-			App->scene->game_over = true;
-
-		if (App->boss->IsEnabled())
-			App->boss->game_over = true;
-	}
+	
 		
 	
 	if (game_win && current_animation->Finished())
@@ -325,13 +358,30 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	//Killing objects-----------------------------------------------------------------
 	if (c2->type == COLLIDER_ENEMY)
 	{
-		game_over_player = true;
+		if (!game_over_player)
+		{
+			die.Reset();
+			lifes--;
+			game_over_player = true;
+			App->audio->PlayFx(fxDie);
+		}
+		
 		return;
 	}
 	if (c2->type == COLLIDER_EXPLOSION)
 	{
 		if (c1->GetPosLevel().x == c2->GetPosLevel().x || c1->GetPosLevel().y == c2->GetPosLevel().y)
-			game_over_player = true;
+		{
+			if (!game_over_player)
+			{
+				die.Reset();
+				lifes--;
+				game_over_player = true;
+				App->audio->PlayFx(fxDie);
+			}
+			
+		}
+			
 	}
 }
 
