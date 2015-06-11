@@ -49,8 +49,11 @@ public:
 	p2List<PowerUp*> active;
 	SDL_Texture* graphics;
 	Animation PowerSpeed;
+	int limitSpeed;
 	Animation PowerBomb;
+	int limitBomb;
 	Animation PowerFire;
+	int limitFire;
 };
 
 #endif // __ModulePowerUp_H__

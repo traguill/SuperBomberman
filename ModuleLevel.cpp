@@ -44,7 +44,7 @@ void ModuleLevel::DrawLevel()
 			int a = level[j][i];
 			if (a == 1)
 				App->renderer->Blit(graphics, 24 + i*TILE, 40 + j*TILE, &wall);
-			if (a == 2)
+			if (a == 2 || a == 5)
 				App->renderer->Blit(graphics, 24 + i*TILE, 40 + j*TILE, &block_r);
 			if (a == 3)
 				App->renderer->Blit(graphics, 24 + i*TILE, 40 + j*TILE, &portal_r);
@@ -63,7 +63,7 @@ void ModuleLevel::SetColliders()
 			int a = level[j][i];
 			if (a == 1)
 				App->collision->AddCollider({ 24 + i*TILE, 40 + j*TILE, 16, 16 }, COLLIDER_WALL, this);
-			if (a == 2)
+			if (a == 2 || a == 5)
 				App->collision->AddCollider({ 24 + i*TILE, 40 + j*TILE, 16, 16 }, COLLIDER_BLOCK, this);
 			if (a == 4)
 			{
@@ -86,9 +86,22 @@ bool ModuleLevel::Start()
 	num_blocks = 5;
 
 
+	/*App->powerUp->AddPowerUp(POWERUP_BOMB);
 	App->powerUp->AddPowerUp(POWERUP_BOMB);
+	App->powerUp->AddPowerUp(POWERUP_BOMB);
+	App->powerUp->AddPowerUp(POWERUP_BOMB);
+	
 	App->powerUp->AddPowerUp(POWERUP_SPEED);
-	//App->powerUp->AddPowerUp(POWERUP_FIRE);
+	App->powerUp->AddPowerUp(POWERUP_SPEED);
+	App->powerUp->AddPowerUp(POWERUP_SPEED);
+	App->powerUp->AddPowerUp(POWERUP_SPEED);*/
+
+	App->powerUp->AddPowerUp(POWERUP_FIRE);
+	App->powerUp->AddPowerUp(POWERUP_FIRE);
+	App->powerUp->AddPowerUp(POWERUP_FIRE);
+	App->powerUp->AddPowerUp(POWERUP_FIRE);
+	App->powerUp->AddPowerUp(POWERUP_FIRE);
+	App->powerUp->AddPowerUp(POWERUP_FIRE);
 
 	InitLevel();
 	SetColliders();
@@ -123,17 +136,17 @@ void ModuleLevel::InitLevel(){
 	int l[11][13] =
 	{ 
 		
-		{ 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+		{ 0, 2, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 1 },
 		{ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 },
-		{ 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0 },
-		{ 0, 1, 4, 1, 0, 1, 2, 1, 0, 1, 0, 1, 0 },
-		{ 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2 },
+		{ 0, 0, 4, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0 },
+		{ 0, 1, 0, 1, 0, 1, 2, 1, 0, 1, 0, 1, 0 },
+		{ 0, 0, 5, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2 },
 		{ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 },
-		{ 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0 },
+		{ 0, 0, 2, 0, 2, 0, 0, 0, 5, 0, 0, 2, 0 },
+		{ 5, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 },
+		{ 0, 0, 5, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0 },
 		{ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 },
-		{ 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0 },
-		{ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 },
-		{ 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		
 
 		
@@ -166,14 +179,19 @@ void ModuleLevel::OnCollision(Collider* c1, Collider* c2)
 	{
 		if (c2->type == COLLIDER_EXPLOSION)
 		{
-			if (c1->GetPosLevel().x == c2->GetPosLevel().x || c1->GetPosLevel().y == c2->GetPosLevel().y)
+		if (c1->GetPosLevel().x == c2->GetPosLevel().x || c1->GetPosLevel().y == c2->GetPosLevel().y)
 			{
-								
 				num_blocks--;
-				level[c1->GetPosLevel().y][c1->GetPosLevel().x] = 0;
+
 				App->particles->AddParticle(App->particles->block, c1->rect.x, c1->rect.y, COLLIDER_WALL, blockT);
-				c1->to_delete = true;
 				
+				if (level[c1->GetPosLevel().y][c1->GetPosLevel().x] == 5)
+					App->powerUp->ActivePowerUp(c1->rect.x, c1->rect.y);
+				
+				level[c1->GetPosLevel().y][c1->GetPosLevel().x] = 0;
+				
+				
+				c1->to_delete = true;
 			}
 						
 		}

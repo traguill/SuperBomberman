@@ -48,7 +48,7 @@ ModuleCollision::ModuleCollision(Application* app, bool start_enabled) : Module(
 	matrix[COLLIDER_EXPLOSION][COLLIDER_BOMB] = true;
 	matrix[COLLIDER_EXPLOSION][COLLIDER_EXPLOSION] = false;
 	matrix[COLLIDER_EXPLOSION][COLLIDER_ENEMY] = true;
-	matrix[COLLIDER_EXPLOSION][COLLIDER_POWERUP] = true;
+	matrix[COLLIDER_EXPLOSION][COLLIDER_POWERUP] = false;
 	matrix[COLLIDER_EXPLOSION][COLLIDER_BOSS] = true;
 
 	matrix[COLLIDER_ENEMY][COLLIDER_WALL] = true;
@@ -64,7 +64,7 @@ ModuleCollision::ModuleCollision(Application* app, bool start_enabled) : Module(
 	matrix[COLLIDER_POWERUP][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_POWERUP][COLLIDER_BLOCK] = false;
 	matrix[COLLIDER_POWERUP][COLLIDER_BOMB] = false;
-	matrix[COLLIDER_POWERUP][COLLIDER_EXPLOSION] = true;
+	matrix[COLLIDER_POWERUP][COLLIDER_EXPLOSION] = false;
 	matrix[COLLIDER_POWERUP][COLLIDER_ENEMY] = true;
 	matrix[COLLIDER_POWERUP][COLLIDER_POWERUP] = false;
 	matrix[COLLIDER_POWERUP][COLLIDER_BOSS] = false;
@@ -220,10 +220,11 @@ bool Collider::CheckCollision(SDL_Rect r) const
 			rect.h + rect.y > r.y);
 }
 
-p2Point<int> Collider::GetPosLevel()const{
-	p2Point<int> p;
-	p.x = (rect.x - 24 + (rect.w/2)) / 16;
-	p.y = (rect.y - 40 + (rect.h/2)) / 16;
+p2Point<int> Collider::GetPosLevel()
+{
+	
+	posLevel.x = (rect.x - 24 + (rect.w/2)) / 16;
+	posLevel.y = (rect.y - 40 + (rect.h/2)) / 16;
 
-	return p;
+	return posLevel;
 }

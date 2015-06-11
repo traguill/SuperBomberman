@@ -52,7 +52,18 @@ private:
 public:
 
 	Particle bomb;
-	Particle explosion;
+	//Particle explosion;
+	//Explosion Parts
+	Particle expCenter;
+	Particle expUp;
+	Particle expDown;
+	Particle expRight;
+	Particle expLeft;
+	Particle expVert;
+	Particle expHor;
+	bool stopFire;
+	int fire;
+	//
 	Particle block;
 	Particle floor;
 	Particle explosion_boss;

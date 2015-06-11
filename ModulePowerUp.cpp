@@ -4,6 +4,10 @@
 
 ModulePowerUp::ModulePowerUp(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
+	limitBomb = 5;
+	limitSpeed = 2;
+	limitFire = 5;
+
 	graphics = NULL;
 
 	//animations
@@ -97,10 +101,16 @@ void ModulePowerUp::OnCollision(Collider* c1, Collider* c2)
 				switch (tmp->data->type)
 				{
 				case POWERUP_BOMB:
-					App->player->max_bombs++;
+					if (App->player->max_bombs < limitBomb)
+						App->player->max_bombs++;
 					break;
 				case POWERUP_SPEED:
-					App->player->speed++;
+					if (App->player->speed < limitSpeed)
+						App->player->speed++;
+					break;
+				case POWERUP_FIRE:
+					if (App->particles->fire < limitFire)
+						App->particles->fire++;
 					break;
 				}
 				c1->to_delete = true;

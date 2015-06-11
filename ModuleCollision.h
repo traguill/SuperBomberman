@@ -42,7 +42,7 @@ struct Collider
 		rect.y = y;
 	}
 
-	p2Point<int> GetPosLevel() const;
+	p2Point<int> GetPosLevel();
 
 	bool CheckCollision(SDL_Rect r) const;
 };

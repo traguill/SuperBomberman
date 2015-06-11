@@ -6,20 +6,70 @@
 ModuleParticles::ModuleParticles(Application* app, bool start_enabled) : Module(app, start_enabled), graphics(NULL)
 {
 
-
+	fire = 1;
 
 	graphics = NULL;
 
 
 	// Explosion particle
+	/*
 	explosion.anim.frames.PushBack({ 49, 49, 48, 48 });
 	explosion.anim.frames.PushBack({ 0, 49, 48, 48 });
 	explosion.anim.frames.PushBack({ 98, 0, 48, 48 });
 	explosion.anim.frames.PushBack({ 49, 0, 48, 48 });
 	explosion.anim.frames.PushBack({ 0, 0, 48, 48 });
 	explosion.anim.speed = 0.17f;
+	*/
+	expCenter.anim.frames.PushBack({ 16, 16, 16, 16 });
+	expCenter.anim.frames.PushBack({ 65, 16, 16, 16 });
+	expCenter.anim.frames.PushBack({114, 16, 16, 16 });
+	expCenter.anim.frames.PushBack({ 16, 65, 16, 16 });
+	expCenter.anim.frames.PushBack({ 65, 65, 16, 16 });
+	expCenter.anim.speed = 0.17f;
 
+	expUp.anim.frames.PushBack({ 16, 0, 16, 16 });
+	expUp.anim.frames.PushBack({ 65, 0, 16, 16 });
+	expUp.anim.frames.PushBack({114, 0, 16, 16 });
+	expUp.anim.frames.PushBack({ 16, 49, 16, 16 });
+	expUp.anim.frames.PushBack({ 65, 49, 16, 16 });
+	expUp.anim.speed = 0.17f;
+
+	expDown.anim.frames.PushBack({ 16, 32, 16, 16 });
+	expDown.anim.frames.PushBack({ 65, 32, 16, 16 });
+	expDown.anim.frames.PushBack({ 114, 32, 16, 16 });
+	expDown.anim.frames.PushBack({ 16, 81, 16, 16 });
+	expDown.anim.frames.PushBack({ 65, 81, 16, 16 });
+	expDown.anim.speed = 0.17f;
+
+	expRight.anim.frames.PushBack({ 32, 16, 16, 16 });
+	expRight.anim.frames.PushBack({ 81, 16, 16, 16 });
+	expRight.anim.frames.PushBack({ 130, 16, 16, 16 });
+	expRight.anim.frames.PushBack({ 32, 65, 16, 16 });
+	expRight.anim.frames.PushBack({ 81, 65, 16, 16 });
+	expRight.anim.speed = 0.17f;
+
+	expLeft.anim.frames.PushBack({ 0, 16, 16, 16 });
+	expLeft.anim.frames.PushBack({ 49, 16, 16, 16 });
+	expLeft.anim.frames.PushBack({ 98, 16, 16, 16 });
+	expLeft.anim.frames.PushBack({ 0, 65, 16, 16 });
+	expLeft.anim.frames.PushBack({ 49, 65, 16, 16 });
+	expLeft.anim.speed = 0.17f;
+
+	expVert.anim.frames.PushBack({ 16, 256, 16, 16 });
+	expVert.anim.frames.PushBack({ 16, 305, 16, 16 });
+	expVert.anim.frames.PushBack({ 16, 353, 16, 16 });
+	expVert.anim.frames.PushBack({ 16, 402, 16, 16 });
+	expVert.anim.frames.PushBack({ 16, 451, 16, 16 });
+	expVert.anim.speed = 0.17f;
+
+	expHor.anim.frames.PushBack({ 32, 272, 16, 16 });
+	expHor.anim.frames.PushBack({ 32, 321, 16, 16 });
+	expHor.anim.frames.PushBack({ 32, 369, 16, 16 });
+	expHor.anim.frames.PushBack({ 32, 418, 16, 16 });
+	expHor.anim.frames.PushBack({ 32, 467, 16, 16 });
+	expHor.anim.speed = 0.17f;
 	// Bomb particle
+
 	bomb.anim.frames.PushBack({ 115, 70, 16, 16 });
 	bomb.anim.frames.PushBack({ 132, 70, 16, 16 });
 	bomb.anim.frames.PushBack({ 149, 70, 16, 16 });
@@ -107,7 +157,25 @@ update_status ModuleParticles::Update()
 		{
 			if (p->type == bombT)
 			{
-				App->particles->AddParticle(App->particles->explosion, p->position.x - 16, p->position.y - 16, COLLIDER_EXPLOSION, explosionT); //DOIT: si es una bomba crea una particula explosio
+				//Explosion creation
+				App->particles->AddParticle(App->particles->expCenter, p->position.x, p->position.y, COLLIDER_EXPLOSION, explosionT); 
+				for (int i = 1; i <= fire; i++)
+				{
+					if (i < fire)
+					{
+						App->particles->AddParticle(App->particles->expVert, p->position.x, p->position.y - i*TILE, COLLIDER_EXPLOSION, explosionT);
+						App->particles->AddParticle(App->particles->expVert, p->position.x, p->position.y + i*TILE, COLLIDER_EXPLOSION, explosionT);
+						App->particles->AddParticle(App->particles->expHor, p->position.x + i*TILE, p->position.y, COLLIDER_EXPLOSION, explosionT);
+						App->particles->AddParticle(App->particles->expHor, p->position.x - i*TILE, p->position.y, COLLIDER_EXPLOSION, explosionT);
+					}
+					else
+					{
+						App->particles->AddParticle(App->particles->expUp, p->position.x, p->position.y - i*TILE, COLLIDER_EXPLOSION, explosionT);
+						App->particles->AddParticle(App->particles->expDown, p->position.x, p->position.y + i*TILE, COLLIDER_EXPLOSION, explosionT);
+						App->particles->AddParticle(App->particles->expRight, p->position.x + i*TILE, p->position.y, COLLIDER_EXPLOSION, explosionT);
+						App->particles->AddParticle(App->particles->expLeft, p->position.x - i*TILE, p->position.y, COLLIDER_EXPLOSION, explosionT);
+					}
+				}
 				App->audio->PlayFx(fxExplode);
 			}
 			if (p->type == explosionT)
@@ -139,8 +207,8 @@ update_status ModuleParticles::Update()
 
 						App->level->num_portals++;
 					}
-					else
-						App->level->level[p->collider->GetPosLevel().y][p->collider->GetPosLevel().x] = 0; //actualitzem la matriu nivell i li diem que no hi ha res.
+					//else
+						//App->level->level[p->collider->GetPosLevel().y][p->collider->GetPosLevel().x] = 0; //actualitzem la matriu nivell i li diem que no hi ha res.
 				}
 				
 			}
