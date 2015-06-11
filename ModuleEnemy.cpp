@@ -10,26 +10,26 @@ ModuleEnemy::ModuleEnemy(Application* app, bool start_enabled) : Module(app, sta
 	copter.left.frames.PushBack({ 16, 0, 16, 24 });
 	copter.left.frames.PushBack({ 32, 0, 16, 24 });
 	copter.left.frames.PushBack({ 48, 0, 16, 24 });
-	copter.left.speed = 0.17f;
+	copter.left.speed = 0.8f;
 
 
 	copter.down.frames.PushBack({ 64, 0, 16, 24 });
 	copter.down.frames.PushBack({ 80, 0, 16, 24 });
 	copter.down.frames.PushBack({ 96, 0, 16, 24 });
 	copter.down.frames.PushBack({ 112, 0, 16, 24 });
-	copter.down.speed = 0.17f;
+	copter.down.speed = 0.8f;
 
 	copter.up.frames.PushBack({ 128, 0, 16, 24 });
 	copter.up.frames.PushBack({ 144, 0, 16, 24 });
 	copter.up.frames.PushBack({ 160, 0, 16, 24 });
 	copter.up.frames.PushBack({ 176, 0, 16, 24 });
-	copter.up.speed = 0.17f;
+	copter.up.speed = 0.8f;
 
 	copter.right.frames.PushBack({ 192, 0, 16, 24 });
 	copter.right.frames.PushBack({ 208, 0, 16, 24 });
 	copter.right.frames.PushBack({ 224, 0, 16, 24 });
 	copter.right.frames.PushBack({ 240, 0, 16, 24 });
-	copter.right.speed = 0.17f;
+	copter.right.speed = 0.8f;
 
 	explosion_copter.up.frames.PushBack({ 0,   198, 22, 40});
 	explosion_copter.up.frames.PushBack({ 22,  198, 22, 40 });
