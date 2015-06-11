@@ -43,6 +43,7 @@ public:
 	void OnCollision(Collider*, Collider*);
 
 	Collider* AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE = COLLIDER_NONE, Type _type = nullT, float sx = 0, float sy = 0, Uint32 delay = 0);
+	void DetectBlock(Collider*);
 
 private:
 
@@ -61,8 +62,12 @@ public:
 	Particle expLeft;
 	Particle expVert;
 	Particle expHor;
-	bool stopFire;
 	int fire;
+	int fireUp;
+	int fireDown;
+	int fireRight;
+	int fireLeft;
+
 	//
 	Particle block;
 	Particle floor;

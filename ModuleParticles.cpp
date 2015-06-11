@@ -6,7 +6,6 @@
 ModuleParticles::ModuleParticles(Application* app, bool start_enabled) : Module(app, start_enabled), graphics(NULL)
 {
 
-	fire = 1;
 
 	graphics = NULL;
 
@@ -104,6 +103,30 @@ ModuleParticles::ModuleParticles(Application* app, bool start_enabled) : Module(
 ModuleParticles::~ModuleParticles()
 {}
 
+void ModuleParticles::DetectBlock(Collider* c)
+{
+	fireUp = fireDown = fireRight = fireLeft = 0;
+
+	for (int i = 1; i < fire; i++)
+	{
+		if (App->level->level[c->GetPosLevel().x][c->GetPosLevel().y + i] == 1 && fireDown == 0)
+			fireDown = i;
+		if (App->level->level[c->GetPosLevel().x][c->GetPosLevel().y - i] == 1 && fireUp == 0)
+			fireUp = i;
+		if (App->level->level[c->GetPosLevel().x + i][c->GetPosLevel().y] == 1 && fireRight == 0)
+			fireRight = i;
+		if (App->level->level[c->GetPosLevel().x - i][c->GetPosLevel().y] == 1 && fireLeft == 0)
+			fireLeft = i;
+	}	
+	if (fireDown == 0)
+		fireDown = fire;
+	if (fireUp == 0)
+		fireUp = fire;
+	if (fireRight == 0)
+		fireRight = fire;
+	if (fireLeft == 0)
+		fireLeft = fire;
+}
 // Load assets
 bool ModuleParticles::Start()
 {
@@ -116,7 +139,7 @@ bool ModuleParticles::Start()
 
 
 	position_portal_x = position_portal_y = 0;
-
+	fire = 1;
 
 
 	return true;
@@ -158,22 +181,33 @@ update_status ModuleParticles::Update()
 			if (p->type == bombT)
 			{
 				//Explosion creation
-				App->particles->AddParticle(App->particles->expCenter, p->position.x, p->position.y, COLLIDER_EXPLOSION, explosionT); 
+				
+				
+				DetectBlock(App->particles->AddParticle(App->particles->expCenter, p->position.x, p->position.y, COLLIDER_EXPLOSION, explosionT)); 
+				
 				for (int i = 1; i <= fire; i++)
 				{
 					if (i < fire)
 					{
-						App->particles->AddParticle(App->particles->expVert, p->position.x, p->position.y - i*TILE, COLLIDER_EXPLOSION, explosionT);
-						App->particles->AddParticle(App->particles->expVert, p->position.x, p->position.y + i*TILE, COLLIDER_EXPLOSION, explosionT);
-						App->particles->AddParticle(App->particles->expHor, p->position.x + i*TILE, p->position.y, COLLIDER_EXPLOSION, explosionT);
-						App->particles->AddParticle(App->particles->expHor, p->position.x - i*TILE, p->position.y, COLLIDER_EXPLOSION, explosionT);
+						if (i < fireUp)
+							App->particles->AddParticle(App->particles->expVert, p->position.x, p->position.y - i*TILE, COLLIDER_EXPLOSION, explosionT);
+						if (i < fireDown)
+							App->particles->AddParticle(App->particles->expVert, p->position.x, p->position.y + i*TILE, COLLIDER_EXPLOSION, explosionT);
+						if (i < fireRight)
+							App->particles->AddParticle(App->particles->expHor, p->position.x + i*TILE, p->position.y, COLLIDER_EXPLOSION, explosionT);
+						if (i < fireLeft)
+							App->particles->AddParticle(App->particles->expHor, p->position.x - i*TILE, p->position.y, COLLIDER_EXPLOSION, explosionT);
 					}
 					else
 					{
-						App->particles->AddParticle(App->particles->expUp, p->position.x, p->position.y - i*TILE, COLLIDER_EXPLOSION, explosionT);
-						App->particles->AddParticle(App->particles->expDown, p->position.x, p->position.y + i*TILE, COLLIDER_EXPLOSION, explosionT);
-						App->particles->AddParticle(App->particles->expRight, p->position.x + i*TILE, p->position.y, COLLIDER_EXPLOSION, explosionT);
-						App->particles->AddParticle(App->particles->expLeft, p->position.x - i*TILE, p->position.y, COLLIDER_EXPLOSION, explosionT);
+						if (i <= fireUp)
+							App->particles->AddParticle(App->particles->expUp, p->position.x, p->position.y - i*TILE, COLLIDER_EXPLOSION, explosionT);
+						if (i <= fireDown)
+							App->particles->AddParticle(App->particles->expDown, p->position.x, p->position.y + i*TILE, COLLIDER_EXPLOSION, explosionT);
+						if (i <= fireRight)
+							App->particles->AddParticle(App->particles->expRight, p->position.x + i*TILE, p->position.y, COLLIDER_EXPLOSION, explosionT);
+						if (i <= fireLeft)
+							App->particles->AddParticle(App->particles->expLeft, p->position.x - i*TILE, p->position.y, COLLIDER_EXPLOSION, explosionT);
 					}
 				}
 				App->audio->PlayFx(fxExplode);
@@ -265,7 +299,7 @@ Collider* ModuleParticles::AddParticle(const Particle& particle, int x, int y, C
 
 	if(collider_type != COLLIDER_NONE)
 	{
-		p->collider = App->collision->AddCollider({p->position.x, p->position.y, 0, 0}, collider_type, this);
+		p->collider = App->collision->AddCollider({ p->position.x, p->position.y, 0, 0 }, collider_type, this);
 	}
 
 	active.add(p);
