@@ -33,15 +33,9 @@ bool ModuleScene::Start()
 	App->particles->Enable();
 	App->powerUp->Enable();
 
-	
-	
-
 
 	scene_transition = false;
 	game_over = false;
-	
-	
-
 
 	return true;
 }

@@ -174,7 +174,7 @@ update_status ModulePlayer::Update()
 
 		
 
-
+			
 			if (!App->audio->IsPlaying(audioChannel))
 			{
 				audioChannel = App->audio->PlayFx(fxStep);

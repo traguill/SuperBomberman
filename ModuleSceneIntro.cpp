@@ -145,7 +145,7 @@ update_status ModuleSceneIntro::Update()
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_UP)
 	{
 		App->audio->PlayFx(fx);
-		App->fade->FadeToBlack(this, App->scene, 3.0f);
+		App->fade->FadeToBlack(this, App->map, 3.0f);
 	}
 
 	return UPDATE_CONTINUE;
