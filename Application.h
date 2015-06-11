@@ -19,7 +19,10 @@
 #include "ModuleLevel.h"
 #include "ModuleEnemy.h"
 #include "ModulePowerUp.h"
+#include "ModuleSceneBoss.h"
+#include "ModuleBossEnemy.h"
 #include "ModuleMap.h"
+
 
 
 class Application
@@ -40,8 +43,11 @@ public:
 	ModuleLevel* level;
 	ModuleEnemy* enemy;
 	ModulePowerUp* powerUp;
+	ModuleSceneBoss* boss;
+	ModuleBossEnemy* boss_enemy;
 	ModuleMap* map;
 	
+
 
 private:
 

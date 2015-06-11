@@ -24,6 +24,8 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 
 	text_menu = { 0, 150, 255, 74 };
 
+	
+
 	fx = 0;
 }
 
@@ -88,7 +90,7 @@ update_status ModuleSceneIntro::Update()
 	actual_time = SDL_GetTicks() - start_time;
 
 	zepelin_position.x += 0.1f;
-	zepelin_fire_position.x -= 0.6f;
+	zepelin_fire_position.x -= 0.4f;
 	ballon_position.x += 0.2f;
 	ballon_position.y += sin(0.003f*SDL_GetTicks())*0.1f;
 

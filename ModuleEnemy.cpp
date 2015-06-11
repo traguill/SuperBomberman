@@ -227,6 +227,7 @@ bool Enemy::Update()
 }
 
 void Enemy::GetNewDirection(){
+
 	Looking new_direction = direction_enemy;
 	
 	srand(SDL_GetTicks());

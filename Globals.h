@@ -44,3 +44,5 @@ enum Looking {				//Les variables tenen una D al final de direccio, no es poden 
 #define DELAY_LEVEL_X 24
 #define DELAY_LEVEL_Y 40
 
+#define GRAVITY_PARTICLE 0.05f
+

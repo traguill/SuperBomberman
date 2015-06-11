@@ -97,12 +97,24 @@ bool ModulePlayer::Start()
 	fxStep = App->audio->LoadFx("Game/Audios/Gameplay/Step.wav");
 	fxPut = App->audio->LoadFx("Game/Audios/Gameplay/PutBomb.wav");
 
-	position.x = 24;
-	position.y = 56;
+	if (App->scene->IsEnabled())
+	{
+		position.x = 24;
+		position.y = 56;
+		direction_player = downD;
+	}
+	if (App->boss->IsEnabled())
+	{
+		position.x = 104;
+		position.y = 216;
+		direction_player = upD;
+	}
+	
 
 	collider = App->collision->AddCollider({ position.x, position.y-16, 16, 16 }, COLLIDER_PLAYER, this);
 
-	direction_player = downD;
+
+	
 
 	bomb_collision = false;
 	game_over_player = false;
@@ -137,9 +149,18 @@ update_status ModulePlayer::Update()
 
 	Animation* current_animation = &idle; //Posem la animacio de quiet per defecte i despres comprovem si ha apretat alguna tecla aixi evitem fer la comprovació que havies fet al final.
 
+	//Checks the intro of the boss scene
+	bool can_start = true;
+	if (App->boss->IsEnabled())
+		can_start = false;
+	if (!can_start)
+	{
+		if (App->boss_enemy->start_time + 3000 < App->boss_enemy->time)
+			can_start = true;
+	}
 	
 
-	if (!game_over_player)
+	if (!game_over_player && can_start &&!game_win)
 	{
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
@@ -234,7 +255,7 @@ update_status ModulePlayer::Update()
 
 			current_animation = &win;
 		}
-		else
+		if (game_over_player)
 		{
 			current_animation = &die;
 		}
@@ -268,7 +289,14 @@ update_status ModulePlayer::Update()
 	
 	
 	if (game_over_player && current_animation->Finished())
-		App->scene->game_over = true;
+	{
+		if (App->scene->IsEnabled())
+			App->scene->game_over = true;
+
+		if (App->boss->IsEnabled())
+			App->boss->game_over = true;
+	}
+		
 	
 	if (game_win && current_animation->Finished())
 		App->scene->game_over = true;
@@ -291,7 +319,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	//Blocks-----------------------------------------------------------------------
 	if (c2->type == COLLIDER_BLOCK || c2->type == COLLIDER_WALL || c2->type == COLLIDER_BOMB)
 	{
-		ThrowWall(direction_player, c2);
+		CrossWall(direction_player, c2);
 	}
 
 	//Killing objects-----------------------------------------------------------------
@@ -311,7 +339,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 
 
 
-void ModulePlayer::ThrowWall(Looking direction_player, Collider* c){
+void ModulePlayer::CrossWall(Looking direction_player, Collider* c){
 
 
 	p2Point<int> tmp;
@@ -376,6 +404,7 @@ void ModulePlayer::ThrowWall(Looking direction_player, Collider* c){
 		case 2: //Down
 			//left DOWN
 			position.y += 1;
+			return;
 			break;
 		}
 		break;

@@ -9,6 +9,7 @@ Application::Application()
 	input = new ModuleInput(this);
 	audio = new ModuleAudio(this);
 	scene = new ModuleScene(this, false);
+	boss = new ModuleSceneBoss(this, false);
 	fade = new ModuleFadeToBlack(this);
 	particles = new ModuleParticles(this,false);
 	player = new ModulePlayer(this, false);
@@ -18,7 +19,12 @@ Application::Application()
 	level = new ModuleLevel(this, false);
 	enemy = new ModuleEnemy(this, false);
 	powerUp = new ModulePowerUp(this, false);
+
+	boss_enemy = new ModuleBossEnemy(this, false);
+	
+
 	map = new ModuleMap(this, false);
+
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -35,6 +41,11 @@ Application::Application()
 	// Scenes
 	AddModule(intro);
 	AddModule(scene);
+
+	AddModule(boss);
+	
+	
+
 	AddModule(timer);
 	AddModule(map);
 	
@@ -49,6 +60,8 @@ Application::Application()
 	// Characters
 	AddModule(player);
 	AddModule(enemy);
+	AddModule(boss_enemy);
+	AddModule(timer);
 
 
 	AddModule(fade); // let this after all drawing
@@ -63,7 +76,9 @@ Application::~Application()
 	delete particles;
 	delete audio;
 	delete scene;
+	delete boss;
 	delete enemy;
+	delete boss_enemy;
 	delete player;
 	delete level;
 	delete fade;
