@@ -7,7 +7,7 @@ ModuleCredits::ModuleCredits(Application* app, bool start_enabled) : Module(app,
 	graphics = NULL;
 
 	//Status bar, animation
-	bar = { 0, 0, 256, 32 };
+	text = { 0, 0, 256, 252 };
 }
 
 ModuleCredits::~ModuleCredits()
@@ -18,7 +18,11 @@ bool ModuleCredits::Start()
 {
 	LOG("Loading Credits");
 
-	graphics = App->textures->Load("interface.png");
+	graphics = App->textures->Load("credits.png");
+	App->audio->PlayMusic("credit.ogg", 0.0f);
+
+	positionY = 230;
+	scene_transition = false;
 
 	return true;
 }
@@ -36,8 +40,16 @@ bool ModuleCredits::CleanUp()
 // Update: draw background
 update_status ModuleCredits::Update()
 {
+	positionY -= 0.5f;
+
+	if (positionY < -252 && !scene_transition)
+	{
+		App->fade->FadeToBlack(this, App->intro, 3.0f);
+		scene_transition = true;
+	}
+		
 	// Draw everything --------------------------------------
-	App->renderer->Blit(graphics, 0, 0, &bar);
+	App->renderer->Blit(graphics, 0, positionY , &text);
 
 	return UPDATE_CONTINUE;
 }

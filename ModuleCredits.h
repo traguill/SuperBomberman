@@ -17,9 +17,9 @@ public:
 public:
 
 	SDL_Texture* graphics;
-	SDL_Rect bar;
-
-
+	SDL_Rect text;
+	bool scene_transition; 
+	float positionY;
 
 
 };

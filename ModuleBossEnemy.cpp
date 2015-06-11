@@ -91,7 +91,7 @@ void ModuleBossEnemy::SetColliders()
 
 	//Boss Collider
 	collider_boss = App->collision->AddCollider({ position_boss.x + 32, position_boss.y + 66, 16, 16 }, COLLIDER_ENEMY, this);
-	collider_bossBig = App->collision->AddCollider({ position_boss.x+10, position_boss.y + 34, 58, 66 }, COLLIDER_BOSS, this);
+	collider_bossBig = App->collision->AddCollider({ position_boss.x+13, position_boss.y + 37, 52, 60 }, COLLIDER_BOSS, this);
 	collider_mallet = App->collision->AddCollider({ 0, 0, 16, 16 }, COLLIDER_ENEMY, this);
 }
 
@@ -146,11 +146,11 @@ update_status ModuleBossEnemy::Update()
 
 	App->renderer->Blit(boss_graphics, position_boss.x, position_boss.y, &r);
 
-	if (game_over_boss && !App->boss->game_over)
+	if (game_over_boss && !App->boss->game_over && !App->boss->game_win)
 	{
 		AnimationExplosion();
 		if (start_explode_time + 5000 < time)
-			App->boss->game_over = true;
+			App->boss->game_win = true;
 	}
 
 	time = SDL_GetTicks();
@@ -210,7 +210,7 @@ void ModuleBossEnemy::BossIA(){
 					//Create the pieces of floor
 					for (int i = 1; i < 6; i++)
 					{
-						App->particles->AddParticle(App->particles->floor, position_boss.x + 32, position_boss.y + 110, COLLIDER_ENEMY, floorT, -0.5f + (i*1.5f) / 10.0f, float(-(i - 3)*(i - 3) + 8) / 6);
+						App->particles->AddParticle(App->particles->floor, position_boss.x + 32, position_boss.y + 125, COLLIDER_ENEMY, floorT, -0.5f + (i*1.5f) / 10.0f, float(-(i - 3)*(i - 3) + 8) / 6);
 					}
 					anim_floor_started = true;
 				}

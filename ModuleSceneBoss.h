@@ -24,6 +24,7 @@ public:
 
 	bool scene_transition;
 	bool game_over;
+	bool game_win;
 
 
 };
