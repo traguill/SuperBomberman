@@ -4,14 +4,6 @@
 #include "Animation.h"
 #include "Globals.h"
 
-struct Floor{
-	p2Point<int> position;
-	Collider* collider;
-	p2Point<float> velocity;
-	bool isBig;
-	Floor();
-	~Floor();
-};
 
 
 class ModuleSceneBoss : public Module
@@ -37,6 +29,7 @@ public:
 private:
 	int RightLeft(const p2Point<int> p)const;
 	int UpDown(const p2Point<int> p)const;
+	void AnimationExplosion();
 
 public:
 
@@ -47,6 +40,7 @@ public:
 	Animation boss_idle;
 	Animation hit;
 	Animation red; //When is hit by a bomb
+	Animation explosion_boss;
 	Animation* current_animation_boss;
 	Collider* collider_boss;
 	Collider* collider_mallet;
@@ -57,22 +51,26 @@ public:
 	Looking direction_boss;
 	Looking last_direction_boss;
 
+	//Timers
 	Uint32 time;
 	Uint32 hit_time;
 	Uint32 move_time;
 	Uint32 stunned_time;
+	Uint32 explosion_time;
+	Uint32 start_explode_time;
+	Uint32 start_time;
 
 	unsigned int lifes;
 	bool stunned;
 
 	bool scene_transition;
 	bool game_over;
+	bool game_over_boss;
 
 	int delay_background;
 
-	p2DynArray<Floor*> pieces_floor;
+	
 	bool anim_floor_started;
-
-
+	
 
 };

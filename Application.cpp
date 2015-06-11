@@ -9,13 +9,13 @@ Application::Application()
 	input = new ModuleInput(this);
 	audio = new ModuleAudio(this);
 	scene = new ModuleScene(this, false);
-	boss = new ModuleSceneBoss(this, true);
+	boss = new ModuleSceneBoss(this, false);
 	fade = new ModuleFadeToBlack(this);
 	particles = new ModuleParticles(this,false);
 	player = new ModulePlayer(this, false);
 	collision = new ModuleCollision(this, false);
 	timer = new ModuleTimer(this, false);
-	intro = new ModuleSceneIntro(this, false);
+	intro = new ModuleSceneIntro(this, true);
 	level = new ModuleLevel(this, false);
 	enemy = new ModuleEnemy(this, false);
 	powerUp = new ModulePowerUp(this, false);

@@ -37,7 +37,16 @@ ModuleParticles::ModuleParticles(Application* app, bool start_enabled) : Module(
 	block.anim.frames.PushBack({ 232, 0, 16, 16 });
 	block.anim.speed = 0.18f;
 
+	//Floor particle
+	floor.anim.frames.PushBack({ 0, 99, 14, 17 });
+	floor.life = 4000;
 
+	explosion_boss.anim.frames.PushBack({ 15,  97, 20, 34 });
+	explosion_boss.anim.frames.PushBack({ 36,  97, 30, 34 });
+	explosion_boss.anim.frames.PushBack({ 67,  97, 32, 34 });
+	explosion_boss.anim.frames.PushBack({ 100, 97, 32, 34 });
+	explosion_boss.anim.frames.PushBack({ 133, 97, 32, 34 });
+	explosion_boss.anim.speed = 0.2f;
 
 
 }
@@ -175,12 +184,14 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2)
 	}*/
 }
 
-Collider* ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type, Type _type, Uint32 delay)
+Collider* ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type, Type _type, float sx, float sy, Uint32 delay)
 {
 	Particle* p = new Particle(particle);
 	p->born = SDL_GetTicks() + delay;
 	p->position.x = x;
 	p->position.y = y;
+	p->speed.x = sx;
+	p->speed.y = sy;
 
 	p->type = _type;
 
@@ -227,7 +238,15 @@ bool Particle::Update()
 	else
 		if(anim.Finished())
 			ret = false;
-
+	if (type == floorT)
+	{
+		position.x += speed.x;
+		speed.y -= GRAVITY_PARTICLE;
+		position.y -= speed.y;
+		
+		if (speed.y < -2.5f)
+			ret = false;
+	}
 	
 
 	if(collider != NULL)

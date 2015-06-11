@@ -97,12 +97,24 @@ bool ModulePlayer::Start()
 	fxStep = App->audio->LoadFx("Game/Audios/Gameplay/Step.wav");
 	fxPut = App->audio->LoadFx("Game/Audios/Gameplay/PutBomb.wav");
 
-	position.x = 24;
-	position.y = 56;
+	if (App->scene->IsEnabled())
+	{
+		position.x = 24;
+		position.y = 56;
+		direction_player = downD;
+	}
+	if (App->boss->IsEnabled())
+	{
+		position.x = 104;
+		position.y = 216;
+		direction_player = upD;
+	}
+	
 
 	collider = App->collision->AddCollider({ position.x, position.y-16, 16, 16 }, COLLIDER_PLAYER, this);
 
-	direction_player = downD;
+
+	
 
 	bomb_collision = false;
 	game_over_player = false;
@@ -137,9 +149,15 @@ update_status ModulePlayer::Update()
 
 	Animation* current_animation = &idle; //Posem la animacio de quiet per defecte i despres comprovem si ha apretat alguna tecla aixi evitem fer la comprovació que havies fet al final.
 
+	bool can_start = false;
+	if (App->boss->IsEnabled() && !can_start)
+	{
+		if (App->boss->start_time + 3000 < App->boss->time)
+			can_start = true;
+	}
 	
 
-	if (!game_over_player)
+	if (!game_over_player && can_start)
 	{
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
@@ -234,7 +252,7 @@ update_status ModulePlayer::Update()
 
 			current_animation = &win;
 		}
-		else
+		if (game_over_player)
 		{
 			current_animation = &die;
 		}
@@ -268,7 +286,14 @@ update_status ModulePlayer::Update()
 	
 	
 	if (game_over_player && current_animation->Finished())
-		App->scene->game_over = true;
+	{
+		if (App->scene->IsEnabled())
+			App->scene->game_over = true;
+
+		if (App->boss->IsEnabled())
+			App->boss->game_over = true;
+	}
+		
 	
 	if (game_win && current_animation->Finished())
 		App->scene->game_over = true;

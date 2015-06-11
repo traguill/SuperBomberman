@@ -10,6 +10,7 @@ enum Type{  //Guarda el tipus de particle per saber si ha d'explotar.
 	bombT,
 	explosionT,
 	blockT,
+	floorT,
 	nullT,
 };
 
@@ -17,8 +18,8 @@ struct Particle
 {
 	Animation anim;
 	unsigned int fx;
-	p2Point<int> position;
-	p2Point<int> speed;
+	p2Point<float> position;
+	p2Point<float> speed;
 	Uint32 born;
 	Uint32 life;
 	bool fx_played;
@@ -41,7 +42,7 @@ public:
 	bool CleanUp();
 	void OnCollision(Collider*, Collider*);
 
-	Collider* AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE = COLLIDER_NONE, Type _type = nullT,Uint32 delay = 0);
+	Collider* AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE = COLLIDER_NONE, Type _type = nullT, float sx = 0, float sy = 0, Uint32 delay = 0);
 
 private:
 
@@ -53,6 +54,8 @@ public:
 	Particle bomb;
 	Particle explosion;
 	Particle block;
+	Particle floor;
+	Particle explosion_boss;
 
 	unsigned int fxExplode;
 

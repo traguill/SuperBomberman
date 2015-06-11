@@ -21,7 +21,10 @@ ModuleSceneBoss::ModuleSceneBoss(Application* app, bool start_enabled) : Module(
 	hit.speed = 0.05f;
 	hit.loop = false;
 
-	red.frames.PushBack({ 267, 0, 81, 156 });
+	red.frames.PushBack({ 0, 140, 77, 156 });
+	red.loop = false;
+
+	
 }
 
 ModuleSceneBoss::~ModuleSceneBoss()
@@ -34,12 +37,12 @@ ModuleSceneBoss::~ModuleSceneBoss()
 // Load assets
 bool ModuleSceneBoss::Start()
 {
+	
 	LOG("Loading Boss");
-
 
 	graphics = App->textures->Load("boss_stage.png");
 	boss_graphics = App->textures->Load("boss.png");
-	App->audio->PlayMusic("Area1.ogg", 0.0f);
+	App->audio->PlayMusic("music_boss.ogg", 0.0f);
 	App->collision->Enable(); // enable before player
 	App->timer->Enable();
 	App->particles->Enable();
@@ -47,26 +50,29 @@ bool ModuleSceneBoss::Start()
 	App->player->Enable();
 
 	position_boss.x = 88;
-	position_boss.y = 60;
+	position_boss.y = 30;
 	last_position_boss = position_boss;
 	direction_boss = downD;
 	last_direction_boss = direction_boss;
-	current_animation_boss = &hit;
+	current_animation_boss = &boss_idle;
 
-	lifes = 2;
+	lifes = 10;
 	stunned = false;
 	delay_background = 0;
 	
 
 	hit.Reset();
 
-	time = SDL_GetTicks();
+	start_time = SDL_GetTicks();
+	time = start_time;
 	hit_time = time;
 	move_time = time;
 	stunned_time = time;
+	explosion_time = time;
 
 	scene_transition = false;
 	game_over = false;
+	game_over_boss = false;
 	anim_floor_started = false;
 
 	SetColliders();
@@ -106,14 +112,16 @@ bool ModuleSceneBoss::CleanUp()
 	App->collision->Disable();
 	App->powerUp->Disable();
 
+
 	return true;
 }
 
 
 update_status ModuleSceneBoss::Update()
 {
-	if (game_over == false)
+	if (game_over_boss == false && start_time + 3000 < time)
 	{
+
 		if (!stunned)
 			BossIA();
 		else
@@ -124,11 +132,15 @@ update_status ModuleSceneBoss::Update()
 
 		}
 
-		if (lifes == 0)
-			game_over = true;
+		if (lifes == 0 && !game_over_boss)
+		{
+			game_over_boss = true;
+			start_explode_time = time;
+		}
+			
 	}
 	
-
+	
 
 	//Check Game Over
 	if (game_over && !scene_transition)
@@ -147,9 +159,31 @@ update_status ModuleSceneBoss::Update()
 
 	App->renderer->Blit(boss_graphics, position_boss.x, position_boss.y ,&r);
 
+	if (game_over_boss && !game_over)
+	{
+		AnimationExplosion();
+		if (start_explode_time + 5000 < time)
+			game_over = true;
+	}
+
 	time = SDL_GetTicks();
 
 	return UPDATE_CONTINUE;
+}
+
+void ModuleSceneBoss::AnimationExplosion(){
+
+	srand(SDL_GetTicks());
+	//Create
+	if (explosion_time + 100 < time)
+	{
+		int bombX = (rand() % (28 - (-50) + 1) - 50) + collider_boss->rect.x;
+		int bombY = (rand() % (28 - (-50) + 1) - 50) + collider_boss->rect.y;
+
+		App->particles->AddParticle(App->particles->explosion_boss, bombX , bombY, COLLIDER_NONE, explosionT);
+		explosion_time = time;
+	}
+	
 }
 
 void ModuleSceneBoss::BossIA(){
@@ -174,6 +208,7 @@ void ModuleSceneBoss::BossIA(){
 			current_animation_boss = &boss_idle;
 			collider_mallet->SetPos(0, 0); //Out of the map
 			delay_background = 0;
+			anim_floor_started = false;
 			
 		}
 		else
@@ -185,35 +220,13 @@ void ModuleSceneBoss::BossIA(){
 
 				if (!anim_floor_started)
 				{
-					
 					//Create the pieces of floor
-					for (int i = 0; i < 6; i++)
+					for (int i = 1; i < 6; i++)
 					{
-						
-						srand(SDL_GetTicks()+i);
-
-						float randomX = (float) rand() / RAND_MAX +i;
-						float randomY = (float)rand() / RAND_MAX  +i;
-						Floor* item = new Floor();
-						item->position.x = position_boss.x + 35;
-						item->position.y = position_boss.y + 110;
-						item->collider = App->collision->AddCollider({ item->position.x, item->position.y, 3, 3 }, COLLIDER_ENEMY, this);
-						item->isBig = true;
-						item->velocity.x = randomX;
-						item->velocity.y = randomY;
-						pieces_floor.PushBack(item);
+						App->particles->AddParticle(App->particles->floor, position_boss.x + 32, position_boss.y + 110, COLLIDER_ENEMY, floorT, -0.5f + (i*1.5f) / 10.0f, float (-(i-3)*(i-3)+8)/6);
 					}
 					anim_floor_started = true;
-				}
-
-				for (int i = 0; i < pieces_floor.Count(); i++)
-				{
-					pieces_floor[i]->position.x += pieces_floor[i]->velocity.x;
-					pieces_floor[i]->position.y -= pieces_floor[i]->velocity.y;
-
-					pieces_floor[i]->collider->SetPos(pieces_floor[i]->position.x, pieces_floor[i]->position.y);
-				}
-				
+				}	
 				
 			}
 				
@@ -405,16 +418,3 @@ void ModuleSceneBoss::OnCollision(Collider* c1, Collider* c2)
 
 }
 
-//---------------------------------------------------------------------------------------------------------------------
-
-Floor::Floor() : isBig(false), collider(NULL)
-{
-	position.SetToZero();
-	velocity.SetToZero();
-}
-
-Floor::~Floor()
-{
-	if (collider)
-		collider->to_delete = true;
-}
