@@ -30,6 +30,7 @@ private:
 	int RightLeft(const p2Point<int> p)const;
 	int UpDown(const p2Point<int> p)const;
 	void AnimationExplosion();
+	void AnimationFalling();
 
 public:
 
@@ -65,8 +66,10 @@ public:
 
 
 	bool game_over_boss;
+	bool falling;
 
 	int delay_background;
+	int delay_falling;
 
 
 	bool anim_floor_started;

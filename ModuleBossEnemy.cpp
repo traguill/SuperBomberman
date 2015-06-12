@@ -69,6 +69,8 @@ bool ModuleBossEnemy::Start()
 
 	game_over_boss = false;
 	anim_floor_started = false;
+	falling = false;
+	delay_falling = 0;
 
 	SetColliders();
 
@@ -134,7 +136,11 @@ update_status ModuleBossEnemy::Update()
 
 
 
-
+	if (falling)
+	{
+		AnimationFalling();
+		return UPDATE_CONTINUE;
+	}
 
 
 	// Draw everything --------------------------------------
@@ -150,12 +156,22 @@ update_status ModuleBossEnemy::Update()
 	{
 		AnimationExplosion();
 		if (start_explode_time + 5000 < time)
-			App->boss->game_win = true;
+			falling = true;
 	}
+	
 
 	time = SDL_GetTicks();
 
 	return UPDATE_CONTINUE;
+}
+
+void ModuleBossEnemy::AnimationFalling(){
+	SDL_Rect r = boss_idle.PeekCurrentFrame();
+	delay_falling += 1;
+	r.h = r.h / 2 - delay_falling;
+	if (delay_falling > 78)
+		App->boss->game_win = true;
+	App->renderer->Blit(boss_graphics, position_boss.x, position_boss.y + delay_falling, &r);
 }
 
 void ModuleBossEnemy::AnimationExplosion(){

@@ -89,6 +89,9 @@ ModuleParticles::ModuleParticles(Application* app, bool start_enabled) : Module(
 	floor.anim.frames.PushBack({ 0, 99, 14, 17 });
 	floor.life = 4000;
 
+	floorS.anim.frames.PushBack({ 180, 99, 6, 7 });
+	floorS.life = 2000;
+
 	explosion_boss.anim.frames.PushBack({ 15,  97, 20, 34 });
 	explosion_boss.anim.frames.PushBack({ 36,  97, 30, 34 });
 	explosion_boss.anim.frames.PushBack({ 67,  97, 32, 34 });
@@ -244,7 +247,10 @@ update_status ModuleParticles::Update()
 				
 			}
 			
-
+			if (p->type == floorT)
+			{
+				App->particles->AddParticle(App->particles->floorS, p->position.x, p->position.y, COLLIDER_ENEMY, floorST, p->speed.x, 1);
+			}
 			delete p;
 			active.del(tmp);
 		}
@@ -337,7 +343,7 @@ bool Particle::Update()
 	else
 		if(anim.Finished())
 			ret = false;
-	if (type == floorT)
+	if (type == floorT || type == floorST)
 	{
 		position.x += speed.x;
 		speed.y -= GRAVITY_PARTICLE;

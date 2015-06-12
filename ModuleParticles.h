@@ -11,6 +11,7 @@ enum Type{  //Guarda el tipus de particle per saber si ha d'explotar.
 	explosionT,
 	blockT,
 	floorT,
+	floorST,
 	nullT,
 };
 
@@ -71,6 +72,7 @@ public:
 	//
 	Particle block;
 	Particle floor;
+	Particle floorS;
 	Particle explosion_boss;
 
 	unsigned int fxExplode;
