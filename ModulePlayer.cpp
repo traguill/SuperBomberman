@@ -128,7 +128,7 @@ bool ModulePlayer::Start()
 
 	current_bombs = 0;
 	max_bombs = App->sceneManager->player_max_bombs;
-	lifes = 5;
+	lifes = App->sceneManager->player_lifes;
 	speed = App->sceneManager->player_speed;
 
 
