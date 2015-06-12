@@ -21,6 +21,9 @@ public:
 	float player_speed;
 	int player_fire;
 	int player_max_bombs;
+	int player_lifes;
+
+
 	
 
 

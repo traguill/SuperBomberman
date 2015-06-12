@@ -138,7 +138,6 @@ bool ModuleParticles::Start()
 
 	fire = App->sceneManager->player_fire;
 	position_portal_x = position_portal_y = 0;
-	fire = 1;
 
 
 	return true;

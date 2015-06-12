@@ -21,6 +21,9 @@ bool SceneManager::Start()
 	player_fire = 1;
 	player_max_bombs = 1;
 	player_speed = 1;
+	player_lifes = 5;
+
+
 
 	return true;
 }
@@ -44,7 +47,9 @@ update_status SceneManager::Update()
 	{
 		player_max_bombs = App->player->max_bombs;
 		player_speed = App->player->speed;
+		player_lifes = App->player->lifes;
 	}
+
 
 	return UPDATE_CONTINUE;
 }
@@ -54,4 +59,5 @@ void SceneManager::Reset()
 	player_fire = 1;
 	player_max_bombs = 1;
 	player_speed = 1;
+	player_lifes = 5;
 }
